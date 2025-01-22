@@ -1,0 +1,8 @@
+{
+    "workbench.colorCustomizations": {
+        "three.indentGuidesStroke": "#AA2B2B",
+        "three.inactiveIndentGuidesStroke": "#AABB2B",
+        "minimap.background": "#00000000",
+        "scrollbar.shadow": "#00000000"
+    }
+}
