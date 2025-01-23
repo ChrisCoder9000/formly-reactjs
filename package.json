@@ -1,15 +1,19 @@
 {
   "name": "formly-reactjs",
-  "version": "0.0.2",
-  "main": "index.js",
+  "version": "0.0.10",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "style": "dist/styles.css",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
+    "build:css": "tailwindcss -i ./src/index.css -o ./dist/styles.css --minify",
+    "build:js": "rollup -c",
+    "build": "rm -rf dist && npm run build:css && npm run build:js && tsc --emitDeclarationOnly",
     "prepare": "npm run build",
-    "publish": "npm run prepare && npm publish --access=public",
-    "dev": "webpack serve --mode development"
+    "publish": "npm run prepare && npm publish --access=public"
   },
   "keywords": [
     "formly",
@@ -18,8 +22,12 @@
     "builder",
     "formly-reactjs"
   ],
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
   "dependencies": {
-    "@babel/preset-typescript": "^7.26.0",
+    "@babel/runtime": "^7.26.0",
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-dialog": "^1.1.5",
     "@radix-ui/react-label": "^2.1.1",
@@ -27,36 +35,37 @@
     "@radix-ui/react-select": "^2.1.5",
     "@radix-ui/react-slot": "^1.1.1",
     "@types/react-input-mask": "^3.0.6",
+    "autoprefixer": "^10.4.20",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
     "lucide-react": "^0.473.0",
-    "react": "^18.3.1",
+    "postcss": "^8.5.1",
+    "postcss-import": "^16.1.0",
     "react-day-picker": "^8.10.1",
-    "react-dom": "^18.3.1",
     "react-hook-form": "^7.54.2",
-    "react-input-mask": "^2.0.4",
     "tailwind-merge": "^2.6.0",
+    "tailwindcss": "^3.4.17",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@babel/cli": "^7.26.4",
     "@babel/core": "^7.26.0",
+    "@babel/plugin-transform-runtime": "^7.25.9",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.26.3",
-    "@types/react": "^19.0.7",
-    "autoprefixer": "^10.4.20",
+    "@babel/preset-typescript": "^7.26.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^25.0.8",
+    "@rollup/plugin-node-resolve": "^15.3.1",
+    "@rollup/plugin-typescript": "^11.1.6",
     "babel-loader": "^9.2.1",
-    "css-loader": "^7.1.2",
-    "html-webpack-plugin": "^5.6.3",
-    "postcss": "^8.5.1",
-    "postcss-import": "^16.1.0",
     "postcss-loader": "^8.1.1",
-    "style-loader": "^4.0.0",
-    "tailwindcss": "^3.4.17",
-    "webpack": "^5.97.1",
-    "webpack-cli": "^6.0.1",
-    "webpack-dev-server": "^5.2.0"
+    "rollup": "^4.31.0",
+    "rollup-plugin-postcss": "^4.0.2"
   }
 }

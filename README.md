@@ -14,6 +14,7 @@ A powerful and flexible form builder SDK for React applications with built-in va
 - 🔄 Form state management
 - 📱 Responsive design
 - 🎯 TypeScript support
+- 🎈 Zero configuration - styles included!
 
 ## Installation
 
@@ -22,6 +23,18 @@ npm install formly-reactjs
 # or
 yarn add formly-reactjs
 ```
+
+## Usage
+
+```javascript
+import { FormBuilder } from "formly-reactjs";
+
+function App() {
+  return <FormBuilder />;
+}
+```
+
+That's it! No additional configuration needed. The package includes all necessary styles.
 
 ## Quick Start
 

@@ -7,22 +7,26 @@ export declare enum FieldType {
     URL = "url",
     PHONE = "phone",
     OTP = "otp",
-    FILES = "files",
     DATE = "date",
     DATE_RANGE = "date_range",
-    DATE_TIME = "date_time",
-    TIME = "time",
+    DATE_TIME = "date_time",// TODO: [ missing ]
+    TIME = "time",// TODO: [ missing ]
     SELECT = "select",
     MULTI_SELECT = "multi_select",
     OPTION = "option",
     MULTI_OPTION = "multi_option",
-    RADIO = "radio",
+    CHOICE = "choice",
+    MULTI_CHOICE = "multi_choice",
+    RADIO = "radio",// TODO: [ missing ]
     CHECKBOX = "checkbox",
     BLOCK = "block",
-    PAYMENT = "payment",
-    INFO_TEXT = "info_text",
-    IMAGE = "image",
-    VIDEO = "video",
-    DOWNLOAD = "download",
+    FILES = "files",
+    PAYMENT = "payment",// TODO: [ missing ]
+    INFO_TEXT = "info_text",// TODO: [ missing ]
+    IMAGE = "image",// TODO: [ missing ]
+    VIDEO = "video",// TODO: [ missing ]
+    DOWNLOAD = "download",// TODO: [ missing ]
     LINK = "link"
 }
+export declare const PHONE_MASKS: Record<string, string>;
+export declare const PHONE_PREFIXES: Record<string, string>;

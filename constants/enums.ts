@@ -20,8 +20,8 @@ export enum FieldType {
   // DATES
   DATE = "date",
   DATE_RANGE = "date_range",
-  DATE_TIME = "date_time",
-  TIME = "time",
+  DATE_TIME = "date_time", // TODO: [ missing ]
+  TIME = "time", // TODO: [ missing ]
 
   // OPTIONS
   SELECT = "select",
@@ -30,7 +30,7 @@ export enum FieldType {
   MULTI_OPTION = "multi_option",
   CHOICE = "choice",
   MULTI_CHOICE = "multi_choice",
-  RADIO = "radio",
+  RADIO = "radio", // TODO: [ missing ]
 
   // BOOLEAN
   CHECKBOX = "checkbox",
@@ -42,12 +42,12 @@ export enum FieldType {
   FILES = "files",
 
   // OTHER
-  PAYMENT = "payment",
-  INFO_TEXT = "info_text",
-  IMAGE = "image",
-  VIDEO = "video",
-  DOWNLOAD = "download",
-  LINK = "link",
+  PAYMENT = "payment", // TODO: [ missing ]
+  INFO_TEXT = "info_text", // TODO: [ missing ]
+  IMAGE = "image", // TODO: [ missing ]
+  VIDEO = "video", // TODO: [ missing ]
+  DOWNLOAD = "download", // TODO: [ missing ]
+  LINK = "link", // TODO: [ missing ]
 }
 
 export const PHONE_MASKS: Record<string, string> = {

@@ -6,8 +6,8 @@
 // Modified By: the developer formerly known as Christian Nonis at <alch.infoemail@gmail.com>
 // -----
 
-import { FieldType } from "@/constants/enums";
-import { Field } from "@/constants/types";
+import { FieldType } from "../constants/enums";
+import { Field } from "../constants/types";
 import { ZodRawShape, z } from "zod";
 
 export const toZod = (fields: Field[]): ZodRawShape => {
@@ -30,17 +30,23 @@ export const toZod = (fields: Field[]): ZodRawShape => {
       schema = isRequired ? schema : schema.optional();
     } else if (field.type === FieldType.NUMBER) {
       schema = z
-        .string()
+        .string({ required_error: requiredError })
         .transform((val) => Number(val))
         .refine((num) => !isNaN(num), {
           message: "Invalid number format",
         });
       schema = isRequired ? schema : schema.optional();
     } else if (field.type === FieldType.EMAIL) {
-      schema = z.string().email();
+      schema = z.string({ required_error: requiredError }).email();
       schema = isRequired ? schema : schema.optional();
     } else if (field.type === FieldType.URL) {
-      schema = z.string().url();
+      schema = z.string({ required_error: requiredError }).url();
+      schema = isRequired ? schema : schema.optional();
+    } else if (field.type === FieldType.MULTI_OPTION) {
+      schema = z.array(z.string(), { required_error: requiredError });
+      schema = isRequired ? schema : schema.optional();
+    } else if (field.type === FieldType.MULTI_CHOICE) {
+      schema = z.array(z.string(), { required_error: requiredError });
       schema = isRequired ? schema : schema.optional();
     } else {
       schema = isRequired

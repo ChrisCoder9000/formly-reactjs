@@ -25,6 +25,16 @@ type BuilderProps = {
             name: string;
         }>;
     }) => React.ComponentType<any>;
+    stepOverrides?: (args: {
+        step: FormStep;
+        title: string;
+        subtitle: string;
+        currentIndex: number;
+        stepsLength: number;
+        onBack: () => void;
+        onSubmit: (data: Record<string, string>) => void;
+        formData: Record<string, string>;
+    }) => React.ComponentType<any>;
 };
 /**
  * Builder is a multi-step form component that handles form state management and navigation

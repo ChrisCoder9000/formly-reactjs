@@ -15,9 +15,9 @@ type StepHeaderProps = {
 
 const StepHeader = (props: StepHeaderProps) => {
   return (
-    <div>
+    <div className="">
       <h1 className="text-2xl font-bold mb-1">{props.title}</h1>
-      <p className="text-sm text-gray-500 mb-4">{props.subtitle}</p>
+      <p className="text-sm text-gray-500 mb-6">{props.subtitle}</p>
     </div>
   );
 };

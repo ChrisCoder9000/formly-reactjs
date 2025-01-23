@@ -1,4 +1,4 @@
-import { Field } from "@/constants/types";
+import { Field } from "../../constants/types";
 import { FieldError, UseFormReturn } from "react-hook-form";
 export type FieldRendererProps = {
     field: Field;

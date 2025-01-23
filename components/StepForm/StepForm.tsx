@@ -14,7 +14,7 @@ import { Form } from "../ui/form";
 import { FieldError, useForm } from "react-hook-form";
 import { Button } from "../ui/button";
 import { z } from "zod";
-import { toZod } from "@/utils/data";
+import { toZod } from "../../utils/data";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TriangleAlert } from "lucide-react";
 
@@ -35,20 +35,25 @@ const StepForm = (props: StepFormProps) => {
     return true;
   };
 
+  const formSchema = z.object(toZod(props.step.fields));
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    mode: "onSubmit",
+  });
+
+  React.useEffect(() => {
+    if (props.formData) {
+      form.reset(props.formData);
+    }
+  }, [props.formData, form]);
+
   const handleSubmit = () => {
     const isValid = validateStep();
     if (isValid) {
       props.onSubmit(form.getValues());
     }
   };
-
-  const formSchema = z.object(toZod(props.step.fields));
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: props.formData,
-    mode: "onSubmit",
-  });
 
   const firstError = Object.values(form.formState.errors)[0] as FieldError;
 
@@ -59,7 +64,7 @@ const StepForm = (props: StepFormProps) => {
           title={props.step.title || props.formTitle}
           subtitle={props.step.subtitle || props.formSubtitle}
         />
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3">
           {props.step.fields.map((field, i) => {
             return (
               <FieldRenderer

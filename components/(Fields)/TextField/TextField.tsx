@@ -6,9 +6,13 @@
 // Modified By: the developer formerly known as Christian Nonis at <alch.infoemail@gmail.com>
 // -----
 
-import { Input } from "@/components/ui/input";
-import { FieldType, PHONE_MASKS, PHONE_PREFIXES } from "@/constants/enums";
-import { cn } from "@/lib/utils";
+import { Input } from "../../../components/ui/input";
+import {
+  FieldType,
+  PHONE_MASKS,
+  PHONE_PREFIXES,
+} from "../../../constants/enums";
+import { cn } from "../../../lib/utils";
 import {
   ChevronDown,
   Eye,
@@ -22,14 +26,19 @@ import {
 } from "lucide-react";
 import React, { useState } from "react";
 import { FieldError } from "react-hook-form";
-import ReactInputMask from "react-input-mask";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "../../../components/ui/select";
+
+type PhoneNumber = {
+  countryCode: string;
+  phoneNumber: string;
+  prefix: string;
+};
 
 type TextFieldProps = {
   type:
@@ -41,10 +50,7 @@ type TextFieldProps = {
     | FieldType.PHONE;
   value: string;
   placeholder?: string;
-  onChange: (
-    name: string,
-    value: string | { countryCode: string; phoneNumber: string; prefix: string }
-  ) => void;
+  onChange: (name: string, value: string | PhoneNumber) => void;
   name: string;
   errored?: FieldError;
 };
@@ -52,9 +58,28 @@ type TextFieldProps = {
 const TextField = (props: TextFieldProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const [countryCode, setCountryCode] = useState("USA");
-  const getMask = () => {
-    if (!countryCode) return PHONE_MASKS.US;
-    return PHONE_MASKS[countryCode] || PHONE_MASKS.US;
+
+  const formatPhoneNumber = (value: string) => {
+    const numbers = value ? value?.replace(/\D/g, "") : "";
+    const mask = PHONE_MASKS[countryCode] || PHONE_MASKS.USA;
+
+    let formattedNumber = "";
+    let numberIndex = 0;
+
+    for (let i = 0; i < mask.length && numberIndex < numbers.length; i++) {
+      if (mask[i] === "9") {
+        formattedNumber += numbers[numberIndex];
+        numberIndex++;
+      } else {
+        formattedNumber += mask[i];
+      }
+    }
+
+    if (formattedNumber.match(/[\s-()]$/)) {
+      formattedNumber = formattedNumber.slice(0, -1);
+    }
+
+    return formattedNumber;
   };
 
   return (
@@ -64,7 +89,7 @@ const TextField = (props: TextFieldProps) => {
           return (
             <div className="flex items-center gap-2">
               <Select value={countryCode} onValueChange={setCountryCode}>
-                <SelectTrigger className="text-sm text-muted-foreground w-[115px] h-9 max-h-unset py-1 px-2">
+                <SelectTrigger className="text-sm text-muted-foreground max-w-[115px] h-9 max-h-unset py-1 px-2">
                   <SelectValue placeholder={PHONE_PREFIXES["USA"]}>
                     {countryCode} ({PHONE_PREFIXES[countryCode]})
                   </SelectValue>
@@ -78,30 +103,28 @@ const TextField = (props: TextFieldProps) => {
                 </SelectContent>
               </Select>
               <div className="relative flex-1">
-                <ReactInputMask
-                  mask={getMask()}
-                  value={props.value ?? ""}
-                  maskChar={null}
+                <Input
+                  type="tel"
+                  value={formatPhoneNumber(
+                    (props.value as unknown as PhoneNumber)?.phoneNumber ?? ""
+                  )}
+                  className={cn(
+                    props.errored ? "border-red-500 bg-red-50" : "",
+                    "pl-10"
+                  )}
                   placeholder={props.placeholder}
                   onChange={(e) => {
-                    const cleanValue = e.target.value.replace(/_/g, "");
-                    props.onChange(props.name, cleanValue);
+                    const rawValue = e.target.value
+                      ? e.target.value?.replace(/\D/g, "")
+                      : "";
+                    props.onChange(props.name, {
+                      countryCode,
+                      phoneNumber: rawValue,
+                      prefix: PHONE_PREFIXES[countryCode],
+                    });
                   }}
-                >
-                  {(inputProps: any) => {
-                    return (
-                      <Input
-                        {...inputProps}
-                        type="tel"
-                        className={cn(
-                          props.errored ? "border-red-500 bg-red-50" : "",
-                          "pl-10"
-                        )}
-                        placeholder={props.placeholder}
-                      />
-                    );
-                  }}
-                </ReactInputMask>
+                  maxLength={15}
+                />
                 <Phone
                   size={16}
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"

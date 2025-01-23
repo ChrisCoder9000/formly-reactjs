@@ -6,7 +6,7 @@
 // Modified By: the developer formerly known as Christian Nonis at <alch.infoemail@gmail.com>
 // -----
 
-import { Field } from "@/constants/types";
+import { Field } from "../../constants/types";
 import React from "react";
 import { Input } from "../ui/input";
 import {
@@ -29,13 +29,15 @@ import { Textarea } from "../ui/textarea";
 import { Calendar } from "../ui/calendar";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "../../lib/utils";
 import { Button } from "../ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { FieldType } from "@/constants/enums";
+import { FieldType } from "../../constants/enums";
 import DateField from "../(Fields)/DateField";
 import SelectField from "../(Fields)/SelectField/SelectField";
 import TextField from "../(Fields)/TextField";
+import ChoiceField from "../(Fields)/ChoiceField/ChoiceField";
+import OptionField from "../(Fields)/OptionField/OptionField";
 
 export type FieldRendererProps = {
   field: Field;
@@ -60,15 +62,38 @@ const FieldRenderer = (props: FieldRendererProps) => {
             ) : (
               <></>
             )}
+            {[
+              FieldType.OPTION,
+              FieldType.CHOICE,
+              FieldType.MULTI_CHOICE,
+              FieldType.MULTI_OPTION,
+            ].includes(props.field.type) ? (
+              <FormDescription
+                className={cn(props.errored ? "text-red-500" : "", "!mt-0")}
+              >
+                {props.field.description}
+              </FormDescription>
+            ) : (
+              <></>
+            )}
             <FieldSwitcher
               {...props.field}
               value={args.field.value ?? props.value}
               errored={props.errored}
               onChange={props.onChange}
             />
-            <FormDescription className={props.errored ? "text-red-500" : ""}>
-              {props.field.description}
-            </FormDescription>
+            {![
+              FieldType.OPTION,
+              FieldType.CHOICE,
+              FieldType.MULTI_CHOICE,
+              FieldType.MULTI_OPTION,
+            ].includes(props.field.type) ? (
+              <FormDescription className={props.errored ? "text-red-500" : ""}>
+                {props.field.description}
+              </FormDescription>
+            ) : (
+              <></>
+            )}
           </FormItem>
         );
       }}
@@ -130,6 +155,30 @@ const FieldSwitcher = (
           name={props.name}
           errored={props.errored}
           type={props.type}
+        />
+      );
+    case "option":
+    case "multi_option":
+      return (
+        <OptionField
+          options={props.options ?? []}
+          value={props.value}
+          onChange={props.onChange}
+          name={props.name}
+          type={props.type}
+          errored={props.errored}
+        />
+      );
+    case "choice":
+    case "multi_choice":
+      return (
+        <ChoiceField
+          options={props.options ?? []}
+          value={props.value}
+          onChange={props.onChange}
+          name={props.name}
+          type={props.type}
+          errored={props.errored}
         />
       );
     default:

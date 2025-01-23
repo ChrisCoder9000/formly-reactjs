@@ -6,11 +6,14 @@
 // Modified By: the developer formerly known as Christian Nonis at <alch.infoemail@gmail.com>
 // -----
 
+"use client";
+
 import { Field, FormStep } from "@/constants/types";
 import React, { useMemo, useReducer, useState } from "react";
 import StepForm from "../StepForm";
 import { FieldType } from "@/constants/enums";
 import { FieldRendererProps } from "../FieldRenderer/FieldRenderer";
+import { UseFormReturn } from "react-hook-form";
 
 type BuilderProps = {
   steps: FormStep[];
@@ -34,6 +37,16 @@ type BuilderProps = {
   }) => React.ComponentType<any>;
   formErrorOverrides?: (args: {
     errors: Record<string, { message: string; name: string }>;
+  }) => React.ComponentType<any>;
+  stepOverrides?: (args: {
+    step: FormStep;
+    title: string;
+    subtitle: string;
+    currentIndex: number;
+    stepsLength: number;
+    onBack: () => void;
+    onSubmit: (data: Record<string, string>) => void;
+    formData: Record<string, string>;
   }) => React.ComponentType<any>;
 };
 
@@ -99,7 +112,7 @@ const Builder = (props: BuilderProps) => {
   }, [currentStep, props.submitLabel, props.nextLabel]);
   // [--primary:84_100%_50%]
   return (
-    <div className={`${props.className}`}>
+    <div className={`${props.className ?? ""}`}>
       <StepForm
         formTitle={props.title}
         formSubtitle={props.description}
