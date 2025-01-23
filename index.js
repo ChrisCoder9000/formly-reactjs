@@ -6,6 +6,44 @@ import "./globals.css";
 
 const STEPS = [
   {
+    title: "Contact Information",
+    fields: [
+      {
+        name: "website",
+        type: "url",
+        placeholder: "https://example.com",
+        validators: [
+          {
+            name: "required",
+          },
+        ],
+      },
+      {
+        name: "phone",
+        type: "phone",
+        validators: [
+          {
+            name: "required",
+          },
+        ],
+      },
+      {
+        name: "email",
+        type: "email",
+        placeholder: "example@example.com",
+        validators: [
+          {
+            name: "required",
+          },
+        ],
+      },
+      {
+        name: "password",
+        type: "secret",
+      },
+    ],
+  },
+  {
     fields: [
       {
         name: "age",
@@ -28,44 +66,8 @@ const STEPS = [
         ],
       },
       {
-        name: "password",
-        type: "secret",
-      },
-      {
         name: "teens",
         type: "date_range",
-      },
-    ],
-  },
-  {
-    title: "Contact Information",
-    fields: [
-      {
-        name: "website",
-        type: "url",
-        validators: [
-          {
-            name: "required",
-          },
-        ],
-      },
-      {
-        name: "phone",
-        type: "phone",
-        validators: [
-          {
-            name: "required",
-          },
-        ],
-      },
-      {
-        name: "email",
-        type: "email",
-        validators: [
-          {
-            name: "required",
-          },
-        ],
       },
     ],
   },

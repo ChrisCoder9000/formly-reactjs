@@ -97,9 +97,9 @@ const Builder = (props: BuilderProps) => {
     }
     return props.nextLabel || "Next";
   }, [currentStep, props.submitLabel, props.nextLabel]);
-
+  // [--primary:84_100%_50%]
   return (
-    <div className={props.className}>
+    <div className={`${props.className}`}>
       <StepForm
         formTitle={props.title}
         formSubtitle={props.description}

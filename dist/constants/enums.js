@@ -18,17 +18,29 @@ var FieldType;
     FieldType["SECRET"] = "secret";
     FieldType["URL"] = "url";
     FieldType["PHONE"] = "phone";
+    FieldType["OTP"] = "otp";
     // FILES
     FieldType["FILES"] = "files";
     // DATES
     FieldType["DATE"] = "date";
+    FieldType["DATE_RANGE"] = "date_range";
     FieldType["DATE_TIME"] = "date_time";
     FieldType["TIME"] = "time";
-    FieldType["DATE_RANGE"] = "date_range";
     // OPTIONS
     FieldType["SELECT"] = "select";
     FieldType["MULTI_SELECT"] = "multi_select";
+    FieldType["OPTION"] = "option";
+    FieldType["MULTI_OPTION"] = "multi_option";
     FieldType["RADIO"] = "radio";
     // BOOLEAN
     FieldType["CHECKBOX"] = "checkbox";
+    // BLOCKS
+    FieldType["BLOCK"] = "block";
+    // OTHER
+    FieldType["PAYMENT"] = "payment";
+    FieldType["INFO_TEXT"] = "info_text";
+    FieldType["IMAGE"] = "image";
+    FieldType["VIDEO"] = "video";
+    FieldType["DOWNLOAD"] = "download";
+    FieldType["LINK"] = "link";
 })(FieldType || (exports.FieldType = FieldType = {}));

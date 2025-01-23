@@ -33,6 +33,9 @@ import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { FieldType } from "@/constants/enums";
+import DateField from "../(Fields)/DateField";
+import SelectField from "../(Fields)/SelectField/SelectField";
+import TextField from "../(Fields)/TextField";
 
 export type FieldRendererProps = {
   field: Field;
@@ -85,88 +88,49 @@ const FieldSwitcher = (
     case "number":
     case "email":
     case "url":
+    case "secret":
+    case "phone":
       return (
-        <Input
+        <TextField
           type={props.type}
+          value={props.value}
+          placeholder={props.placeholder}
+          onChange={props.onChange}
+          name={props.name}
+          errored={props.errored}
+        />
+      );
+    case "otp":
+      return <></>;
+    case "text_area":
+      return (
+        <Textarea
           value={props.value ?? ""}
           className={props.errored ? "border-red-500 bg-red-50" : ""}
           placeholder={props.placeholder}
           onChange={(e) => props.onChange(props.name, e.target.value)}
         />
       );
-    case "secret":
-      return <></>;
-    case "phone":
-      return <></>;
-    case "text_area":
-      return (
-        <Textarea
-          value={props.value}
-          className={props.errored ? "border-red-500 bg-red-50" : ""}
-          placeholder={props.placeholder}
-          onChange={(e) => props.onChange(props.name, e.target.value)}
-        />
-      );
     case "select":
-      if (!props.options) {
-        throw new Error(`Select field ${props.name} must have options`);
-      }
       return (
-        <Select
+        <SelectField
+          options={props.options ?? []}
           value={props.value}
-          onValueChange={(value) => props.onChange(props.name, value)}
-        >
-          <SelectTrigger
-            className={`w-full ${
-              props.errored ? "border-red-500 bg-red-50" : ""
-            }`}
-          >
-            <SelectValue placeholder="Theme" />
-          </SelectTrigger>
-          <SelectContent>
-            {props.options.map((option, i) => (
-              <SelectItem key={i} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          onChange={props.onChange}
+          name={props.name}
+          errored={props.errored}
+        />
       );
     case "date":
     case "date_range":
       return (
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant={"outline"}
-              className={cn(
-                "justify-start text-left font-normal",
-                !props.value && "text-muted-foreground",
-                props.errored && "border-red-500 bg-red-50 text-red-500"
-              )}
-            >
-              <CalendarIcon />
-              {props.value ? (
-                format(props.value, "PPP")
-              ) : (
-                <span>Pick a date</span>
-              )}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
-            <Calendar
-              mode={
-                props.type === FieldType.DATE
-                  ? "single"
-                  : props.type === FieldType.DATE_RANGE
-                  ? "range"
-                  : "single"
-              }
-              selected={props.value}
-              onSelect={(date: any) => date && props.onChange(props.name, date)}
-            />
-          </PopoverContent>
-        </Popover>
+        <DateField
+          value={props.value}
+          onChange={props.onChange}
+          name={props.name}
+          errored={props.errored}
+          type={props.type}
+        />
       );
     default:
       return (

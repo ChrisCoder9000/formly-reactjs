@@ -8,6 +8,7 @@ type StepFormProps = {
     stepIndex: number;
     stepsLength: number;
     onBack?: () => void;
+    formData?: Record<string, string>;
 };
 declare const StepForm: (props: StepFormProps) => import("react/jsx-runtime").JSX.Element;
 export default StepForm;

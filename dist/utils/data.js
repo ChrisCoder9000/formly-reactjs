@@ -8,38 +8,55 @@
 // -----
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.toZod = void 0;
+const enums_1 = require("@/constants/enums");
 const zod_1 = require("zod");
 const toZod = (fields) => {
     const shape = {};
     fields.forEach((field) => {
-        var _a, _b, _c, _d, _e;
-        let schema = zod_1.z.string();
-        let requiredError = {
-            required_error: `${field.label || field.name.split("_").join(" ")} is required`,
-        };
-        if ((_a = field.validators) === null || _a === void 0 ? void 0 : _a.some((v) => v.name === "required")) {
-            requiredError.required_error =
-                (_d = (_c = (_b = field.validators) === null || _b === void 0 ? void 0 : _b.find((v) => v.name === "required")) === null || _c === void 0 ? void 0 : _c.errorMessage) !== null && _d !== void 0 ? _d : requiredError.required_error;
+        var _a, _b, _c, _d;
+        let schema;
+        const requiredError = (_c = (_b = (_a = field.validators) === null || _a === void 0 ? void 0 : _a.find((v) => v.name === "required")) === null || _b === void 0 ? void 0 : _b.errorMessage) !== null && _c !== void 0 ? _c : `${field.label || field.name.split("_").join(" ")} is required`;
+        const isRequired = (_d = field.validators) === null || _d === void 0 ? void 0 : _d.some((v) => v.name === "required");
+        if (field.type === enums_1.FieldType.DATE) {
+            schema = zod_1.z
+                .date()
+                .transform((val) => new Date(val))
+                .refine((date) => !isNaN(date.getTime()), {
+                message: "Invalid date format",
+            });
+            schema = isRequired ? schema : schema.optional();
         }
-        switch (field.type) {
-            case "text":
-                schema = zod_1.z.string(requiredError);
-                break;
+        else if (field.type === enums_1.FieldType.NUMBER) {
+            schema = zod_1.z
+                .string()
+                .transform((val) => Number(val))
+                .refine((num) => !isNaN(num), {
+                message: "Invalid number format",
+            });
+            schema = isRequired ? schema : schema.optional();
+        }
+        else if (field.type === enums_1.FieldType.EMAIL) {
+            schema = zod_1.z.string().email();
+            schema = isRequired ? schema : schema.optional();
+        }
+        else if (field.type === enums_1.FieldType.URL) {
+            schema = zod_1.z.string().url();
+            schema = isRequired ? schema : schema.optional();
+        }
+        else {
+            schema = isRequired
+                ? zod_1.z.string({ required_error: requiredError })
+                : zod_1.z.string().optional();
         }
         if (field.validators) {
             field.validators.forEach((validator) => {
-                switch (validator.name) {
-                    case "minLength":
-                        schema = schema.min(validator.value, validator.errorMessage);
-                        break;
-                    case "maxLength":
-                        schema = schema.max(validator.value, validator.errorMessage);
-                        break;
+                if (validator.name === "minLength") {
+                    schema = schema.refine((val) => !val || val.length >= validator.value, { message: validator.errorMessage });
+                }
+                if (validator.name === "maxLength") {
+                    schema = schema.refine((val) => !val || val.length <= validator.value, { message: validator.errorMessage });
                 }
             });
-        }
-        if (!((_e = field.validators) === null || _e === void 0 ? void 0 : _e.some((v) => v.name === "required"))) {
-            schema = schema.optional();
         }
         shape[field.name] = schema;
     });

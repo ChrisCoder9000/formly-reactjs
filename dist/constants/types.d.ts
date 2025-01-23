@@ -8,6 +8,10 @@ export type FieldOption = {
     value: string;
     label: string;
 };
+export type FieldDependency = {
+    name: string;
+    value: string;
+};
 export type Field = {
     name: string;
     type: FieldType;
@@ -16,6 +20,7 @@ export type Field = {
     placeholder?: string;
     options?: FieldOption[];
     validators?: FieldValidator[];
+    dependencies?: FieldDependency[];
 };
 export type FormStep = {
     title?: string;
