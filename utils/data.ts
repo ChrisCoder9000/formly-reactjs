@@ -80,6 +80,10 @@ export const toZod = (fields: Field[]): ZodRawShape => {
         countryCode: z.string({ required_error: requiredError }),
       });
       schema = isRequired ? schema : schema.optional();
+    } else if (field.type === FieldType.BLOCKS) {
+      const nestedSchema = field.fields ? toZod(field.fields) : {};
+      schema = z.array(z.object(nestedSchema));
+      schema = isRequired ? schema : schema.optional();
     } else {
       schema = isRequired
         ? z.string({ required_error: requiredError })
@@ -107,4 +111,51 @@ export const toZod = (fields: Field[]): ZodRawShape => {
   });
 
   return shape;
+};
+
+export const getNestedValue = (path: string, value: any, type?: FieldType) => {
+  if (!Object.entries(value).length) {
+    return undefined;
+  }
+  if (!path.includes(".") && type && [FieldType.CHECKBOX].includes(type)) {
+    return value;
+  }
+
+  const keys = path.split(".");
+  let current = value;
+
+  for (const key of keys) {
+    if (current === undefined || current === null) {
+      return undefined;
+    }
+    current = current[key];
+  }
+
+  return current;
+};
+
+export const fillNestedField = (
+  name: string,
+  value: string,
+  formData: Record<string, string> | undefined
+) => {
+  const keys = name.split(".");
+
+  if (keys.length === 1) {
+    return { ...formData, [name]: value };
+  }
+
+  let result: any = [];
+  let current = result;
+
+  for (let i = 0; i < keys.length - 1; i++) {
+    current[keys[i]] = {};
+    current = current[keys[i]];
+  }
+
+  current[keys[keys.length - 1]] = value;
+
+  const _formData = { ...formData, ...result };
+  console.log("fill", _formData);
+  return _formData;
 };

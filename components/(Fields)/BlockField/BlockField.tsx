@@ -8,25 +8,27 @@
 
 import React, { useState } from "react";
 import { FieldError, UseFormReturn } from "react-hook-form";
-import { Field } from "@/constants/types";
-import FieldRenderer from "@/components/FieldRenderer";
-import { FieldType } from "@/constants/enums";
-import { PlusIcon } from "lucide-react";
+import { Field } from "../../../constants/types";
+import FieldRenderer from "../../../components/FieldRenderer";
+import { PlusIcon, Trash, Trash2 } from "lucide-react";
+import { colorBuilder } from "../../../utils/colors";
+import { cn } from "../../../lib/utils";
+import { getNestedValue } from "../../../utils/data";
 
 type BlockFieldProps = {
-  value: any;
-  onChange: (name: string, value: object) => void;
+  value: Record<string, any>[];
+  onChange: (name: string, value: any) => void;
   name: string;
   errored: FieldError | undefined;
   field: Field;
   form: UseFormReturn;
 };
 
-const BlockField = (props: BlockFieldProps) => {
+const BlocksField = (props: BlockFieldProps) => {
   const [blocks, setBlocks] = useState<any[]>([
     { fields: props.field.fields || [] },
   ]);
-  const [openedBlockIndex, setOpenedBlockIndex] = useState<number | null>(null);
+  const [openedBlockIndex, setOpenedBlockIndex] = useState<number>(0);
   const { field, form } = props;
 
   const handleAdd = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -40,26 +42,69 @@ const BlockField = (props: BlockFieldProps) => {
   }
 
   return (
-    <div className="mb-4">
+    <div className="!mb-4">
       {/* <div className="w-full bg-slate-200 h-[1px] mb-4"></div> */}
-      <div>
+      <div className="space-y-2">
         {blocks.map((block, j) => (
           <div
-            className="space-y-4 p-4 rounded-lg bg-slate-50 rounded-md"
+            className={cn(
+              openedBlockIndex === j
+                ? cn(
+                    "space-y-4 p-4 rounded-lg rounded-md",
+                    colorBuilder("bg", props.errored ? "red" : "slate", "50")
+                  )
+                : ""
+            )}
             key={j}
           >
-            {block.fields?.map((childField: Field) => (
-              <FieldRenderer
-                key={childField.name}
-                field={childField}
-                onChange={(name, value) => {
-                  const newValue = { ...(props.value || {}), [name]: value };
-                  props.onChange(props.name, newValue);
-                }}
-                value={props.value?.[childField.name]}
-                form={form}
-              />
-            ))}
+            {openedBlockIndex === j ? (
+              block.fields?.map((childField: Field) => (
+                <FieldRenderer
+                  errored={props.errored}
+                  key={childField.name}
+                  field={childField}
+                  onChange={(name, value) => {
+                    const prev = props.value[j] ?? {};
+                    const otherBlocks = props.value?.filter(
+                      (_: any, i: number) => i !== j
+                    );
+                    props.onChange(name, [
+                      ...otherBlocks,
+                      { ...prev, [name]: value },
+                    ]);
+                  }}
+                  value={props.value[j]?.[childField.name]}
+                  form={form}
+                />
+              ))
+            ) : (
+              <div
+                className={cn(
+                  "flex items-center justify-between cursor-pointer py-2 px-4 rounded-md",
+                  colorBuilder("bg", props.errored ? "red" : "slate", "50"),
+                  colorBuilder("text", props.errored ? "red" : "slate", "500"),
+                  `hover:${colorBuilder(
+                    "bg",
+                    props.errored ? "red" : "slate",
+                    "50"
+                  )}`
+                )}
+                onClick={() => setOpenedBlockIndex(j)}
+              >
+                <p className="text-xs font-[600]">
+                  {field.openLabel || "Open"}
+                </p>
+                <Trash2
+                  size={14}
+                  // className={cn(colorBuilder("text", "slate", "300"))}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    setBlocks((p) => p.filter((_, i) => i !== j));
+                  }}
+                />
+              </div>
+            )}
           </div>
         ))}
       </div>
@@ -77,4 +122,4 @@ const BlockField = (props: BlockFieldProps) => {
   );
 };
 
-export default BlockField;
+export default BlocksField;

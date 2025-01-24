@@ -6,7 +6,7 @@
 // Modified By: the developer formerly known as Christian Nonis at <alch.infoemail@gmail.com>
 // -----
 
-import { FormStep } from "@/constants/types";
+import { FormStep } from "../../constants/types";
 import React from "react";
 import FieldRenderer from "../FieldRenderer";
 import StepHeader from "../StepHeader/StepHeader";
@@ -14,9 +14,10 @@ import { Form } from "../ui/form";
 import { FieldError, useForm } from "react-hook-form";
 import { Button } from "../ui/button";
 import { z } from "zod";
-import { toZod } from "../../utils/data";
+import { fillNestedField, getNestedValue, toZod } from "../../utils/data";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TriangleAlert } from "lucide-react";
+import { FieldType } from "../../constants/enums";
 
 type StepFormProps = {
   step: FormStep;
@@ -64,16 +65,23 @@ const StepForm = (props: StepFormProps) => {
           title={props.step.title || props.formTitle}
           subtitle={props.step.subtitle || props.formSubtitle}
         />
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-4">
           {props.step.fields.map((field, i) => {
             return (
               <FieldRenderer
                 form={form}
                 errored={form.formState.errors[field.name] as any}
                 field={field}
-                onChange={form.setValue}
+                onChange={(_, value) => {
+                  const _formData = fillNestedField(
+                    field.name,
+                    value,
+                    props.formData
+                  );
+                  form.setValue(field.name, _formData[field.name]);
+                }}
                 key={i}
-                value={props.formData?.[field.name]}
+                value={getNestedValue(field.name, form.getValues(), field.type)}
               />
             );
           })}

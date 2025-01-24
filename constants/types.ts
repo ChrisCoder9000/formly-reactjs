@@ -35,6 +35,7 @@ export type Field = {
   dependencies?: FieldDependency[];
   fields?: Field[];
   addLabel?: string;
+  openLabel?: string;
 };
 
 export type FormStep = {

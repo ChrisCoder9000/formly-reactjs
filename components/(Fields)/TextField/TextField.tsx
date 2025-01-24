@@ -83,7 +83,7 @@ const TextField = (props: TextFieldProps) => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative !mt-2">
       {(() => {
         if (props.type === FieldType.PHONE) {
           return (

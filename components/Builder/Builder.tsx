@@ -8,10 +8,10 @@
 
 "use client";
 
-import { Field, FormStep } from "@/constants/types";
+import { Field, FormStep } from "../../constants/types";
 import React, { useMemo, useReducer, useState } from "react";
 import StepForm from "../StepForm";
-import { FieldType } from "@/constants/enums";
+import { FieldType } from "../../constants/enums";
 import { FieldRendererProps } from "../FieldRenderer/FieldRenderer";
 import { UseFormReturn } from "react-hook-form";
 

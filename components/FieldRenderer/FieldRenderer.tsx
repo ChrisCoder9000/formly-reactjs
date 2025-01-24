@@ -39,7 +39,7 @@ import TextField from "../(Fields)/TextField";
 import ChoiceField from "../(Fields)/ChoiceField/ChoiceField";
 import OptionField from "../(Fields)/OptionField/OptionField";
 import CheckboxField from "../(Fields)/CheckboxField/CheckboxField";
-import BlockField from "../(Fields)/BlockField";
+import BlocksField from "../(Fields)/BlockField";
 
 export type FieldRendererProps = {
   field: Field;
@@ -59,7 +59,10 @@ const FieldRenderer = (props: FieldRendererProps) => {
           <FormItem className="flex flex-col gap-1">
             {props.field.label &&
             ![FieldType.CHECKBOX].includes(props.field.type) ? (
-              <FormLabel htmlFor={args.field.name}>
+              <FormLabel
+                className={cn(props.errored ? "text-red-500" : "")}
+                htmlFor={args.field.name}
+              >
                 {props.field.label}
               </FormLabel>
             ) : (
@@ -96,7 +99,9 @@ const FieldRenderer = (props: FieldRendererProps) => {
               FieldType.CHECKBOX,
               FieldType.BLOCKS,
             ].includes(props.field.type) && props.field.description ? (
-              <FormDescription className={props.errored ? "text-red-500" : ""}>
+              <FormDescription
+                className={cn(props.errored ? "text-red-500" : "", "!mt-1")}
+              >
                 {props.field.description}
               </FormDescription>
             ) : (
@@ -127,7 +132,7 @@ const FieldSwitcher = (
     case "phone":
       return (
         <TextField
-          type={props.type}
+          type={props.type ?? ""}
           value={props.value}
           placeholder={props.placeholder}
           onChange={props.onChange}
@@ -204,8 +209,8 @@ const FieldSwitcher = (
       );
     case "blocks":
       return (
-        <BlockField
-          value={props.value}
+        <BlocksField
+          value={props.value ?? []}
           onChange={props.onChange}
           name={props.name}
           errored={props.errored}
