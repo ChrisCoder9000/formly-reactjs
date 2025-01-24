@@ -21,11 +21,7 @@ import React from "react";
 import { FieldError } from "react-hook-form";
 
 type DateFieldProps = {
-  type:
-    | FieldType.DATE
-    | FieldType.DATE_RANGE
-    | FieldType.DATE_TIME
-    | FieldType.TIME;
+  type: FieldType.DATE | FieldType.DATE_RANGE;
   value: any;
   onChange: (name: string, value: any) => void;
   name: string;
@@ -53,20 +49,30 @@ const DateField = (props: DateFieldProps) => {
               typeof props.value === "object" &&
               !(props.value instanceof Date)
             ) {
-              return props.value?.from ? (
-                props.value?.to ? (
-                  <>
-                    {format(props.value.from, "LLL dd, y")} -{" "}
-                    {format(props.value.to, "LLL dd, y")}
-                  </>
-                ) : (
-                  format(props.value.from, "LLL dd, y")
-                )
-              ) : (
-                <span>Pick a date</span>
-              );
+              const fromDate = props.value?.from
+                ? new Date(props.value.from)
+                : null;
+              const toDate = props.value?.to ? new Date(props.value.to) : null;
+
+              if (fromDate && !isNaN(fromDate.getTime())) {
+                if (toDate && !isNaN(toDate.getTime())) {
+                  return (
+                    <>
+                      {format(fromDate, "LLL dd, y")} -{" "}
+                      {format(toDate, "LLL dd, y")}
+                    </>
+                  );
+                }
+                return format(fromDate, "LLL dd, y");
+              }
+              return <span>Pick a date</span>;
             }
-            return format(props.value, "PPP");
+            const date = new Date(props.value);
+            return !isNaN(date.getTime()) ? (
+              format(date, "PPP")
+            ) : (
+              <span>Pick a date</span>
+            );
           })()}
         </Button>
       </PopoverTrigger>

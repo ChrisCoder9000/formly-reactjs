@@ -81,7 +81,7 @@ const StepForm = (props: StepFormProps) => {
         {Object.keys(form.formState.errors).length ? (
           <div className="bg-red-200 text-white px-3 py-2 rounded-md mt-4 flex items-center gap-2">
             <TriangleAlert className="w-4 h-4 text-red-500" />
-            <div>
+            <div className="flex-1">
               <p className="text-red-500 text-sm">
                 {firstError?.message ?? "Form is invalid"}
               </p>

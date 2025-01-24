@@ -36,7 +36,7 @@ export enum FieldType {
   CHECKBOX = "checkbox",
 
   // BLOCKS
-  BLOCK = "block",
+  BLOCKS = "blocks",
 
   // FILES
   FILES = "files",

@@ -33,6 +33,8 @@ export type Field = {
   options?: FieldOption[];
   validators?: FieldValidator[];
   dependencies?: FieldDependency[];
+  fields?: Field[];
+  addLabel?: string;
 };
 
 export type FormStep = {

@@ -37,7 +37,9 @@ const OptionField = <T extends FieldType.OPTION | FieldType.MULTI_OPTION>(
 ) => {
   const checkValue = (option: { label: string; value: string }) => {
     if (props.type === FieldType.MULTI_OPTION) {
-      return props.value?.includes(option.value);
+      return Array.isArray(props.value)
+        ? props.value.includes(option.value)
+        : false;
     } else {
       return props.value === option.value;
     }

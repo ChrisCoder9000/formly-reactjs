@@ -6,6 +6,7 @@ var reactSlot = require('@radix-ui/react-slot');
 var LabelPrimitive = require('@radix-ui/react-label');
 var PopoverPrimitive = require('@radix-ui/react-popover');
 var SelectPrimitive = require('@radix-ui/react-select');
+var CheckboxPrimitive = require('@radix-ui/react-checkbox');
 var zod = require('@hookform/resolvers/zod');
 
 function _interopNamespaceDefault(e) {
@@ -29,6 +30,7 @@ var React__namespace = /*#__PURE__*/_interopNamespaceDefault(React);
 var LabelPrimitive__namespace = /*#__PURE__*/_interopNamespaceDefault(LabelPrimitive);
 var PopoverPrimitive__namespace = /*#__PURE__*/_interopNamespaceDefault(PopoverPrimitive);
 var SelectPrimitive__namespace = /*#__PURE__*/_interopNamespaceDefault(SelectPrimitive);
+var CheckboxPrimitive__namespace = /*#__PURE__*/_interopNamespaceDefault(CheckboxPrimitive);
 
 /******************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -5048,7 +5050,7 @@ var FieldType;
   // BOOLEAN
   FieldType["CHECKBOX"] = "checkbox";
   // BLOCKS
-  FieldType["BLOCK"] = "block";
+  FieldType["BLOCKS"] = "blocks";
   // FILES
   FieldType["FILES"] = "files";
   // OTHER
@@ -5594,13 +5596,13 @@ const createLucideIcon = (iconName, iconNode) => {
  */
 
 
-const __iconNode$d = [
+const __iconNode$e = [
   ["path", { d: "M8 2v4", key: "1cmpym" }],
   ["path", { d: "M16 2v4", key: "4m81vk" }],
   ["rect", { width: "18", height: "18", x: "3", y: "4", rx: "2", key: "1hopcy" }],
   ["path", { d: "M3 10h18", key: "8toen8" }]
 ];
-const Calendar$1 = createLucideIcon("Calendar", __iconNode$d);
+const Calendar$1 = createLucideIcon("Calendar", __iconNode$e);
 
 /**
  * @license lucide-react v0.473.0 - ISC
@@ -5610,8 +5612,8 @@ const Calendar$1 = createLucideIcon("Calendar", __iconNode$d);
  */
 
 
-const __iconNode$c = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
-const Check = createLucideIcon("Check", __iconNode$c);
+const __iconNode$d = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
+const Check = createLucideIcon("Check", __iconNode$d);
 
 /**
  * @license lucide-react v0.473.0 - ISC
@@ -5621,8 +5623,8 @@ const Check = createLucideIcon("Check", __iconNode$c);
  */
 
 
-const __iconNode$b = [["path", { d: "m6 9 6 6 6-6", key: "qrunsl" }]];
-const ChevronDown = createLucideIcon("ChevronDown", __iconNode$b);
+const __iconNode$c = [["path", { d: "m6 9 6 6 6-6", key: "qrunsl" }]];
+const ChevronDown = createLucideIcon("ChevronDown", __iconNode$c);
 
 /**
  * @license lucide-react v0.473.0 - ISC
@@ -5632,8 +5634,8 @@ const ChevronDown = createLucideIcon("ChevronDown", __iconNode$b);
  */
 
 
-const __iconNode$a = [["path", { d: "m15 18-6-6 6-6", key: "1wnfg3" }]];
-const ChevronLeft = createLucideIcon("ChevronLeft", __iconNode$a);
+const __iconNode$b = [["path", { d: "m15 18-6-6 6-6", key: "1wnfg3" }]];
+const ChevronLeft = createLucideIcon("ChevronLeft", __iconNode$b);
 
 /**
  * @license lucide-react v0.473.0 - ISC
@@ -5643,8 +5645,8 @@ const ChevronLeft = createLucideIcon("ChevronLeft", __iconNode$a);
  */
 
 
-const __iconNode$9 = [["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]];
-const ChevronRight = createLucideIcon("ChevronRight", __iconNode$9);
+const __iconNode$a = [["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]];
+const ChevronRight = createLucideIcon("ChevronRight", __iconNode$a);
 
 /**
  * @license lucide-react v0.473.0 - ISC
@@ -5654,8 +5656,8 @@ const ChevronRight = createLucideIcon("ChevronRight", __iconNode$9);
  */
 
 
-const __iconNode$8 = [["path", { d: "m18 15-6-6-6 6", key: "153udz" }]];
-const ChevronUp = createLucideIcon("ChevronUp", __iconNode$8);
+const __iconNode$9 = [["path", { d: "m18 15-6-6-6 6", key: "153udz" }]];
+const ChevronUp = createLucideIcon("ChevronUp", __iconNode$9);
 
 /**
  * @license lucide-react v0.473.0 - ISC
@@ -5665,7 +5667,7 @@ const ChevronUp = createLucideIcon("ChevronUp", __iconNode$8);
  */
 
 
-const __iconNode$7 = [
+const __iconNode$8 = [
   [
     "path",
     {
@@ -5683,7 +5685,27 @@ const __iconNode$7 = [
   ],
   ["path", { d: "m2 2 20 20", key: "1ooewy" }]
 ];
-const EyeOff = createLucideIcon("EyeOff", __iconNode$7);
+const EyeOff = createLucideIcon("EyeOff", __iconNode$8);
+
+/**
+ * @license lucide-react v0.473.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+const __iconNode$7 = [
+  [
+    "path",
+    {
+      d: "M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0",
+      key: "1nclc0"
+    }
+  ],
+  ["circle", { cx: "12", cy: "12", r: "3", key: "1v7zrd" }]
+];
+const Eye = createLucideIcon("Eye", __iconNode$7);
 
 /**
  * @license lucide-react v0.473.0 - ISC
@@ -5694,16 +5716,12 @@ const EyeOff = createLucideIcon("EyeOff", __iconNode$7);
 
 
 const __iconNode$6 = [
-  [
-    "path",
-    {
-      d: "M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0",
-      key: "1nclc0"
-    }
-  ],
-  ["circle", { cx: "12", cy: "12", r: "3", key: "1v7zrd" }]
+  ["line", { x1: "4", x2: "20", y1: "9", y2: "9", key: "4lhtct" }],
+  ["line", { x1: "4", x2: "20", y1: "15", y2: "15", key: "vyu0kd" }],
+  ["line", { x1: "10", x2: "8", y1: "3", y2: "21", key: "1ggp8o" }],
+  ["line", { x1: "16", x2: "14", y1: "3", y2: "21", key: "weycgp" }]
 ];
-const Eye = createLucideIcon("Eye", __iconNode$6);
+const Hash = createLucideIcon("Hash", __iconNode$6);
 
 /**
  * @license lucide-react v0.473.0 - ISC
@@ -5714,12 +5732,10 @@ const Eye = createLucideIcon("Eye", __iconNode$6);
 
 
 const __iconNode$5 = [
-  ["line", { x1: "4", x2: "20", y1: "9", y2: "9", key: "4lhtct" }],
-  ["line", { x1: "4", x2: "20", y1: "15", y2: "15", key: "vyu0kd" }],
-  ["line", { x1: "10", x2: "8", y1: "3", y2: "21", key: "1ggp8o" }],
-  ["line", { x1: "16", x2: "14", y1: "3", y2: "21", key: "weycgp" }]
+  ["path", { d: "M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71", key: "1cjeqo" }],
+  ["path", { d: "M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71", key: "19qd67" }]
 ];
-const Hash = createLucideIcon("Hash", __iconNode$5);
+const Link = createLucideIcon("Link", __iconNode$5);
 
 /**
  * @license lucide-react v0.473.0 - ISC
@@ -5730,10 +5746,10 @@ const Hash = createLucideIcon("Hash", __iconNode$5);
 
 
 const __iconNode$4 = [
-  ["path", { d: "M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71", key: "1cjeqo" }],
-  ["path", { d: "M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71", key: "19qd67" }]
+  ["rect", { width: "18", height: "11", x: "3", y: "11", rx: "2", ry: "2", key: "1w4ew1" }],
+  ["path", { d: "M7 11V7a5 5 0 0 1 10 0v4", key: "fwvmzm" }]
 ];
-const Link = createLucideIcon("Link", __iconNode$4);
+const Lock = createLucideIcon("Lock", __iconNode$4);
 
 /**
  * @license lucide-react v0.473.0 - ISC
@@ -5744,10 +5760,10 @@ const Link = createLucideIcon("Link", __iconNode$4);
 
 
 const __iconNode$3 = [
-  ["rect", { width: "18", height: "11", x: "3", y: "11", rx: "2", ry: "2", key: "1w4ew1" }],
-  ["path", { d: "M7 11V7a5 5 0 0 1 10 0v4", key: "fwvmzm" }]
+  ["rect", { width: "20", height: "16", x: "2", y: "4", rx: "2", key: "18n3k1" }],
+  ["path", { d: "m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7", key: "1ocrg3" }]
 ];
-const Lock = createLucideIcon("Lock", __iconNode$3);
+const Mail = createLucideIcon("Mail", __iconNode$3);
 
 /**
  * @license lucide-react v0.473.0 - ISC
@@ -5758,10 +5774,15 @@ const Lock = createLucideIcon("Lock", __iconNode$3);
 
 
 const __iconNode$2 = [
-  ["rect", { width: "20", height: "16", x: "2", y: "4", rx: "2", key: "18n3k1" }],
-  ["path", { d: "m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7", key: "1ocrg3" }]
+  [
+    "path",
+    {
+      d: "M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z",
+      key: "foiqr5"
+    }
+  ]
 ];
-const Mail = createLucideIcon("Mail", __iconNode$2);
+const Phone = createLucideIcon("Phone", __iconNode$2);
 
 /**
  * @license lucide-react v0.473.0 - ISC
@@ -5772,15 +5793,10 @@ const Mail = createLucideIcon("Mail", __iconNode$2);
 
 
 const __iconNode$1 = [
-  [
-    "path",
-    {
-      d: "M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z",
-      key: "foiqr5"
-    }
-  ]
+  ["path", { d: "M5 12h14", key: "1ays0h" }],
+  ["path", { d: "M12 5v14", key: "s699le" }]
 ];
-const Phone = createLucideIcon("Phone", __iconNode$1);
+const Plus = createLucideIcon("Plus", __iconNode$1);
 
 /**
  * @license lucide-react v0.473.0 - ISC
@@ -11602,13 +11618,24 @@ var DateField = function DateField(props) {
             });
           }
           if (_typeof(props.value) === "object" && !(props.value instanceof Date)) {
-            return ((_a = props.value) === null || _a === undefined ? undefined : _a.from) ? ((_b = props.value) === null || _b === undefined ? undefined : _b.to) ? jsxRuntime.jsxs(jsxRuntime.Fragment, {
-              children: [format(props.value.from, "LLL dd, y"), " -", " ", format(props.value.to, "LLL dd, y")]
-            }) : format(props.value.from, "LLL dd, y") : jsxRuntime.jsx("span", {
+            var fromDate = ((_a = props.value) === null || _a === undefined ? undefined : _a.from) ? new Date(props.value.from) : null;
+            var toDate = ((_b = props.value) === null || _b === undefined ? undefined : _b.to) ? new Date(props.value.to) : null;
+            if (fromDate && !isNaN(fromDate.getTime())) {
+              if (toDate && !isNaN(toDate.getTime())) {
+                return jsxRuntime.jsxs(jsxRuntime.Fragment, {
+                  children: [format(fromDate, "LLL dd, y"), " -", " ", format(toDate, "LLL dd, y")]
+                });
+              }
+              return format(fromDate, "LLL dd, y");
+            }
+            return jsxRuntime.jsx("span", {
               children: "Pick a date"
             });
           }
-          return format(props.value, "PPP");
+          var date = new Date(props.value);
+          return !isNaN(date.getTime()) ? format(date, "PPP") : jsxRuntime.jsx("span", {
+            children: "Pick a date"
+          });
         }()]
       })
     }), jsxRuntime.jsx(PopoverContent, {
@@ -11633,7 +11660,7 @@ var SelectTrigger = /*#__PURE__*/React__namespace.forwardRef(function (_a, ref) 
     props = __rest$1(_a, ["className", "children"]);
   return jsxRuntime.jsxs(SelectPrimitive__namespace.Trigger, __assign$1({
     ref: ref,
-    className: cn("flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1", className)
+    className: cn("flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 bg-white", className)
   }, props, {
     children: [children, jsxRuntime.jsx(SelectPrimitive__namespace.Icon, {
       asChild: true,
@@ -11705,7 +11732,7 @@ var SelectItem = /*#__PURE__*/React__namespace.forwardRef(function (_a, ref) {
     props = __rest$1(_a, ["className", "children"]);
   return jsxRuntime.jsxs(SelectPrimitive__namespace.Item, __assign$1({
     ref: ref,
-    className: cn("relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50", className)
+    className: cn("relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 hite/80 backdrop-blur-sm w-full", className)
   }, props, {
     children: [jsxRuntime.jsx("span", {
       className: "absolute right-2 flex h-3.5 w-3.5 items-center justify-center",
@@ -11761,7 +11788,7 @@ var Input = /*#__PURE__*/React__namespace.forwardRef(function (_a, ref) {
     props = __rest$1(_a, ["className", "type"]);
   return jsxRuntime.jsx("input", __assign$1({
     type: type,
-    className: cn("flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm", className),
+    className: cn("flex h-9 w-full rounded-md border border-input px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm", className),
     ref: ref
   }, props));
 });
@@ -11845,7 +11872,7 @@ var TextField = function TextField(props) {
         return jsxRuntime.jsx(Input, {
           type: props.type === FieldType.SECRET ? isVisible ? "text" : "password" : props.type,
           value: (_c = props.value) !== null && _c !== undefined ? _c : "",
-          className: cn(props.errored ? "border-red-500 bg-red-50" : "", "pl-10"),
+          className: cn(props.errored ? "border-red-500 bg-red-50" : "", [FieldType.TEXT].includes(props.type) ? "pl-3" : "pl-10"),
           placeholder: props.placeholder,
           onChange: function onChange(e) {
             return props.onChange(props.name, e.target.value);
@@ -11958,9 +11985,8 @@ var ChoiceField = function ChoiceField(props) {
 var OptionField = function OptionField(props) {
   var _a;
   var checkValue = function checkValue(option) {
-    var _a;
     if (props.type === FieldType.MULTI_OPTION) {
-      return (_a = props.value) === null || _a === undefined ? undefined : _a.includes(option.value);
+      return Array.isArray(props.value) ? props.value.includes(option.value) : false;
     } else {
       return props.value === option.value;
     }
@@ -11998,6 +12024,108 @@ var OptionField = function OptionField(props) {
   });
 };
 
+var Checkbox = /*#__PURE__*/React__namespace.forwardRef(function (_a, ref) {
+  var className = _a.className,
+    props = __rest$1(_a, ["className"]);
+  return jsxRuntime.jsx(CheckboxPrimitive__namespace.Root, __assign$1({
+    ref: ref,
+    className: cn("peer h-4 w-4 shrink-0 rounded-sm border border-primary shadow focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground", className)
+  }, props, {
+    children: jsxRuntime.jsx(CheckboxPrimitive__namespace.Indicator, {
+      className: cn("flex items-center justify-center text-current"),
+      children: jsxRuntime.jsx(Check, {
+        className: "h-4 w-4"
+      })
+    })
+  }));
+});
+Checkbox.displayName = CheckboxPrimitive__namespace.Root.displayName;
+
+var CheckboxField = function CheckboxField(props) {
+  if (!props.label) {
+    throw new Error("Label is required for CheckboxField");
+  }
+  return jsxRuntime.jsxs("div", {
+    className: "items-top flex space-x-2",
+    children: [jsxRuntime.jsx(Checkbox, {
+      className: cn("cursor-pointer", props.errored ? "border-red-500 bg-red-50 text-red-500" : ""),
+      id: props.name,
+      checked: props.value,
+      onCheckedChange: function onCheckedChange(checked) {
+        return props.onChange(props.name, checked);
+      }
+    }), jsxRuntime.jsxs("div", {
+      className: "grid gap-1.5 leading-none cursor-pointer",
+      children: [jsxRuntime.jsx("label", {
+        htmlFor: props.name,
+        className: cn("text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70", props.errored ? "text-red-500" : ""),
+        children: props.label
+      }), props.description ? jsxRuntime.jsx("p", {
+        className: cn("text-[0.8rem] text-muted-foreground", props.errored ? "text-red-100" : ""),
+        children: props.description
+      }) : jsxRuntime.jsx(jsxRuntime.Fragment, {})]
+    })]
+  });
+};
+
+var BlockField = function BlockField(props) {
+  var _a = React.useState([{
+      fields: props.field.fields || []
+    }]),
+    blocks = _a[0],
+    setBlocks = _a[1];
+  var _b = React.useState(null);
+    _b[0];
+    _b[1];
+  var field = props.field,
+    form = props.form;
+  var handleAdd = function handleAdd(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    setBlocks(function (p) {
+      return __spreadArray$1(__spreadArray$1([], p, true), [{
+        fields: field.fields || []
+      }], false);
+    });
+  };
+  if (!field.fields || !field.fields.length) {
+    return jsxRuntime.jsx(jsxRuntime.Fragment, {});
+  }
+  return jsxRuntime.jsxs("div", {
+    className: "mb-4",
+    children: [jsxRuntime.jsx("div", {
+      children: blocks.map(function (block, j) {
+        var _a;
+        return jsxRuntime.jsx("div", {
+          className: "space-y-4 p-4 rounded-lg bg-slate-50 rounded-md",
+          children: (_a = block.fields) === null || _a === undefined ? undefined : _a.map(function (childField) {
+            var _a;
+            return jsxRuntime.jsx(FieldRenderer, {
+              field: childField,
+              onChange: function onChange(name, value) {
+                var _a;
+                var newValue = __assign$1(__assign$1({}, props.value || {}), (_a = {}, _a[name] = value, _a));
+                props.onChange(props.name, newValue);
+              },
+              value: (_a = props.value) === null || _a === undefined ? undefined : _a[childField.name],
+              form: form
+            }, childField.name);
+          })
+        }, j);
+      })
+    }), jsxRuntime.jsxs("button", {
+      onClick: handleAdd,
+      style: {
+        boxShadow: "0 1px 1px rgba(0,0,0,0.1)"
+      },
+      className: "text-sm font-[500] flex items-center gap-2 rounded-lg border border-slate-100 py-1 px-2 mt-2 cursor-pointer",
+      children: [jsxRuntime.jsx(Plus, {
+        className: "w-4 h-4"
+      }), props.field.addLabel || "Add"]
+    })]
+  });
+};
+
 var FieldRenderer = function FieldRenderer(props) {
   return jsxRuntime.jsx(FormField, {
     name: props.field.name,
@@ -12006,17 +12134,19 @@ var FieldRenderer = function FieldRenderer(props) {
       var _a;
       return jsxRuntime.jsxs(FormItem, {
         className: "flex flex-col gap-1",
-        children: [props.field.label ? jsxRuntime.jsx(FormLabel, {
+        children: [props.field.label && ![FieldType.CHECKBOX].includes(props.field.type) ? jsxRuntime.jsx(FormLabel, {
           htmlFor: args.field.name,
           children: props.field.label
-        }) : jsxRuntime.jsx(jsxRuntime.Fragment, {}), [FieldType.OPTION, FieldType.CHOICE, FieldType.MULTI_CHOICE, FieldType.MULTI_OPTION].includes(props.field.type) ? jsxRuntime.jsx(FormDescription, {
+        }) : jsxRuntime.jsx(jsxRuntime.Fragment, {}), [FieldType.OPTION, FieldType.CHOICE, FieldType.MULTI_CHOICE, FieldType.MULTI_OPTION, FieldType.BLOCKS].includes(props.field.type) ? jsxRuntime.jsx(FormDescription, {
           className: cn(props.errored ? "text-red-500" : "", "!mt-0"),
           children: props.field.description
         }) : jsxRuntime.jsx(jsxRuntime.Fragment, {}), jsxRuntime.jsx(FieldSwitcher, __assign$1({}, props.field, {
           value: (_a = args.field.value) !== null && _a !== undefined ? _a : props.value,
           errored: props.errored,
-          onChange: props.onChange
-        })), ![FieldType.OPTION, FieldType.CHOICE, FieldType.MULTI_CHOICE, FieldType.MULTI_OPTION].includes(props.field.type) ? jsxRuntime.jsx(FormDescription, {
+          onChange: props.onChange,
+          field: props.field,
+          form: props.form
+        })), ![FieldType.OPTION, FieldType.CHOICE, FieldType.MULTI_CHOICE, FieldType.MULTI_OPTION, FieldType.CHECKBOX, FieldType.BLOCKS].includes(props.field.type) && props.field.description ? jsxRuntime.jsx(FormDescription, {
           className: props.errored ? "text-red-500" : "",
           children: props.field.description
         }) : jsxRuntime.jsx(jsxRuntime.Fragment, {})]
@@ -12025,7 +12155,7 @@ var FieldRenderer = function FieldRenderer(props) {
   });
 };
 var FieldSwitcher = function FieldSwitcher(props) {
-  var _a, _b, _c, _d;
+  var _a, _b, _c, _d, _e;
   switch (props.type) {
     case "text":
     case "number":
@@ -12088,6 +12218,24 @@ var FieldSwitcher = function FieldSwitcher(props) {
         name: props.name,
         type: props.type,
         errored: props.errored
+      });
+    case "checkbox":
+      return jsxRuntime.jsx(CheckboxField, {
+        value: props.value,
+        onChange: props.onChange,
+        name: props.name,
+        errored: props.errored,
+        label: (_e = props.label) !== null && _e !== undefined ? _e : "",
+        description: props.description
+      });
+    case "blocks":
+      return jsxRuntime.jsx(BlockField, {
+        value: props.value,
+        onChange: props.onChange,
+        name: props.name,
+        errored: props.errored,
+        field: props.field,
+        form: props.form
       });
     default:
       return jsxRuntime.jsx("div", {
@@ -16499,21 +16647,45 @@ var z = /*#__PURE__*/Object.freeze({
 var toZod = function toZod(fields) {
   var shape = {};
   fields.forEach(function (field) {
-    var _a, _b, _c, _d;
+    var _a, _b, _c, _d, _e;
     var schema;
     var requiredError = (_c = (_b = (_a = field.validators) === null || _a === undefined ? undefined : _a.find(function (v) {
       return v.name === "required";
-    })) === null || _b === undefined ? undefined : _b.errorMessage) !== null && _c !== undefined ? _c : "".concat(field.label || field.name.split("_").join(" "), " is required");
-    var isRequired = (_d = field.validators) === null || _d === undefined ? undefined : _d.some(function (v) {
+    })) === null || _b === undefined ? undefined : _b.errorMessage) !== null && _c !== undefined ? _c : "".concat(field.label || ((_d = field.name) === null || _d === undefined ? undefined : _d.split("_").join(" ")), " is required");
+    var isRequired = (_e = field.validators) === null || _e === undefined ? undefined : _e.some(function (v) {
       return v.name === "required";
     });
     if (field.type === FieldType.DATE) {
-      schema = z.date().transform(function (val) {
+      schema = z.date({
+        required_error: requiredError
+      }).transform(function (val) {
         return new Date(val);
       }).refine(function (date) {
         return !isNaN(date.getTime());
       }, {
         message: "Invalid date format"
+      });
+      schema = isRequired ? schema : schema.optional();
+    } else if (field.type === FieldType.DATE_RANGE) {
+      schema = z.object({
+        from: z.date({
+          required_error: requiredError
+        }).transform(function (val) {
+          return new Date(val);
+        }).refine(function (date) {
+          return !isNaN(date.getTime());
+        }, {
+          message: "Invalid date format"
+        }),
+        to: z.date({
+          required_error: requiredError
+        }).transform(function (val) {
+          return new Date(val);
+        }).refine(function (date) {
+          return !isNaN(date.getTime());
+        }, {
+          message: "Invalid date format"
+        })
       });
       schema = isRequired ? schema : schema.optional();
     } else if (field.type === FieldType.NUMBER) {
@@ -16545,6 +16717,32 @@ var toZod = function toZod(fields) {
     } else if (field.type === FieldType.MULTI_CHOICE) {
       schema = z.array(z.string(), {
         required_error: requiredError
+      });
+      schema = isRequired ? schema : schema.optional();
+    } else if (field.type === FieldType.CHECKBOX) {
+      schema = z["boolean"]({
+        required_error: requiredError
+      });
+      if (isRequired) {
+        schema = schema.refine(function (val) {
+          return val === true;
+        }, {
+          message: requiredError
+        });
+      } else {
+        schema = schema.optional();
+      }
+    } else if (field.type === FieldType.PHONE) {
+      schema = z.object({
+        phoneNumber: z.string({
+          required_error: requiredError
+        }),
+        prefix: z.string({
+          required_error: requiredError
+        }),
+        countryCode: z.string({
+          required_error: requiredError
+        })
       });
       schema = isRequired ? schema : schema.optional();
     } else {
@@ -16616,6 +16814,7 @@ var StepForm = function StepForm(props) {
         children: [jsxRuntime.jsx(TriangleAlert, {
           className: "w-4 h-4 text-red-500"
         }), jsxRuntime.jsx("div", {
+          className: "flex-1",
           children: jsxRuntime.jsx("p", {
             className: "text-red-500 text-sm",
             children: (_a = firstError === null || firstError === undefined ? undefined : firstError.message) !== null && _a !== undefined ? _a : "Form is invalid"
@@ -16737,11 +16936,5 @@ var Builder = function Builder(props) {
   });
 };
 
-// Import styles first
-
-// Export styles path for manual import
-var styles = "./styles.css";
-
 exports.FormBuilder = Builder;
-exports.styles = styles;
 //# sourceMappingURL=index.js.map

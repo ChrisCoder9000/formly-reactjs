@@ -1,6 +1,6 @@
 {
   "name": "formly-reactjs",
-  "version": "0.1.1",
+  "version": "0.0.11",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
@@ -13,7 +13,10 @@
     "build:js": "rollup -c",
     "build": "rm -rf dist && npm run build:css && npm run build:js && tsc --emitDeclarationOnly",
     "prepare": "npm run build",
-    "publish": "npm run prepare && npm publish --access=public"
+    "publish": "npm run prepare && npm publish --access=public",
+    "dev": "rollup -c -w",
+    "dev:css": "tailwindcss -i ./src/index.css -o ./dist/styles.css --watch",
+    "dev:all": "npm run dev:css & npm run dev"
   },
   "keywords": [
     "formly",
@@ -29,6 +32,7 @@
   "dependencies": {
     "@babel/runtime": "^7.26.0",
     "@hookform/resolvers": "^3.10.0",
+    "@radix-ui/react-checkbox": "^1.1.3",
     "@radix-ui/react-dialog": "^1.1.5",
     "@radix-ui/react-label": "^2.1.1",
     "@radix-ui/react-popover": "^1.1.5",

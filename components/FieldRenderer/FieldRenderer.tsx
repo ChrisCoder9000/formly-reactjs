@@ -38,6 +38,8 @@ import SelectField from "../(Fields)/SelectField/SelectField";
 import TextField from "../(Fields)/TextField";
 import ChoiceField from "../(Fields)/ChoiceField/ChoiceField";
 import OptionField from "../(Fields)/OptionField/OptionField";
+import CheckboxField from "../(Fields)/CheckboxField/CheckboxField";
+import BlockField from "../(Fields)/BlockField";
 
 export type FieldRendererProps = {
   field: Field;
@@ -55,7 +57,8 @@ const FieldRenderer = (props: FieldRendererProps) => {
       render={(args) => {
         return (
           <FormItem className="flex flex-col gap-1">
-            {props.field.label ? (
+            {props.field.label &&
+            ![FieldType.CHECKBOX].includes(props.field.type) ? (
               <FormLabel htmlFor={args.field.name}>
                 {props.field.label}
               </FormLabel>
@@ -67,6 +70,7 @@ const FieldRenderer = (props: FieldRendererProps) => {
               FieldType.CHOICE,
               FieldType.MULTI_CHOICE,
               FieldType.MULTI_OPTION,
+              FieldType.BLOCKS,
             ].includes(props.field.type) ? (
               <FormDescription
                 className={cn(props.errored ? "text-red-500" : "", "!mt-0")}
@@ -81,13 +85,17 @@ const FieldRenderer = (props: FieldRendererProps) => {
               value={args.field.value ?? props.value}
               errored={props.errored}
               onChange={props.onChange}
+              field={props.field}
+              form={props.form}
             />
             {![
               FieldType.OPTION,
               FieldType.CHOICE,
               FieldType.MULTI_CHOICE,
               FieldType.MULTI_OPTION,
-            ].includes(props.field.type) ? (
+              FieldType.CHECKBOX,
+              FieldType.BLOCKS,
+            ].includes(props.field.type) && props.field.description ? (
               <FormDescription className={props.errored ? "text-red-500" : ""}>
                 {props.field.description}
               </FormDescription>
@@ -106,6 +114,8 @@ const FieldSwitcher = (
     errored?: FieldError;
     onChange: (name: string, value: any) => void;
     value: any;
+    field: Field;
+    form: UseFormReturn;
   }
 ) => {
   switch (props.type) {
@@ -179,6 +189,28 @@ const FieldSwitcher = (
           name={props.name}
           type={props.type}
           errored={props.errored}
+        />
+      );
+    case "checkbox":
+      return (
+        <CheckboxField
+          value={props.value}
+          onChange={props.onChange}
+          name={props.name}
+          errored={props.errored}
+          label={props.label ?? ""}
+          description={props.description}
+        />
+      );
+    case "blocks":
+      return (
+        <BlockField
+          value={props.value}
+          onChange={props.onChange}
+          name={props.name}
+          errored={props.errored}
+          field={props.field}
+          form={props.form}
         />
       );
     default:

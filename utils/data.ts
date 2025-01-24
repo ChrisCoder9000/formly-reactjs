@@ -17,16 +17,32 @@ export const toZod = (fields: Field[]): ZodRawShape => {
     let schema: z.ZodType<any>;
     const requiredError =
       field.validators?.find((v) => v.name === "required")?.errorMessage ??
-      `${field.label || field.name.split("_").join(" ")} is required`;
+      `${field.label || field.name?.split("_").join(" ")} is required`;
     const isRequired = field.validators?.some((v) => v.name === "required");
 
     if (field.type === FieldType.DATE) {
       schema = z
-        .date()
+        .date({ required_error: requiredError })
         .transform((val) => new Date(val))
         .refine((date) => !isNaN(date.getTime()), {
           message: "Invalid date format",
         });
+      schema = isRequired ? schema : schema.optional();
+    } else if (field.type === FieldType.DATE_RANGE) {
+      schema = z.object({
+        from: z
+          .date({ required_error: requiredError })
+          .transform((val) => new Date(val))
+          .refine((date) => !isNaN(date.getTime()), {
+            message: "Invalid date format",
+          }),
+        to: z
+          .date({ required_error: requiredError })
+          .transform((val) => new Date(val))
+          .refine((date) => !isNaN(date.getTime()), {
+            message: "Invalid date format",
+          }),
+      });
       schema = isRequired ? schema : schema.optional();
     } else if (field.type === FieldType.NUMBER) {
       schema = z
@@ -47,6 +63,22 @@ export const toZod = (fields: Field[]): ZodRawShape => {
       schema = isRequired ? schema : schema.optional();
     } else if (field.type === FieldType.MULTI_CHOICE) {
       schema = z.array(z.string(), { required_error: requiredError });
+      schema = isRequired ? schema : schema.optional();
+    } else if (field.type === FieldType.CHECKBOX) {
+      schema = z.boolean({ required_error: requiredError });
+      if (isRequired) {
+        schema = schema.refine((val) => val === true, {
+          message: requiredError,
+        });
+      } else {
+        schema = schema.optional();
+      }
+    } else if (field.type === FieldType.PHONE) {
+      schema = z.object({
+        phoneNumber: z.string({ required_error: requiredError }),
+        prefix: z.string({ required_error: requiredError }),
+        countryCode: z.string({ required_error: requiredError }),
+      });
       schema = isRequired ? schema : schema.optional();
     } else {
       schema = isRequired

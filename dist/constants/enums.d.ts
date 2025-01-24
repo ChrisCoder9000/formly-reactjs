@@ -19,7 +19,7 @@ export declare enum FieldType {
     MULTI_CHOICE = "multi_choice",
     RADIO = "radio",// TODO: [ missing ]
     CHECKBOX = "checkbox",
-    BLOCK = "block",
+    BLOCKS = "blocks",
     FILES = "files",
     PAYMENT = "payment",// TODO: [ missing ]
     INFO_TEXT = "info_text",// TODO: [ missing ]

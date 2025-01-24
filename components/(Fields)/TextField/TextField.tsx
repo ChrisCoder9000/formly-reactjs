@@ -145,7 +145,7 @@ const TextField = (props: TextFieldProps) => {
               value={props.value ?? ""}
               className={cn(
                 props.errored ? "border-red-500 bg-red-50" : "",
-                "pl-10"
+                [FieldType.TEXT].includes(props.type) ? "pl-3" : "pl-10"
               )}
               placeholder={props.placeholder}
               onChange={(e) => props.onChange(props.name, e.target.value)}
