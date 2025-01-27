@@ -19,6 +19,7 @@ import ChoiceField from "../(Fields)/ChoiceField/ChoiceField";
 import OptionField from "../(Fields)/OptionField/OptionField";
 import CheckboxField from "../(Fields)/CheckboxField/CheckboxField";
 import BlocksField from "../(Fields)/BlockField";
+import { OtpField } from "../(Fields)/OtpField";
 import { areDependenciesSatisfied } from "../../utils/data";
 
 export type FieldRendererProps = {
@@ -131,7 +132,16 @@ const FieldSwitcher = (
         />
       );
     case "otp":
-      return <></>;
+      return (
+        <OtpField
+          value={props.value}
+          onChange={props.onChange}
+          name={props.name}
+          errored={
+            typeof props.errored === "object" ? props.errored : undefined
+          }
+        />
+      );
     case "text_area":
       return (
         <Textarea
