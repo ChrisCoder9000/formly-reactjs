@@ -6,7 +6,7 @@
 // Modified By: the developer formerly known as Christian Nonis at <alch.infoemail@gmail.com>
 // -----
 
-import React from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import {
   Select,
   SelectContent,
@@ -25,13 +25,41 @@ type SelectFieldProps = {
 };
 
 const SelectField = (props: SelectFieldProps) => {
+  const [internalValue, setInternalValue] = useState(props.value);
+  const isUserChange = useRef(false);
+
+  useEffect(() => {
+    if (!isUserChange.current) {
+      setInternalValue(props.value);
+    }
+  }, [props.value, isUserChange]);
+
   if (!props.options) {
     throw new Error(`Select field ${props.name} must have options`);
   }
+
+  const handleChange = useCallback(
+    (value: string) => {
+      if (isUserChange.current) {
+        setInternalValue(value);
+        props.onChange(props.name, value);
+        isUserChange.current = false;
+      }
+    },
+    [props.name, props.onChange]
+  );
+
+  const handleOpenChange = (open: boolean) => {
+    if (open) {
+      isUserChange.current = true;
+    }
+  };
+
   return (
     <Select
-      value={props.value}
-      onValueChange={(value) => props.onChange(props.name, value)}
+      value={internalValue}
+      onOpenChange={handleOpenChange}
+      onValueChange={handleChange}
     >
       <SelectTrigger
         className={`w-full ${props.errored ? "border-red-500 bg-red-50" : ""}`}

@@ -56,7 +56,13 @@ const StepForm = (props: StepFormProps) => {
     }
   };
 
-  const firstError = Object.values(form.formState.errors)[0] as FieldError;
+  let firstError = Object.values(form.formState.errors)[0] as FieldError;
+
+  if (Array.isArray(firstError)) {
+    firstError = Object.values(
+      Object.entries(firstError)[0][1]
+    )[0] as FieldError;
+  }
 
   return (
     <Form {...form}>

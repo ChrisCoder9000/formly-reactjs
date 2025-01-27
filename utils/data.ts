@@ -82,7 +82,18 @@ export const toZod = (fields: Field[]): ZodRawShape => {
       schema = isRequired ? schema : schema.optional();
     } else if (field.type === FieldType.BLOCKS) {
       const nestedSchema = field.fields ? toZod(field.fields) : {};
-      schema = z.array(z.object(nestedSchema));
+      schema = z
+        .array(z.object(nestedSchema).strict())
+        .min(isRequired ? 1 : 0, { message: requiredError })
+        .transform((blocks) =>
+          blocks.map((block) => {
+            return Object.fromEntries(
+              Object.entries(block).filter(
+                ([_, v]) => v !== undefined && v !== ""
+              )
+            );
+          })
+        );
       schema = isRequired ? schema : schema.optional();
     } else {
       schema = isRequired
@@ -156,6 +167,52 @@ export const fillNestedField = (
   current[keys[keys.length - 1]] = value;
 
   const _formData = { ...formData, ...result };
-  console.log("fill", _formData);
+
   return _formData;
+};
+
+export const findDependencyValue = (
+  formValues: any,
+  dependencyName: string
+): any => {
+  if (formValues[dependencyName] !== undefined) {
+    return formValues[dependencyName];
+  }
+
+  for (const key in formValues) {
+    const value = formValues[key];
+
+    if (Array.isArray(value)) {
+      for (const item of value) {
+        const found = findDependencyValue(item, dependencyName);
+        if (found !== undefined) return found;
+      }
+    } else if (typeof value === "object" && value !== null) {
+      const found = findDependencyValue(value, dependencyName);
+      if (found !== undefined) return found;
+    }
+  }
+
+  return undefined;
+};
+
+export const areDependenciesSatisfied = (
+  dependencies: Field["dependencies"],
+  formValues: any
+): boolean => {
+  if (!dependencies?.length) return true;
+
+  return dependencies.every((dependency) => {
+    const dependencyValue = findDependencyValue(formValues, dependency.name);
+
+    if (dependencyValue === undefined || dependencyValue === null) {
+      return false;
+    }
+
+    if (Array.isArray(dependencyValue)) {
+      return dependencyValue.includes(dependency.value);
+    }
+
+    return dependencyValue === dependency.value;
+  });
 };

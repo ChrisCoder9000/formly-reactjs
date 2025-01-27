@@ -6,20 +6,19 @@
 // Modified By: the developer formerly known as Christian Nonis at <alch.infoemail@gmail.com>
 // -----
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FieldError, UseFormReturn } from "react-hook-form";
 import { Field } from "../../../constants/types";
 import FieldRenderer from "../../../components/FieldRenderer";
 import { PlusIcon, Trash, Trash2 } from "lucide-react";
 import { colorBuilder } from "../../../utils/colors";
 import { cn } from "../../../lib/utils";
-import { getNestedValue } from "../../../utils/data";
 
 type BlockFieldProps = {
   value: Record<string, any>[];
   onChange: (name: string, value: any) => void;
   name: string;
-  errored: FieldError | undefined;
+  errored: FieldError | Record<string, FieldError>[] | undefined;
   field: Field;
   form: UseFormReturn;
 };
@@ -35,11 +34,25 @@ const BlocksField = (props: BlockFieldProps) => {
     e.preventDefault();
     e.stopPropagation();
     setBlocks((p) => [...p, { fields: field.fields || [] }]);
+    props.onChange(field.name, [...props.value, {}]);
   };
 
   if (!field.fields || !field.fields.length) {
     return <></>;
   }
+
+  const blockErrored =
+    typeof props.errored === "object"
+      ? (props.errored as FieldError)?.ref?.name.includes(field.name)
+      : false;
+
+  useEffect(() => {
+    setBlocks(
+      Array.from({ length: props.value.length || 1 }, (_, i) => ({
+        fields: props.field.fields,
+      }))
+    );
+  }, [props.value]);
 
   return (
     <div className="!mb-4">
@@ -51,7 +64,7 @@ const BlocksField = (props: BlockFieldProps) => {
               openedBlockIndex === j
                 ? cn(
                     "space-y-4 p-4 rounded-lg rounded-md",
-                    colorBuilder("bg", props.errored ? "red" : "slate", "50")
+                    colorBuilder("bg", blockErrored ? "red" : "slate", "50")
                   )
                 : ""
             )}
@@ -60,18 +73,21 @@ const BlocksField = (props: BlockFieldProps) => {
             {openedBlockIndex === j ? (
               block.fields?.map((childField: Field) => (
                 <FieldRenderer
-                  errored={props.errored}
+                  errored={
+                    Array.isArray(props.errored)
+                      ? (props.errored as Record<string, FieldError>[])?.find(
+                          (e: Record<string, FieldError>) =>
+                            e && childField.name in e
+                        )?.[childField.name]
+                      : undefined
+                  }
                   key={childField.name}
                   field={childField}
                   onChange={(name, value) => {
                     const prev = props.value[j] ?? {};
-                    const otherBlocks = props.value?.filter(
-                      (_: any, i: number) => i !== j
-                    );
-                    props.onChange(name, [
-                      ...otherBlocks,
-                      { ...prev, [name]: value },
-                    ]);
+                    const newValue = [...(props.value || [])];
+                    newValue[j] = { ...prev, [name]: value };
+                    props.onChange(name, newValue);
                   }}
                   value={props.value[j]?.[childField.name]}
                   form={form}
@@ -81,11 +97,11 @@ const BlocksField = (props: BlockFieldProps) => {
               <div
                 className={cn(
                   "flex items-center justify-between cursor-pointer py-2 px-4 rounded-md",
-                  colorBuilder("bg", props.errored ? "red" : "slate", "50"),
-                  colorBuilder("text", props.errored ? "red" : "slate", "500"),
+                  colorBuilder("bg", blockErrored ? "red" : "slate", "50"),
+                  colorBuilder("text", blockErrored ? "red" : "slate", "500"),
                   `hover:${colorBuilder(
                     "bg",
-                    props.errored ? "red" : "slate",
+                    blockErrored ? "red" : "slate",
                     "50"
                   )}`
                 )}

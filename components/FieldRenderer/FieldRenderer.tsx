@@ -7,31 +7,10 @@
 // -----
 
 import { Field } from "../../constants/types";
-import React from "react";
-import { Input } from "../ui/input";
-import {
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form";
-import { FieldError, useForm, UseFormReturn } from "react-hook-form";
-import { Label } from "../ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
+import { FormDescription, FormField, FormItem, FormLabel } from "../ui/form";
+import { FieldError, UseFormReturn } from "react-hook-form";
 import { Textarea } from "../ui/textarea";
-import { Calendar } from "../ui/calendar";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
 import { cn } from "../../lib/utils";
-import { Button } from "../ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { FieldType } from "../../constants/enums";
 import DateField from "../(Fields)/DateField";
 import SelectField from "../(Fields)/SelectField/SelectField";
@@ -40,6 +19,7 @@ import ChoiceField from "../(Fields)/ChoiceField/ChoiceField";
 import OptionField from "../(Fields)/OptionField/OptionField";
 import CheckboxField from "../(Fields)/CheckboxField/CheckboxField";
 import BlocksField from "../(Fields)/BlockField";
+import { areDependenciesSatisfied } from "../../utils/data";
 
 export type FieldRendererProps = {
   field: Field;
@@ -50,6 +30,12 @@ export type FieldRendererProps = {
 };
 
 const FieldRenderer = (props: FieldRendererProps) => {
+  if (props.field.dependencies?.length) {
+    const formValues = props.form.getValues();
+    if (!areDependenciesSatisfied(props.field.dependencies, formValues)) {
+      return null;
+    }
+  }
   return (
     <FormField
       name={props.field.name}
@@ -87,7 +73,9 @@ const FieldRenderer = (props: FieldRendererProps) => {
               {...props.field}
               value={args.field.value ?? props.value}
               errored={props.errored}
-              onChange={props.onChange}
+              onChange={(name, value) => {
+                props.onChange(name, value);
+              }}
               field={props.field}
               form={props.form}
             />
@@ -137,7 +125,9 @@ const FieldSwitcher = (
           placeholder={props.placeholder}
           onChange={props.onChange}
           name={props.name}
-          errored={props.errored}
+          errored={
+            typeof props.errored === "object" ? props.errored : undefined
+          }
         />
       );
     case "otp":
@@ -146,7 +136,11 @@ const FieldSwitcher = (
       return (
         <Textarea
           value={props.value ?? ""}
-          className={props.errored ? "border-red-500 bg-red-50" : ""}
+          className={
+            typeof props.errored === "object" && props.errored
+              ? "border-red-500 bg-red-50"
+              : ""
+          }
           placeholder={props.placeholder}
           onChange={(e) => props.onChange(props.name, e.target.value)}
         />
@@ -155,10 +149,12 @@ const FieldSwitcher = (
       return (
         <SelectField
           options={props.options ?? []}
-          value={props.value}
+          value={props.value ?? ""}
           onChange={props.onChange}
           name={props.name}
-          errored={props.errored}
+          errored={
+            typeof props.errored === "object" ? props.errored : undefined
+          }
         />
       );
     case "date":
@@ -168,7 +164,9 @@ const FieldSwitcher = (
           value={props.value}
           onChange={props.onChange}
           name={props.name}
-          errored={props.errored}
+          errored={
+            typeof props.errored === "object" ? props.errored : undefined
+          }
           type={props.type}
         />
       );
@@ -181,7 +179,9 @@ const FieldSwitcher = (
           onChange={props.onChange}
           name={props.name}
           type={props.type}
-          errored={props.errored}
+          errored={
+            typeof props.errored === "object" ? props.errored : undefined
+          }
         />
       );
     case "choice":
@@ -193,7 +193,9 @@ const FieldSwitcher = (
           onChange={props.onChange}
           name={props.name}
           type={props.type}
-          errored={props.errored}
+          errored={
+            typeof props.errored === "object" ? props.errored : undefined
+          }
         />
       );
     case "checkbox":
@@ -202,7 +204,9 @@ const FieldSwitcher = (
           value={props.value}
           onChange={props.onChange}
           name={props.name}
-          errored={props.errored}
+          errored={
+            typeof props.errored === "object" ? props.errored : undefined
+          }
           label={props.label ?? ""}
           description={props.description}
         />
