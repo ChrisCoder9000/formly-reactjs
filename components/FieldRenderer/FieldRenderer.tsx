@@ -51,6 +51,11 @@ const FieldRenderer = (props: FieldRendererProps) => {
                 htmlFor={args.field.name}
               >
                 {props.field.label}
+                {props.field.validators?.some((v) => v.name === "required") ? (
+                  <span className="text-red-400 ml-1">*</span>
+                ) : (
+                  <></>
+                )}
               </FormLabel>
             ) : (
               <></>

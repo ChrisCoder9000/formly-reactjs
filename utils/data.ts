@@ -10,10 +10,17 @@ import { FieldType } from "../constants/enums";
 import { Field } from "../constants/types";
 import { ZodRawShape, z } from "zod";
 
-export const toZod = (fields: Field[]): ZodRawShape => {
+export const toZod = (fields: Field[], formValues: any = {}): ZodRawShape => {
   const shape: ZodRawShape = {};
 
   fields.forEach((field) => {
+    if (
+      field.dependencies &&
+      !areDependenciesSatisfied(field.dependencies, formValues)
+    ) {
+      return;
+    }
+
     let schema: z.ZodType<any>;
     const requiredError =
       field.validators?.find((v) => v.name === "required")?.errorMessage ??
@@ -81,7 +88,7 @@ export const toZod = (fields: Field[]): ZodRawShape => {
       });
       schema = isRequired ? schema : schema.optional();
     } else if (field.type === FieldType.BLOCKS) {
-      const nestedSchema = field.fields ? toZod(field.fields) : {};
+      const nestedSchema = field.fields ? toZod(field.fields, formValues) : {};
       schema = z
         .array(z.object(nestedSchema).strict())
         .min(isRequired ? 1 : 0, { message: requiredError })

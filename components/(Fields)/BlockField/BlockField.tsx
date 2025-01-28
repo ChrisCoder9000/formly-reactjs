@@ -37,6 +37,14 @@ const BlocksField = (props: BlockFieldProps) => {
     props.onChange(field.name, [...props.value, {}]);
   };
 
+  const handleRemove = (index: number) => {
+    setBlocks((p) => p.filter((_, i) => i !== index));
+    props.onChange(
+      field.name,
+      [...props.value].filter((_, i) => i !== index)
+    );
+  };
+
   if (!field.fields || !field.fields.length) {
     return <></>;
   }
@@ -47,11 +55,13 @@ const BlocksField = (props: BlockFieldProps) => {
       : false;
 
   useEffect(() => {
-    setBlocks(
-      Array.from({ length: props.value.length || 1 }, (_, i) => ({
-        fields: props.field.fields,
-      }))
-    );
+    if (!blocks.length) {
+      setBlocks(
+        Array.from({ length: props.value.length || 1 }, (_, i) => ({
+          fields: props.field.fields,
+        }))
+      );
+    }
   }, [props.value]);
 
   return (
@@ -116,7 +126,7 @@ const BlocksField = (props: BlockFieldProps) => {
                   onClick={(e) => {
                     e.stopPropagation();
                     e.preventDefault();
-                    setBlocks((p) => p.filter((_, i) => i !== j));
+                    handleRemove(j);
                   }}
                 />
               </div>

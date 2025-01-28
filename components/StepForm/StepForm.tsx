@@ -36,12 +36,20 @@ const StepForm = (props: StepFormProps) => {
     return true;
   };
 
+  const formRef = React.useRef<any>();
   const formSchema = z.object(toZod(props.step.fields));
 
   const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+    resolver: async (values, context, options) => {
+      const schema = z.object(
+        toZod(props.step.fields, formRef.current?.getValues())
+      );
+      return zodResolver(schema)(values, context, options);
+    },
     mode: "onSubmit",
   });
+
+  formRef.current = form;
 
   React.useEffect(() => {
     if (props.formData) {

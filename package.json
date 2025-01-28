@@ -8,12 +8,12 @@
     "src"
   ],
   "scripts": {
-    "prepare": "npm run typecheck",
+    "prepare": "npm run typecheck && npm run build:css",
     "typecheck": "tsc --noEmit",
     "publish": "npm publish --access=public",
     "dev": "concurrently \"npm run dev:css\" \"npm run typecheck --watch\"",
     "dev:css": "tailwindcss -i ./src/index.css -o ./src/output.css --watch",
-    "build:css": "tailwindcss -i ./src/index.css -o ./src/output.css"
+    "build:css": "tailwindcss -i ./src/index.css -o ./src/output.css --minify"
   },
   "keywords": [
     "formly",
