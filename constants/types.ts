@@ -6,6 +6,7 @@
 // Modified By: the developer formerly known as Christian Nonis at <alch.infoemail@gmail.com>
 // -----
 
+import { FieldRendererProps } from "@/components/FieldRenderer/FieldRenderer";
 import { FieldType } from "./enums";
 
 export type FieldValidator = {
@@ -48,4 +49,8 @@ export type Form = {
   title?: string;
   description?: string;
   steps: FormStep[];
+};
+
+export type FormFieldOverrides = Omit<FieldRendererProps, "form"> & {
+  defaultComponent?: React.ReactNode;
 };

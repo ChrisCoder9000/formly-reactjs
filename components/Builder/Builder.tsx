@@ -8,12 +8,10 @@
 
 "use client";
 
-import { Field, FormStep } from "../../constants/types";
+import { Field, FormFieldOverrides, FormStep } from "../../constants/types";
 import React, { useMemo, useReducer, useState } from "react";
 import StepForm from "../StepForm";
 import { FieldType } from "../../constants/enums";
-import { FieldRendererProps } from "../FieldRenderer/FieldRenderer";
-import { UseFormReturn } from "react-hook-form";
 
 type BuilderProps = {
   steps: FormStep[];
@@ -23,21 +21,30 @@ type BuilderProps = {
   nextLabel?: string;
   submitLabel?: string;
   onSubmit: (data: Record<string, string>) => void;
-  fieldComponentOverrides?: Record<
-    FieldType,
-    (args: FieldRendererProps) => React.ComponentType<any>
+
+  // Field Overwrites
+  fieldComponentOverwrites?: Partial<
+    Record<FieldType, (args: FormFieldOverrides) => JSX.Element>
   >;
+
+  // Actions Overwrites
   actionsOverrides?: (args: {
     onBack: () => void;
     onSubmit: (data: Record<string, string>) => void;
   }) => React.ComponentType<any>;
+
+  // Header Overwrites
   headerOverrides?: (args: {
     title: string;
     subtitle: string;
   }) => React.ComponentType<any>;
+
+  // Form Error Overwrites
   formErrorOverrides?: (args: {
     errors: Record<string, { message: string; name: string }>;
   }) => React.ComponentType<any>;
+
+  // Step Overwrites
   stepOverrides?: (args: {
     step: FormStep;
     title: string;
@@ -114,6 +121,7 @@ const Builder = (props: BuilderProps) => {
   return (
     <div className={`${props.className ?? ""}`}>
       <StepForm
+        fieldOverwrites={props.fieldComponentOverwrites}
         formTitle={props.title}
         formSubtitle={props.description}
         step={props.steps[currentStep]}

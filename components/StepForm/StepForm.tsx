@@ -6,7 +6,7 @@
 // Modified By: the developer formerly known as Christian Nonis at <alch.infoemail@gmail.com>
 // -----
 
-import { FormStep } from "../../constants/types";
+import { FormFieldOverrides, FormStep } from "../../constants/types";
 import React from "react";
 import FieldRenderer from "../FieldRenderer";
 import StepHeader from "../StepHeader/StepHeader";
@@ -29,6 +29,9 @@ type StepFormProps = {
   stepsLength: number;
   onBack?: () => void;
   formData?: Record<string, string>;
+  fieldOverwrites?: Partial<
+    Record<FieldType, (args: FormFieldOverrides) => JSX.Element>
+  >;
 };
 
 const StepForm = (props: StepFormProps) => {
@@ -81,7 +84,7 @@ const StepForm = (props: StepFormProps) => {
         />
         <div className="flex flex-col gap-4">
           {props.step.fields.map((field, i) => {
-            return (
+            let CurrentComponent = (
               <FieldRenderer
                 form={form}
                 errored={form.formState.errors[field.name] as any}
@@ -94,10 +97,33 @@ const StepForm = (props: StepFormProps) => {
                   );
                   form.setValue(field.name, _formData[field.name]);
                 }}
-                key={i}
                 value={getNestedValue(field.name, form.getValues(), field.type)}
+                key={i}
               />
             );
+            if (props.fieldOverwrites?.[field.type]) {
+              const OverwrittenComponent = props.fieldOverwrites[field.type]!({
+                errored: form.formState.errors[field.name] as any,
+                field: field,
+                onChange: (value) => {
+                  const _formData = fillNestedField(
+                    field.name,
+                    value,
+                    props.formData
+                  );
+                  form.setValue(field.name, _formData[field.name], {
+                    shouldDirty: true,
+                    shouldValidate: true,
+                  });
+                },
+                value: getNestedValue(field.name, form.getValues(), field.type),
+                defaultComponent: CurrentComponent,
+              });
+              return (
+                <React.Fragment key={i}>{OverwrittenComponent}</React.Fragment>
+              );
+            }
+            return CurrentComponent;
           })}
         </div>
         {Object.keys(form.formState.errors).length ? (
