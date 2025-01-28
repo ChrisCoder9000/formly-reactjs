@@ -8,6 +8,7 @@
 
 import {
   Field,
+  FieldOverwriteOnChangeProps,
   FormFieldOverrides,
   FormStep,
   FormStepFlex,
@@ -110,7 +111,9 @@ const StepForm = (props: StepFormProps) => {
             if (props.fieldOverwrites?.[field.type]) {
               const OverwrittenComponent = props.fieldOverwrites[field.type]!({
                 errored: form.formState.errors[field.name] as any,
-                onChange: (value) => {
+                onChange: (
+                  value: FieldOverwriteOnChangeProps<typeof field.type>
+                ) => {
                   const _formData = fillNestedField(
                     field.name,
                     value,

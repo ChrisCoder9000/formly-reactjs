@@ -154,7 +154,7 @@ export const getNestedValue = (path: string, value: any, type?: FieldType) => {
 
 export const fillNestedField = (
   name: string,
-  value: string,
+  value: any,
   formData: Record<string, string> | undefined
 ) => {
   const keys = name.split(".");

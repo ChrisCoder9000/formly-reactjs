@@ -73,3 +73,34 @@ export type FormFieldOverrides = {
   stepIndex?: number;
   name?: string;
 };
+
+type _FieldOverwriteOnChangePropsMap = {
+  [FieldType.TEXT]: string;
+  [FieldType.NUMBER]: number;
+  [FieldType.DATE]: Date;
+  [FieldType.PHONE]: {
+    prefix: string;
+    phoneNumber: string;
+  };
+  [FieldType.DATE_RANGE]: {
+    from: Date;
+    to: Date;
+  };
+  [FieldType.MULTI_SELECT]: string[];
+  [FieldType.MULTI_OPTION]: string[];
+  [FieldType.MULTI_CHOICE]: string[];
+  [FieldType.CHECKBOX]: boolean;
+  [FieldType.BLOCKS]: {
+    blocks?: [];
+    fields?: [];
+    blockIndex?: number;
+    name?: number;
+  };
+};
+
+type FieldOverwriteOnChangePropsMap = _FieldOverwriteOnChangePropsMap;
+
+export type FieldOverwriteOnChangeProps<T extends FieldType> =
+  T extends keyof FieldOverwriteOnChangePropsMap
+    ? FieldOverwriteOnChangePropsMap[T]
+    : never;
