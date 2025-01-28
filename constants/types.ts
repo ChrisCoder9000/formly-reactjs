@@ -61,7 +61,7 @@ export type Form = {
   steps: FormStep[];
 };
 
-export type FormFieldOverrides = {
+export type FieldFormOverridesBase = {
   onChange: (value: any) => void;
   value: any;
   errored?: FieldError;
@@ -72,6 +72,29 @@ export type FormFieldOverrides = {
   defaultComponent?: React.ReactNode;
   stepIndex?: number;
   name?: string;
+};
+
+export type FieldFormOverridesBlock = FieldFormOverridesBase & {
+  onAddBlock: () => void;
+  onRemoveBlock: (index: number) => void;
+  onValueChange: (blockIndex: number, name: any, value: any) => void;
+  blocks: {
+    fields: (Field & {
+      value: any;
+      defaultComponent: React.ReactNode;
+    })[];
+  }[];
+};
+
+export type FormFieldOverrides<T extends FieldType> = T extends FieldType.BLOCKS
+  ? FieldFormOverridesBlock
+  : FieldFormOverridesBase;
+
+// Add a new type to help with component props inference
+export type FieldComponentOverrides = {
+  [K in FieldType]: K extends FieldType.BLOCKS
+    ? (args: FieldFormOverridesBlock) => JSX.Element
+    : (args: FieldFormOverridesBase) => JSX.Element;
 };
 
 type _FieldOverwriteOnChangePropsMap = {

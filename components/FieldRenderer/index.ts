@@ -6,6 +6,5 @@
 // Modified By: the developer formerly known as Christian Nonis at <alch.infoemail@gmail.com>
 // -----
 
-import FieldRenderer from "./FieldRenderer";
-
-export default FieldRenderer;
+export { FieldRenderer } from "./FieldRenderer";
+export type { FieldRendererProps } from "./FieldRenderer";

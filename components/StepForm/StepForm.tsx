@@ -12,9 +12,9 @@ import {
   FormFieldOverrides,
   FormStep,
   FormStepFlex,
+  FieldComponentOverrides,
 } from "../../constants/types";
 import React from "react";
-import FieldRenderer from "../FieldRenderer";
 import StepHeader from "../StepHeader/StepHeader";
 import { Form } from "../ui/form";
 import { FieldError, useForm } from "react-hook-form";
@@ -24,6 +24,7 @@ import { fillNestedField, getNestedValue, toZod } from "../../utils/data";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TriangleAlert } from "lucide-react";
 import { FieldType } from "../../constants/enums";
+import FieldRendererWithOverwriteHandler from "../FieldRendererWithOverwriteHandler";
 
 type StepFormProps = {
   step: FormStep;
@@ -35,9 +36,7 @@ type StepFormProps = {
   stepsLength: number;
   onBack?: () => void;
   formData?: Record<string, string>;
-  fieldOverwrites?: Partial<
-    Record<FieldType, (args: FormFieldOverrides) => JSX.Element>
-  >;
+  fieldOverwrites?: Partial<FieldComponentOverrides>;
 };
 
 const StepForm = (props: StepFormProps) => {
@@ -80,7 +79,7 @@ const StepForm = (props: StepFormProps) => {
       Object.entries(firstError)[0][1]
     )[0] as FieldError;
   }
-
+  console.log(form.getValues());
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
@@ -91,53 +90,17 @@ const StepForm = (props: StepFormProps) => {
         <div className="flex flex-col gap-4">
           {props.step.fields.map((_field: any, i) => {
             const field = _field as Omit<Field, "type"> & { type: FieldType };
-            let CurrentComponent = (
-              <FieldRenderer
-                form={form}
-                errored={form.formState.errors[field.name] as any}
-                field={field}
-                onChange={(_, value) => {
-                  const _formData = fillNestedField(
-                    field.name,
-                    value,
-                    props.formData
-                  );
-                  form.setValue(field.name, _formData[field.name]);
-                }}
-                value={getNestedValue(field.name, form.getValues(), field.type)}
+            return (
+              <FieldRendererWithOverwriteHandler
                 key={i}
+                field={field}
+                fieldOverwrites={props.fieldOverwrites}
+                formData={props.formData ?? form.getValues()}
+                stepIndex={props.stepIndex}
+                form={form}
+                value={form.getValues()?.[field.name]}
               />
             );
-            if (props.fieldOverwrites?.[field.type]) {
-              const OverwrittenComponent = props.fieldOverwrites[field.type]!({
-                errored: form.formState.errors[field.name] as any,
-                onChange: (
-                  value: FieldOverwriteOnChangeProps<typeof field.type>
-                ) => {
-                  const _formData = fillNestedField(
-                    field.name,
-                    value,
-                    props.formData
-                  );
-                  form.setValue(field.name, _formData[field.name], {
-                    shouldDirty: true,
-                    shouldValidate: true,
-                  });
-                },
-                value: getNestedValue(field.name, form.getValues(), field.type),
-                defaultComponent: CurrentComponent,
-                label: field.label,
-                description: field.description,
-                placeholder: field.placeholder,
-                options: field.options,
-                stepIndex: props.stepIndex,
-                name: field.name,
-              });
-              return (
-                <React.Fragment key={i}>{OverwrittenComponent}</React.Fragment>
-              );
-            }
-            return CurrentComponent;
           })}
         </div>
         {Object.keys(form.formState.errors).length ? (

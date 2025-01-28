@@ -8,11 +8,12 @@
 
 import React, { useEffect, useState } from "react";
 import { FieldError, UseFormReturn } from "react-hook-form";
-import { Field } from "../../../constants/types";
-import FieldRenderer from "../../../components/FieldRenderer";
+import { Field, FieldFormOverridesBlock } from "../../../constants/types";
+import { FieldRenderer } from "../../../components/FieldRenderer";
 import { PlusIcon, Trash, Trash2 } from "lucide-react";
 import { colorBuilder } from "../../../utils/colors";
 import { cn } from "../../../lib/utils";
+import { useBlocksField } from "./hooks";
 
 type BlockFieldProps = {
   value: Record<string, any>[];
@@ -24,11 +25,12 @@ type BlockFieldProps = {
 };
 
 const BlocksField = (props: BlockFieldProps) => {
-  const [blocks, setBlocks] = useState<any[]>([
-    { fields: props.field.fields || [] },
-  ]);
-  const [openedBlockIndex, setOpenedBlockIndex] = useState<number>(0);
   const { field, form } = props;
+  const { blocks, setBlocks, openedBlockIndex, setOpenedBlockIndex } =
+    useBlocksField({
+      fields: field.fields || [],
+      value: props.value,
+    });
 
   const handleAdd = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -53,16 +55,6 @@ const BlocksField = (props: BlockFieldProps) => {
     typeof props.errored === "object"
       ? (props.errored as FieldError)?.ref?.name.includes(field.name)
       : false;
-
-  useEffect(() => {
-    if (!blocks.length) {
-      setBlocks(
-        Array.from({ length: props.value.length || 1 }, (_, i) => ({
-          fields: props.field.fields,
-        }))
-      );
-    }
-  }, [props.value]);
 
   return (
     <div className="!mb-4">

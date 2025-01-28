@@ -30,7 +30,7 @@ export type FieldRendererProps = {
   form: UseFormReturn;
 };
 
-const FieldRenderer = (props: FieldRendererProps) => {
+export const FieldRenderer = (props: FieldRendererProps) => {
   if (props.field.dependencies?.length) {
     const formValues = props.form.getValues();
     if (!areDependenciesSatisfied(props.field.dependencies, formValues)) {
@@ -126,8 +126,8 @@ const FieldSwitcher = (
     case "phone":
       return (
         <TextField
-          type={props.type ?? ""}
-          value={props.value}
+          type={props.type}
+          value={props.value ?? ""}
           placeholder={props.placeholder}
           onChange={props.onChange}
           name={props.name}
@@ -245,5 +245,3 @@ const FieldSwitcher = (
       );
   }
 };
-
-export default FieldRenderer;
