@@ -8,13 +8,18 @@
 
 "use client";
 
-import { Field, FormFieldOverrides, FormStep } from "../../constants/types";
+import {
+  Field,
+  FormFieldOverrides,
+  FormStep,
+  FormStepFlex,
+} from "../../constants/types";
 import React, { useMemo, useReducer, useState } from "react";
 import StepForm from "../StepForm";
-import { FieldType } from "../../constants/enums";
+import { FieldTypeFlex } from "../../constants/enums";
 
 type BuilderProps = {
-  steps: FormStep[];
+  steps: FormStepFlex[];
   title?: string;
   description?: string;
   className?: string;
@@ -24,7 +29,7 @@ type BuilderProps = {
 
   // Field Overwrites
   fieldComponentOverwrites?: Partial<
-    Record<FieldType, (args: FormFieldOverrides) => JSX.Element>
+    Record<FieldTypeFlex, (args: FormFieldOverrides) => JSX.Element>
   >;
 
   // Actions Overwrites
@@ -124,7 +129,7 @@ const Builder = (props: BuilderProps) => {
         fieldOverwrites={props.fieldComponentOverwrites}
         formTitle={props.title}
         formSubtitle={props.description}
-        step={props.steps[currentStep]}
+        step={props.steps[currentStep] as FormStep}
         onSubmit={handleSubmit}
         submitLabel={submitLabel}
         stepIndex={currentStep}

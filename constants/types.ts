@@ -7,11 +7,12 @@
 // -----
 
 import { FieldRendererProps } from "@/components/FieldRenderer/FieldRenderer";
-import { FieldType } from "./enums";
+import { FieldType, FieldTypeFlex } from "./enums";
+import { FieldError } from "react-hook-form";
 
 export type FieldValidator = {
   name: string;
-  errorMessage: string;
+  errorMessage?: string;
   value?: any;
 };
 
@@ -22,7 +23,7 @@ export type FieldOption = {
 
 export type FieldDependency = {
   name: string;
-  value: string;
+  value: any;
 };
 
 export type Field = {
@@ -39,10 +40,19 @@ export type Field = {
   openLabel?: string;
 };
 
+export type FieldFlex = Omit<Field, "type" | "fields"> & {
+  type: FieldTypeFlex;
+  fields?: FieldFlex[];
+};
+
 export type FormStep = {
   title?: string;
   subtitle?: string;
   fields: Field[];
+};
+
+export type FormStepFlex = Omit<FormStep, "fields"> & {
+  fields: FieldFlex[];
 };
 
 export type Form = {
@@ -51,6 +61,15 @@ export type Form = {
   steps: FormStep[];
 };
 
-export type FormFieldOverrides = Omit<FieldRendererProps, "form"> & {
+export type FormFieldOverrides = {
+  onChange: (value: any) => void;
+  value: any;
+  errored?: FieldError;
+  label?: string;
+  description?: string;
+  placeholder?: string;
+  options?: FieldOption[];
   defaultComponent?: React.ReactNode;
+  stepIndex?: number;
+  name?: string;
 };

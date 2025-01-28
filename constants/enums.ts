@@ -50,6 +50,8 @@ export enum FieldType {
   LINK = "link", // TODO: [ missing ]
 }
 
+export type FieldTypeFlex = (typeof FieldType)[keyof typeof FieldType] | string;
+
 export const PHONE_MASKS: Record<string, string> = {
   AFG: "999 999 999",
   AGO: "999 999 999",

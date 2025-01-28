@@ -6,7 +6,12 @@
 // Modified By: the developer formerly known as Christian Nonis at <alch.infoemail@gmail.com>
 // -----
 
-import { FormFieldOverrides, FormStep } from "../../constants/types";
+import {
+  Field,
+  FormFieldOverrides,
+  FormStep,
+  FormStepFlex,
+} from "../../constants/types";
 import React from "react";
 import FieldRenderer from "../FieldRenderer";
 import StepHeader from "../StepHeader/StepHeader";
@@ -83,7 +88,8 @@ const StepForm = (props: StepFormProps) => {
           subtitle={props.step.subtitle || props.formSubtitle}
         />
         <div className="flex flex-col gap-4">
-          {props.step.fields.map((field, i) => {
+          {props.step.fields.map((_field: any, i) => {
+            const field = _field as Omit<Field, "type"> & { type: FieldType };
             let CurrentComponent = (
               <FieldRenderer
                 form={form}
@@ -104,7 +110,6 @@ const StepForm = (props: StepFormProps) => {
             if (props.fieldOverwrites?.[field.type]) {
               const OverwrittenComponent = props.fieldOverwrites[field.type]!({
                 errored: form.formState.errors[field.name] as any,
-                field: field,
                 onChange: (value) => {
                   const _formData = fillNestedField(
                     field.name,
@@ -118,6 +123,12 @@ const StepForm = (props: StepFormProps) => {
                 },
                 value: getNestedValue(field.name, form.getValues(), field.type),
                 defaultComponent: CurrentComponent,
+                label: field.label,
+                description: field.description,
+                placeholder: field.placeholder,
+                options: field.options,
+                stepIndex: props.stepIndex,
+                name: field.name,
               });
               return (
                 <React.Fragment key={i}>{OverwrittenComponent}</React.Fragment>
