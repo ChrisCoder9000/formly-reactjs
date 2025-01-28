@@ -81,6 +81,7 @@ type _FieldOverwriteOnChangePropsMap = {
   [FieldType.PHONE]: {
     prefix: string;
     phoneNumber: string;
+    countryCode: string;
   };
   [FieldType.DATE_RANGE]: {
     from: Date;
