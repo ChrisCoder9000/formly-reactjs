@@ -7,7 +7,7 @@
 // -----
 
 import { FieldError } from "react-hook-form";
-import { Checkbox } from "../../ui/Checkbox";
+import { Checkbox } from "../../../components/ui/checkbox";
 import React from "react";
 import { cn } from "../../../lib/utils";
 

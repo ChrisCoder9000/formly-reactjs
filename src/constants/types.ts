@@ -6,7 +6,7 @@
 // Modified By: the developer formerly known as Christian Nonis at <alch.infoemail@gmail.com>
 // -----
 
-import { FieldRendererProps } from "@/components/FieldRenderer/FieldRenderer";
+import { FieldRendererProps } from "../components/FieldRenderer";
 import { FieldType, FieldTypeFlex } from "./enums";
 import { FieldError } from "react-hook-form";
 import { TW_COLORS } from "./colors";
