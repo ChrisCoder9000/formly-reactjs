@@ -31,9 +31,23 @@ pnpm add formly-reactjs
 
 ## 🎨 Tailwind CSS Setup (Required)
 
-Formly requires Tailwind CSS for styling. Follow these steps to set it up:
+### Alternative: Using Pre-built CSS
 
-1. Install Tailwind CSS and its peer dependencies:
+If you prefer not to install Tailwind CSS, you can manually add our pre-built CSS file from:
+https://github.com/ChrisCoder9000/formly-reactjs-styles
+
+Download the `output.css` file and include it in your project.
+
+Alternatively you can install styles with npm `npm install formly-reactjs-styles` and import them in the root of your project:
+
+```tsx
+import "formly-reactjs-styles";
+```
+
+<details>
+<summary><strong>📦 1. Install Dependencies</strong></summary>
+
+Install Tailwind CSS and its peer dependencies:
 
 ```bash
 npm install -D tailwindcss postcss autoprefixer
@@ -43,7 +57,12 @@ yarn add -D tailwindcss postcss autoprefixer
 pnpm add -D tailwindcss postcss autoprefixer
 ```
 
-2. Create a `postcss.config.js` file:
+</details>
+
+<details>
+<summary><strong>⚙️ 2. PostCSS Configuration</strong></summary>
+
+Create a `postcss.config.js` file:
 
 ```javascript
 module.exports = {
@@ -54,7 +73,12 @@ module.exports = {
 };
 ```
 
-3. Create a `tailwind.config.js` file:
+</details>
+
+<details>
+<summary><strong>🔧 3. Tailwind Configuration</strong></summary>
+
+Create a `tailwind.config.js` file:
 
 ```javascript
 /** @type {import('tailwindcss').Config} */
@@ -149,7 +173,12 @@ module.exports = {
 
 > **Important**: This configuration is required for proper styling of form components. Make sure to include all the theme extensions and safelist patterns as they are used for dynamic color applications and animations.
 
-4. Add Tailwind's directives to your CSS:
+</details>
+
+<details>
+<summary><strong>🎨 4. CSS Setup</strong></summary>
+
+Add Tailwind's directives to your CSS:
 
 ```css
 @tailwind base;
@@ -205,12 +234,7 @@ module.exports = {
 
 > **Important**: These CSS variables are required for proper styling of form components. They provide the base colors and theme values used throughout the library. You can customize these values to match your application's theme.
 
-### Alternative: Using Pre-built CSS
-
-If you prefer not to install Tailwind CSS, you can manually add our pre-built CSS file from:
-https://github.com/ChrisCoder9000/formly-reactjs-styles
-
-Download the `output.css` file and include it in your project.
+</details>
 
 ## 🚀 Quick Start
 
@@ -642,3 +666,74 @@ function App() {
 You can provide custom components for any of these field types:
 
 - Text Fields: `text`, `text_area`, `number`, `email`, `secret`, `url`, `phone`, `otp`
+- Date Fields: `date`, `date_range`
+- Option Fields: `select`, `multi_select`, `option`, `multi_option`, `choice`, `multi_choice`
+- Boolean Fields: `checkbox`
+- Complex Fields: `blocks`
+- File Fields: `files`
+
+Each custom component receives the appropriate props type based on the field type, with block fields receiving additional props for managing block operations.
+
+## 🎨 Styling
+
+Formly uses Tailwind CSS for styling. You can customize the appearance through:
+
+- Custom CSS classes via the `className` prop
+- Tailwind configuration
+- Theme customization (see docs)
+
+### Color Customization
+
+You can customize the colors of your form components by passing a `colors` prop to the `Builder` component:
+
+```tsx
+import { Builder } from "formly-reactjs";
+import { TW_COLORS } from "formly-reactjs/constants/colors";
+
+function App() {
+  return (
+    <Builder
+      steps={steps}
+      colors={{
+        background: "blue", // Primary background color
+        backgroundSecondary: "indigo", // Secondary background color
+        text: "gray", // Primary text color
+        textSecondary: "slate", // Secondary text color
+        error: "red", // Error state color
+        buttons: {
+          primary: "blue", // Primary button color
+          secondary: "gray", // Secondary button color
+        },
+        ring: "blue", // Focus ring color
+      }}
+      onSubmit={handleSubmit}
+    />
+  );
+}
+```
+
+Available color options (TW_COLORS):
+
+- Basic: `gray`, `zinc`, `neutral`, `stone`
+- Warm: `red`, `orange`, `amber`, `yellow`
+- Nature: `lime`, `green`, `emerald`, `teal`
+- Cool: `cyan`, `sky`, `blue`, `indigo`
+- Vibrant: `violet`, `purple`, `fuchsia`, `pink`, `rose`
+
+Each color follows Tailwind CSS's color palette system and will automatically handle different shades for various states (hover, focus, etc.).
+
+## 🤝 Contributing
+
+We welcome contributions!
+
+<!-- Please see our [Contributing Guide](CONTRIBUTING.md) for details. -->
+
+## 📄 License
+
+MIT © Formly
+
+<!-- ## 💬 Support
+
+- [Documentation](https://formly-docs.com)
+- [GitHub Issues](https://github.com/formly/formly-reactsdk/issues)
+- [Discord Community](https://discord.gg/formly) -->
