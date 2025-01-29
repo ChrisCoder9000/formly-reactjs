@@ -1,20 +1,21 @@
 {
   "name": "formly-reactjs",
-  "version": "0.3.1",
-  "main": "src/index.ts",
-  "module": "src/index.ts",
-  "types": "src/index.ts",
+  "version": "0.3.0",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "src"
+    "dist"
   ],
   "scripts": {
-    "prepare": "npm run typecheck",
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "prepare": "npm run build",
     "typecheck": "tsc --noEmit",
     "publish": "npm publish --access=public",
     "p:patch": "npm run prepare && npm version patch && npm run publish --access=public",
     "p:minor": "npm run prepare && npm version minor && npm run publish --access=public",
-    "p:major": "npm run prepare && npm version major && npm run publish --access=public",
-    "dev": "npm run typecheck --watch"
+    "p:major": "npm run prepare && npm version major && npm run publish --access=public"
   },
   "keywords": [
     "formly",
