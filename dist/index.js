@@ -17364,17 +17364,31 @@ var StepForm = function StepForm(props) {
     }
   }, [props.formData, form]);
   var handleSubmit = function handleSubmit() {
-    {
-      props.onSubmit(form.getValues());
-    }
+    props.onSubmit(form.getValues());
   };
   var firstError = Object.values(form.formState.errors)[0];
   if (Array.isArray(firstError)) {
     firstError = Object.values(Object.entries(firstError)[0][1])[0];
   }
+  var handleStepSubmit = function handleStepSubmit(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var _validInvalidHandler = function _validInvalidHandler() {
+      console.log("validInvalidHandler");
+      if (props.onStepSubmit) {
+        props.onStepSubmit({
+          data: form.getValues(),
+          stepIndex: props.stepIndex,
+          errors: form.formState.errors
+        });
+      }
+      handleSubmit();
+    };
+    form.handleSubmit(_validInvalidHandler, _validInvalidHandler)(e);
+  };
   return jsxRuntime.jsx(Form, __assign$1({}, form, {
     children: jsxRuntime.jsxs("form", {
-      onSubmit: form.handleSubmit(handleSubmit),
+      onSubmit: handleStepSubmit,
       children: [props.headerOverwrites ? props.headerOverwrites({
         title: props.step.title || props.formTitle,
         subtitle: props.step.subtitle || props.formSubtitle
@@ -17524,6 +17538,7 @@ var Builder = function Builder(props) {
         });
       },
       color: props.color,
+      onStepSubmit: props.onStepSubmit,
       formData: Object.fromEntries(Object.entries(formData).filter(function (_a) {
         var key = _a[0];
         return props.steps[currentStep].fields.some(function (f) {
