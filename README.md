@@ -29,6 +29,189 @@ yarn add formly-reactjs
 pnpm add formly-reactjs
 ```
 
+## 🎨 Tailwind CSS Setup (Required)
+
+Formly requires Tailwind CSS for styling. Follow these steps to set it up:
+
+1. Install Tailwind CSS and its peer dependencies:
+
+```bash
+npm install -D tailwindcss postcss autoprefixer
+# or
+yarn add -D tailwindcss postcss autoprefixer
+# or
+pnpm add -D tailwindcss postcss autoprefixer
+```
+
+2. Create a `postcss.config.js` file:
+
+```javascript
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+```
+
+3. Create a `tailwind.config.js` file:
+
+```javascript
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  darkMode: ["class"],
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/formly-reactjs/**/*.{js,jsx,ts,tsx}",
+  ],
+  safelist: [
+    {
+      pattern:
+        /(bg|text|border|ring)-(gray|zinc|red|blue|green|yellow|purple|pink|indigo|orange)-(50|100|200|300|400|500|600|700|800|900)/,
+      variants: ["hover", "focus", "focus-visible"],
+    },
+    {
+      pattern:
+        /(bg|text|border|ring)-(gray|zinc|red|blue|green|yellow|purple|pink|indigo|orange)-(50\/10|100\/10|200\/10|300\/10|400\/10|500\/10|600\/10|700\/10|800\/10|900\/10)/,
+      variants: ["hover", "focus", "focus-visible"],
+    },
+    {
+      pattern: /ring-(0|1|2|4|8)/,
+      variants: ["focus", "focus-visible"],
+    },
+  ],
+  theme: {
+    extend: {
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      keyframes: {
+        "caret-blink": {
+          "0%,70%,100%": { opacity: "1" },
+          "20%,50%": { opacity: "0" },
+        },
+        "accordion-down": {
+          from: { height: 0 },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: 0 },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+        "caret-blink": "caret-blink 1.25s ease-out infinite",
+      },
+    },
+  },
+  plugins: [],
+};
+```
+
+> **Important**: This configuration is required for proper styling of form components. Make sure to include all the theme extensions and safelist patterns as they are used for dynamic color applications and animations.
+
+4. Add Tailwind's directives to your CSS:
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Required CSS variables */
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
+  --primary: 222.2 47.4% 11.2%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96.1%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --accent: 210 40% 96.1%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 222.2 84% 4.9%;
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 210 40% 98%;
+  --primary-foreground: 222.2 47.4% 11.2%;
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 212.7 26.8% 83.9%;
+}
+```
+
+> **Important**: These CSS variables are required for proper styling of form components. They provide the base colors and theme values used throughout the library. You can customize these values to match your application's theme.
+
+### Alternative: Using Pre-built CSS
+
+If you prefer not to install Tailwind CSS, you can manually add our pre-built CSS file from:
+https://github.com/ChrisCoder9000/formly-reactjs-styles
+
+Download the `output.css` file and include it in your project.
+
 ## 🚀 Quick Start
 
 ```tsx
@@ -459,74 +642,3 @@ function App() {
 You can provide custom components for any of these field types:
 
 - Text Fields: `text`, `text_area`, `number`, `email`, `secret`, `url`, `phone`, `otp`
-- Date Fields: `date`, `date_range`
-- Option Fields: `select`, `multi_select`, `option`, `multi_option`, `choice`, `multi_choice`
-- Boolean Fields: `checkbox`
-- Complex Fields: `blocks`
-- File Fields: `files`
-
-Each custom component receives the appropriate props type based on the field type, with block fields receiving additional props for managing block operations.
-
-## 🎨 Styling
-
-Formly uses Tailwind CSS for styling. You can customize the appearance through:
-
-- Custom CSS classes via the `className` prop
-- Tailwind configuration
-- Theme customization (see docs)
-
-### Color Customization
-
-You can customize the colors of your form components by passing a `colors` prop to the `Builder` component:
-
-```tsx
-import { Builder } from "formly-reactjs";
-import { TW_COLORS } from "formly-reactjs/constants/colors";
-
-function App() {
-  return (
-    <Builder
-      steps={steps}
-      colors={{
-        background: "blue", // Primary background color
-        backgroundSecondary: "indigo", // Secondary background color
-        text: "gray", // Primary text color
-        textSecondary: "slate", // Secondary text color
-        error: "red", // Error state color
-        buttons: {
-          primary: "blue", // Primary button color
-          secondary: "gray", // Secondary button color
-        },
-        ring: "blue", // Focus ring color
-      }}
-      onSubmit={handleSubmit}
-    />
-  );
-}
-```
-
-Available color options (TW_COLORS):
-
-- Basic: `gray`, `zinc`, `neutral`, `stone`
-- Warm: `red`, `orange`, `amber`, `yellow`
-- Nature: `lime`, `green`, `emerald`, `teal`
-- Cool: `cyan`, `sky`, `blue`, `indigo`
-- Vibrant: `violet`, `purple`, `fuchsia`, `pink`, `rose`
-
-Each color follows Tailwind CSS's color palette system and will automatically handle different shades for various states (hover, focus, etc.).
-
-## 🤝 Contributing
-
-We welcome contributions!
-
-<!-- Please see our [Contributing Guide](CONTRIBUTING.md) for details. -->
-
-## 📄 License
-
-MIT © Formly
-
-<!-- ## 💬 Support
-
-- [Documentation](https://formly-docs.com)
-- [GitHub Issues](https://github.com/formly/formly-reactsdk/issues)
-- [Discord Community](https://discord.gg/formly) -->

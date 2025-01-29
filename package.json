@@ -8,15 +8,13 @@
     "src"
   ],
   "scripts": {
-    "prepare": "npm run typecheck && npm run build:css",
+    "prepare": "npm run typecheck",
     "typecheck": "tsc --noEmit",
     "publish": "npm publish --access=public",
     "p:patch": "npm run prepare && npm version patch && npm run publish --access=public",
     "p:minor": "npm run prepare && npm version minor && npm run publish --access=public",
     "p:major": "npm run prepare && npm version major && npm run publish --access=public",
-    "dev": "concurrently \"npm run dev:css\" \"npm run typecheck --watch\"",
-    "dev:css": "tailwindcss -i ./src/index.css -o ./src/output.css --watch",
-    "build:css": "tailwindcss -i ./src/index.css -o ./src/output.css --minify"
+    "dev": "npm run typecheck --watch"
   },
   "keywords": [
     "formly",
