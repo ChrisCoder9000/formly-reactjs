@@ -7,7 +7,7 @@
 // -----
 
 import { FieldType } from "../constants/enums";
-import { Field } from "../constants/types";
+import { Field, FormStep, FormStepFlex } from "../constants/types";
 import { ZodRawShape, z } from "zod";
 import { VALIDATORS } from "../constants/validators";
 
@@ -235,4 +235,23 @@ export const areDependenciesSatisfied = (
 
     return dependencyValue === dependency.value;
   });
+};
+
+export const fillInitialFormData = (
+  formData: Record<string, string> | undefined,
+  fields: FormStepFlex[]
+): { [key: string]: string } => {
+  let _formData: { [key: string]: string } = {};
+
+  if (!fields?.length || !Object.entries(formData ?? {}).length)
+    return _formData;
+
+  for (const [name, value] of Object.entries(formData ?? {})) {
+    const field = fields.find((f) => f.fields.find((f) => f.name === name));
+    if (field) {
+      _formData[name] = value;
+    }
+  }
+
+  return _formData;
 };

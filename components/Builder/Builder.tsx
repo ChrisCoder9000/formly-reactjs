@@ -23,6 +23,7 @@ import { cn } from "../../lib/utils";
 import { TW_COLORS } from "../../constants/colors";
 import { FieldError, FieldErrors } from "react-hook-form";
 import { colorBuilder } from "../../utils/colors";
+import { fillInitialFormData } from "../../utils/data";
 
 type BuilderProps = {
   steps: FormStepFlex[];
@@ -32,6 +33,7 @@ type BuilderProps = {
   nextLabel?: string;
   color?: ColorsOverwrites;
   submitLabel?: string;
+  defaultFormData?: Record<string, string>;
   onSubmit?: (data: Record<string, string>) => void;
   // onStepSubmit?: (data: Record<string, string>) => void;
   // onStepChange?: (step: FormStepFlex) => void;
@@ -108,7 +110,10 @@ const reducer = (
  */
 const Builder = (props: BuilderProps) => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [formData, setFormData] = useReducer(reducer, {});
+  const [formData, setFormData] = useReducer(
+    reducer,
+    fillInitialFormData(props.defaultFormData, props.steps)
+  );
 
   const handleSubmit = (data: Record<string, string>) => {
     let _data: Record<string, string> = {};
