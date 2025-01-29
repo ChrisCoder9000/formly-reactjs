@@ -5,6 +5,8 @@ A modern, type-safe form builder SDK for React applications that makes creating 
 ![npm version](https://badge.fury.io/js/formly-reactjs.svg)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
+[GitHub Repository](https://github.com/ChrisCoder9000/formly-reactjs)
+
 ## ✨ Features
 
 - 🎯 **Type-Safe**: Built with TypeScript for robust type checking and better IDE support
@@ -362,7 +364,7 @@ const blockField = {
 };
 ```
 
-## �� Field Overwrites
+## 🎨 Field Overwrites
 
 Formly allows you to customize the rendering of any field type by providing custom components. This is useful when you want to maintain the form's logic but need a different UI representation.
 
@@ -515,7 +517,9 @@ Each color follows Tailwind CSS's color palette system and will automatically ha
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+We welcome contributions!
+
+<!-- Please see our [Contributing Guide](CONTRIBUTING.md) for details. -->
 
 ## 📄 License
 
