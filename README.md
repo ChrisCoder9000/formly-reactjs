@@ -43,12 +43,6 @@ yarn add formly-reactjs-styles
 pnpm add formly-reactjs-styles
 ```
 
-3. Import the styles in your app's entry point (e.g., \_app.tsx, App.jsx, or index.js):
-
-```tsx
-import "formly-reactjs-styles/dist/styles.css";
-```
-
 ## 🎨 Tailwind CSS Setup (Optional)
 
 If you want to customize the styles, you'll need to set up Tailwind CSS:
