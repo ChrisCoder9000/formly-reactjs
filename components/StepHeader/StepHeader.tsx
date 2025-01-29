@@ -6,18 +6,37 @@
 // Modified By: the developer formerly known as Christian Nonis at <alch.infoemail@gmail.com>
 // -----
 
+import { colorBuilder } from "../../utils/colors";
+import { ColorsOverwrites } from "../../constants/types";
 import React from "react";
 
 type StepHeaderProps = {
   title?: string;
   subtitle?: string;
+  colors?: ColorsOverwrites;
 };
 
 const StepHeader = (props: StepHeaderProps) => {
   return (
     <div className="">
-      <h1 className="text-2xl font-bold mb-1">{props.title}</h1>
-      <p className="text-sm text-gray-500 mb-6">{props.subtitle}</p>
+      <h1
+        className={`text-2xl font-bold mb-1 ${colorBuilder(
+          "text",
+          props.colors?.text ?? "gray",
+          "900"
+        )}`}
+      >
+        {props.title}
+      </h1>
+      <p
+        className={`text-sm ${colorBuilder(
+          "text",
+          props.colors?.textSecondary ?? "gray",
+          "500"
+        )} mb-6`}
+      >
+        {props.subtitle}
+      </p>
     </div>
   );
 };

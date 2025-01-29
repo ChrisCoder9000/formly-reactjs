@@ -50,13 +50,13 @@ const ChoiceField = <T extends FieldType.CHOICE | FieldType.MULTI_CHOICE>(
           className={cn(
             `flex items-center gap-2 border py-2 px-4 rounded-md hover:${colorBuilder(
               "bg",
-              props.errored ? "red" : "slate",
+              props.errored ? "red" : "gray",
               "300/30"
             )} cursor-pointer`,
             props.errored ? colorBuilder("border", "red", "100") : "",
             props.errored ? colorBuilder("bg", "red", "50") : "",
             checkValue(option)
-              ? colorBuilder("bg", props.errored ? "red" : "slate", "400/20")
+              ? colorBuilder("bg", props.errored ? "red" : "gray", "400/20")
               : ""
           )}
           onClick={() => {
@@ -92,12 +92,12 @@ const ChoiceField = <T extends FieldType.CHOICE | FieldType.MULTI_CHOICE>(
             className={cn(
               `${colorBuilder(
                 "text",
-                props.errored ? "red" : "slate",
+                props.errored ? "red" : "gray",
                 "500"
               )} border rounded-md px-2 py-1 text-sm text-center`,
               checkValue(option)
-                ? colorBuilder("border", props.errored ? "red" : "slate", "300")
-                : colorBuilder("border", props.errored ? "red" : "slate", "200")
+                ? colorBuilder("border", props.errored ? "red" : "gray", "300")
+                : colorBuilder("border", props.errored ? "red" : "gray", "200")
             )}
           >
             {String.fromCharCode(97 + i).toUpperCase()}
@@ -105,7 +105,7 @@ const ChoiceField = <T extends FieldType.CHOICE | FieldType.MULTI_CHOICE>(
           <p
             className={`${colorBuilder(
               "text",
-              props.errored ? "red" : "slate",
+              props.errored ? "red" : "gray",
               "500"
             )} text-sm`}
           >

@@ -6,7 +6,7 @@
 // Modified By: the developer formerly known as Christian Nonis at <alch.infoemail@gmail.com>
 // -----
 
-import { Field } from "../../constants/types";
+import { ColorsOverwrites, Field } from "../../constants/types";
 import { FormDescription, FormField, FormItem, FormLabel } from "../ui/form";
 import { FieldError, UseFormReturn } from "react-hook-form";
 import { Textarea } from "../ui/textarea";
@@ -28,6 +28,7 @@ export type FieldRendererProps = {
   onChange: (name: string, value: string) => void;
   value?: any;
   form: UseFormReturn;
+  colors?: ColorsOverwrites;
 };
 
 export const FieldRenderer = (props: FieldRendererProps) => {
@@ -84,6 +85,7 @@ export const FieldRenderer = (props: FieldRendererProps) => {
               }}
               field={props.field}
               form={props.form}
+              colors={props.colors}
             />
             {![
               FieldType.OPTION,
@@ -115,6 +117,7 @@ const FieldSwitcher = (
     value: any;
     field: Field;
     form: UseFormReturn;
+    colors?: ColorsOverwrites;
   }
 ) => {
   switch (props.type) {
@@ -134,6 +137,7 @@ const FieldSwitcher = (
           errored={
             typeof props.errored === "object" ? props.errored : undefined
           }
+          colors={props.colors}
         />
       );
     case "otp":
@@ -163,6 +167,7 @@ const FieldSwitcher = (
     case "select":
       return (
         <SelectField
+          colors={props.colors}
           options={props.options ?? []}
           value={props.value ?? ""}
           onChange={props.onChange}
@@ -235,6 +240,7 @@ const FieldSwitcher = (
           errored={props.errored}
           field={props.field}
           form={props.form}
+          colors={props.colors}
         />
       );
     default:

@@ -8,7 +8,11 @@
 
 import React, { useEffect, useState } from "react";
 import { FieldError, UseFormReturn } from "react-hook-form";
-import { Field, FieldFormOverridesBlock } from "../../../constants/types";
+import {
+  ColorsOverwrites,
+  Field,
+  FieldFormOverridesBlock,
+} from "../../../constants/types";
 import { FieldRenderer } from "../../../components/FieldRenderer";
 import { PlusIcon, Trash, Trash2 } from "lucide-react";
 import { colorBuilder } from "../../../utils/colors";
@@ -22,6 +26,7 @@ type BlockFieldProps = {
   errored: FieldError | Record<string, FieldError>[] | undefined;
   field: Field;
   form: UseFormReturn;
+  colors?: ColorsOverwrites;
 };
 
 const BlocksField = (props: BlockFieldProps) => {
@@ -66,7 +71,13 @@ const BlocksField = (props: BlockFieldProps) => {
               openedBlockIndex === j
                 ? cn(
                     "space-y-4 p-4 rounded-lg rounded-md",
-                    colorBuilder("bg", blockErrored ? "red" : "slate", "50")
+                    colorBuilder(
+                      "bg",
+                      blockErrored
+                        ? "red"
+                        : props.colors?.backgroundSecondary ?? "gray",
+                      "50"
+                    )
                   )
                 : ""
             )}
@@ -93,28 +104,54 @@ const BlocksField = (props: BlockFieldProps) => {
                   }}
                   value={props.value[j]?.[childField.name]}
                   form={form}
+                  colors={props.colors}
                 />
               ))
             ) : (
               <div
                 className={cn(
                   "flex items-center justify-between cursor-pointer py-2 px-4 rounded-md",
-                  colorBuilder("bg", blockErrored ? "red" : "slate", "50"),
-                  colorBuilder("text", blockErrored ? "red" : "slate", "500"),
+                  colorBuilder(
+                    "bg",
+                    blockErrored
+                      ? "red"
+                      : props.colors?.backgroundSecondary ?? "gray",
+                    "50"
+                  ),
+                  colorBuilder(
+                    "text",
+                    blockErrored
+                      ? "red"
+                      : props.colors?.textSecondary ?? "gray",
+                    "500"
+                  ),
                   `hover:${colorBuilder(
                     "bg",
-                    blockErrored ? "red" : "slate",
+                    blockErrored
+                      ? "red"
+                      : props.colors?.backgroundSecondary ?? "gray",
                     "50"
                   )}`
                 )}
                 onClick={() => setOpenedBlockIndex(j)}
               >
-                <p className="text-xs font-[600]">
+                <p
+                  className={cn(
+                    "text-xs font-[600]",
+                    colorBuilder("text", props.colors?.text ?? "gray", "800")
+                  )}
+                >
                   {field.openLabel || "Open"}
                 </p>
                 <Trash2
                   size={14}
-                  // className={cn(colorBuilder("text", "slate", "300"))}
+                  className={cn(
+                    colorBuilder(
+                      "text",
+                      props.colors?.backgroundSecondary ?? "gray",
+                      "600"
+                    )
+                  )}
                   onClick={(e) => {
                     e.stopPropagation();
                     e.preventDefault();
@@ -131,7 +168,12 @@ const BlocksField = (props: BlockFieldProps) => {
         style={{
           boxShadow: "0 1px 1px rgba(0,0,0,0.1)",
         }}
-        className="text-sm font-[500] flex items-center gap-2 rounded-lg border border-slate-100 py-1 px-2 mt-2 cursor-pointer"
+        className={cn(
+          `text-sm font-[500] flex items-center gap-2 rounded-lg border py-1 px-2 mt-2 cursor-pointer`,
+          colorBuilder("border", props.colors?.ring ?? "gray", "100"),
+          colorBuilder("text", props.colors?.text ?? "gray", "800"),
+          colorBuilder("bg", props.colors?.background ?? "gray", "50/10")
+        )}
       >
         <PlusIcon className="w-4 h-4" />
         {props.field.addLabel || "Add"}

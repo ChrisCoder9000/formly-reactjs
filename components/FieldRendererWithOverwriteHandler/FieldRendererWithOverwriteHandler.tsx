@@ -14,6 +14,7 @@ import {
   FormFieldOverrides,
   FieldComponentOverrides,
   Field,
+  ColorsOverwrites,
 } from "../../constants/types";
 import { FieldType } from "../../constants/enums";
 import { useBlocksField } from "../(Fields)/BlockField/hooks";
@@ -25,6 +26,7 @@ type FieldRendererWithOverwriteHandlerProps = Omit<
   fieldOverwrites?: Partial<FieldComponentOverrides>;
   formData: Record<string, any>;
   stepIndex: number;
+  colors?: ColorsOverwrites;
 };
 
 const FieldRendererWithOverwriteHandler = (
@@ -41,6 +43,7 @@ const FieldRendererWithOverwriteHandler = (
       form={props.form}
       errored={props.form.formState.errors[props.field.name] as any}
       field={props.field}
+      colors={props.colors}
       onChange={(_, value) => {
         const _formData = fillNestedField(
           props.field.name,
@@ -176,6 +179,7 @@ const FieldRendererWithOverwriteHandler = (
                 }}
                 value={props.value?.[j]?.[f.name]}
                 key={i}
+                colors={props.colors}
               />
             ),
           };

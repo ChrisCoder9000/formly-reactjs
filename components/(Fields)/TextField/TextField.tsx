@@ -33,6 +33,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../../components/ui/select";
+import { ColorsOverwrites } from "../../../constants/types";
 
 type PhoneNumber = {
   countryCode: string;
@@ -53,6 +54,7 @@ type TextFieldProps = {
   onChange: (name: string, value: string | PhoneNumber) => void;
   name: string;
   errored?: FieldError;
+  colors?: ColorsOverwrites;
 };
 
 const TextField = (props: TextFieldProps) => {
@@ -110,7 +112,8 @@ const TextField = (props: TextFieldProps) => {
                   )}
                   className={cn(
                     props.errored ? "border-red-500 bg-red-50" : "",
-                    "pl-10"
+                    "pl-10",
+                    `focus-visible:ring-${props.colors?.ring ?? "gray"}-800`
                   )}
                   placeholder={props.placeholder}
                   onChange={(e) => {
@@ -145,7 +148,8 @@ const TextField = (props: TextFieldProps) => {
               value={props.value ?? ""}
               className={cn(
                 props.errored ? "border-red-500 bg-red-50" : "",
-                [FieldType.TEXT].includes(props.type) ? "pl-3" : "pl-10"
+                [FieldType.TEXT].includes(props.type) ? "pl-3" : "pl-10",
+                `focus-visible:ring-${props.colors?.ring ?? "gray"}-800`
               )}
               placeholder={props.placeholder}
               onChange={(e) => props.onChange(props.name, e.target.value)}

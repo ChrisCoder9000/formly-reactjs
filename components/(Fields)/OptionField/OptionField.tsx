@@ -52,12 +52,12 @@ const OptionField = <T extends FieldType.OPTION | FieldType.MULTI_OPTION>(
           className={cn(
             `flex items-center gap-2 ${colorBuilder(
               "bg",
-              props.errored ? "red" : "slate",
+              props.errored ? "red" : "gray",
               "100"
             )} border py-2 px-4 rounded-md w-fit cursor-pointer`,
             checkValue(option)
-              ? colorBuilder("bg", props.errored ? "red" : "slate", "300")
-              : colorBuilder("bg", props.errored ? "red" : "slate", "100")
+              ? colorBuilder("bg", props.errored ? "red" : "gray", "300")
+              : colorBuilder("bg", props.errored ? "red" : "gray", "100")
           )}
           onClick={() => {
             if (props.type === FieldType.MULTI_OPTION) {
@@ -85,7 +85,7 @@ const OptionField = <T extends FieldType.OPTION | FieldType.MULTI_OPTION>(
           <p
             className={`${colorBuilder(
               "text",
-              props.errored ? "red" : "slate",
+              props.errored ? "red" : "gray",
               "600"
             )} text-sm`}
           >

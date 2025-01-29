@@ -9,6 +9,7 @@
 import { FieldRendererProps } from "@/components/FieldRenderer/FieldRenderer";
 import { FieldType, FieldTypeFlex } from "./enums";
 import { FieldError } from "react-hook-form";
+import { TW_COLORS } from "./colors";
 
 export type FieldValidator = {
   name: string;
@@ -128,3 +129,16 @@ export type FieldOverwriteOnChangeProps<T extends FieldType> =
   T extends keyof FieldOverwriteOnChangePropsMap
     ? FieldOverwriteOnChangePropsMap[T]
     : never;
+
+export type ColorsOverwrites = {
+  background?: TW_COLORS;
+  backgroundSecondary?: TW_COLORS;
+  text?: TW_COLORS;
+  textSecondary?: TW_COLORS;
+  error?: TW_COLORS;
+  buttons?: {
+    primary?: TW_COLORS;
+    secondary?: TW_COLORS;
+  };
+  ring?: TW_COLORS;
+};

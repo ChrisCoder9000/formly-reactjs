@@ -6,31 +6,11 @@
 // Modified By: the developer formerly known as Christian Nonis at <alch.infoemail@gmail.com>
 // -----
 
+import { TW_COLORS } from "../constants/colors";
+
 export const colorBuilder = (
   type: "bg" | "text" | "border",
-  color:
-    | "slate"
-    | "gray"
-    | "zinc"
-    | "neutral"
-    | "stone"
-    | "red"
-    | "orange"
-    | "amber"
-    | "yellow"
-    | "lime"
-    | "green"
-    | "emerald"
-    | "teal"
-    | "cyan"
-    | "sky"
-    | "blue"
-    | "indigo"
-    | "violet"
-    | "purple"
-    | "fuchsia"
-    | "pink"
-    | "rose" = "slate",
+  color: TW_COLORS,
   opacity: string
 ) => {
   return `${type}-${color}-${opacity}`;

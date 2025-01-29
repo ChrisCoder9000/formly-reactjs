@@ -15,6 +15,9 @@ import {
   SelectValue,
 } from "../../../components/ui/select";
 import { FieldError } from "react-hook-form";
+import { ColorsOverwrites } from "../../../constants/types";
+import { colorBuilder } from "../../../utils/colors";
+import { cn } from "../../../lib/utils";
 
 type SelectFieldProps = {
   options: { label: string; value: string }[];
@@ -22,6 +25,7 @@ type SelectFieldProps = {
   onChange: (name: string, value: string) => void;
   name: string;
   errored?: FieldError;
+  colors?: ColorsOverwrites;
 };
 
 const SelectField = (props: SelectFieldProps) => {
@@ -62,13 +66,17 @@ const SelectField = (props: SelectFieldProps) => {
       onValueChange={handleChange}
     >
       <SelectTrigger
-        className={`w-full ${props.errored ? "border-red-500 bg-red-50" : ""}`}
+        colors={props.colors}
+        className={cn(
+          `w-full ${props.errored ? "border-red-500 bg-red-50" : ""}`,
+          `focus:ring-${props.colors?.backgroundSecondary ?? "gray"}-800`
+        )}
       >
         <SelectValue placeholder="Theme" />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent colors={props.colors}>
         {props.options.map((option, i) => (
-          <SelectItem key={i} value={option.value}>
+          <SelectItem key={i} value={option.value} colors={props.colors}>
             {option.label}
           </SelectItem>
         ))}
