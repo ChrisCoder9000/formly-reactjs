@@ -5,7 +5,7 @@
 // Modified By: the developer formerly known as Christian Nonis at <alch.infoemail@gmail.com>
 // -----
 
-module.exports = {
+export default {
   plugins: {
     // "tailwindcss/nesting": {},
     tailwindcss: {},
