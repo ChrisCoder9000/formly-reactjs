@@ -9,6 +9,7 @@
 import { FieldType } from "../constants/enums";
 import { Field } from "../constants/types";
 import { ZodRawShape, z } from "zod";
+import { VALIDATORS } from "../constants/validators";
 
 export const toZod = (fields: Field[], formValues: any = {}): ZodRawShape => {
   const shape: ZodRawShape = {};
@@ -119,6 +120,18 @@ export const toZod = (fields: Field[], formValues: any = {}): ZodRawShape => {
         if (validator.name === "maxLength") {
           schema = schema.refine(
             (val) => !val || val.length <= validator.value,
+            { message: validator.errorMessage }
+          ) as unknown as z.ZodString;
+        }
+        if (validator.name === "pattern") {
+          schema = schema.refine(
+            (val) => !val || VALIDATORS.pattern(validator.value, val),
+            { message: validator.errorMessage }
+          ) as unknown as z.ZodString;
+        }
+        if (validator.name === "custom") {
+          schema = schema.refine(
+            (val) => !val || VALIDATORS.custom(validator.value, val),
             { message: validator.errorMessage }
           ) as unknown as z.ZodString;
         }

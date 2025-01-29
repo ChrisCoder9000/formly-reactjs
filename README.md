@@ -224,10 +224,10 @@ Built-in validators:
 - `email`: Must be a valid email address
 - `minLength`: Minimum string length
 - `maxLength`: Maximum string length
-- `pattern`: Regular expression pattern
-- `custom`: Custom validation function
+- `pattern`: Regular expression pattern with custom error message
+- `custom`: Custom validation function that returns boolean
 
-Example:
+### Basic Validation Example
 
 ```tsx
 const field = {
@@ -236,18 +236,133 @@ const field = {
   validators: [
     {
       name: "required",
-      message: "Email is required",
+      errorMessage: "Email is required",
     },
     {
       name: "pattern",
       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-      message: "Invalid email format",
+      errorMessage: "Invalid email format",
     },
   ],
 };
 ```
 
-## 🎨 Field Overwrites
+### Pattern Validator
+
+The pattern validator uses regular expressions to validate field values:
+
+```tsx
+const nameField = {
+  name: "fullName",
+  type: "text",
+  label: "Full Name",
+  validators: [
+    {
+      name: "required",
+      errorMessage: "Name is required",
+    },
+    {
+      name: "pattern",
+      value: /^[a-zA-Z]+$/, // Only letters allowed
+      errorMessage: "Name must contain only letters",
+    },
+  ],
+};
+
+const phoneField = {
+  name: "phone",
+  type: "text",
+  label: "Phone Number",
+  validators: [
+    {
+      name: "pattern",
+      value: /^\d{10}$/, // Exactly 10 digits
+      errorMessage: "Phone number must be 10 digits",
+    },
+  ],
+};
+```
+
+### Custom Validator
+
+Custom validators allow you to define complex validation logic using a function:
+
+```tsx
+const usernameField = {
+  name: "username",
+  type: "text",
+  label: "Username",
+  validators: [
+    {
+      name: "custom",
+      value: (value: string) => value.length >= 3 && value.length <= 20,
+      errorMessage: "Username must be between 3 and 20 characters",
+    },
+    {
+      name: "custom",
+      value: (value: string) => !value.includes(" "),
+      errorMessage: "Username cannot contain spaces",
+    },
+  ],
+};
+```
+
+### Block Field Validation
+
+Block fields can have validators at both the block level and for individual fields within the block:
+
+```tsx
+const blockField = {
+  name: "userDetails",
+  type: "blocks",
+  label: "User Details",
+  description: "Add one or more user details",
+  addLabel: "Add User",
+  // Validates that at least one block exists
+  validators: [
+    {
+      name: "required",
+      errorMessage: "At least one user detail is required",
+    },
+  ],
+  fields: [
+    {
+      name: "username",
+      type: "text",
+      label: "Username",
+      placeholder: "Enter username",
+      validators: [
+        {
+          name: "required",
+          errorMessage: "Username is required",
+        },
+        {
+          name: "custom",
+          value: (value: string) => {
+            // Complex validation example
+            return value === "Jonny" || value === "Jane";
+          },
+          errorMessage: "Username must be either Jonny or Jane",
+        },
+      ],
+    },
+    {
+      name: "age",
+      type: "number",
+      label: "Age",
+      validators: [
+        {
+          name: "custom",
+          value: (value: number) => value >= 18,
+          errorMessage: "User must be at least 18 years old",
+        },
+      ],
+    },
+  ],
+};
+```
+
+## �� Field Overwrites
 
 Formly allows you to customize the rendering of any field type by providing custom components. This is useful when you want to maintain the form's logic but need a different UI representation.
 
@@ -406,8 +521,8 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 MIT © Formly
 
-## 💬 Support
+<!-- ## 💬 Support
 
 - [Documentation](https://formly-docs.com)
 - [GitHub Issues](https://github.com/formly/formly-reactsdk/issues)
-- [Discord Community](https://discord.gg/formly)
+- [Discord Community](https://discord.gg/formly) -->
