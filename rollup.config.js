@@ -1,7 +1,6 @@
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
-import postcss from "rollup-plugin-postcss";
 import babel from "@rollup/plugin-babel";
 
 export default {
@@ -10,7 +9,7 @@ export default {
     {
       file: "dist/index.js",
       format: "cjs",
-      sourcemap: true,
+      sourcemap: false,
       globals: {
         react: "React",
         "react-dom": "ReactDOM",
@@ -19,7 +18,7 @@ export default {
     {
       file: "dist/index.esm.js",
       format: "esm",
-      sourcemap: true,
+      sourcemap: false,
       globals: {
         react: "React",
         "react-dom": "ReactDOM",
@@ -46,25 +45,6 @@ export default {
       declaration: true,
       declarationDir: "dist",
       exclude: ["node_modules/**"],
-    }),
-    postcss({
-      config: {
-        path: "./postcss.config.js",
-      },
-      extensions: [".css"],
-      minimize: true,
-      modules: false,
-      extract: true,
-      autoModules: false,
-      inject: false,
-      use: {
-        sass: null,
-        stylus: null,
-        less: null,
-      },
-      loaders: [],
-      to: "./dist/styles.css",
-      sourceMap: true,
     }),
     babel({
       exclude: "node_modules/**",

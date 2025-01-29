@@ -19,6 +19,8 @@ A modern, type-safe form builder SDK for React applications that makes creating 
 
 ## 📦 Installation
 
+1. Install the core package:
+
 ```bash
 npm install formly-reactjs
 
@@ -29,7 +31,27 @@ yarn add formly-reactjs
 pnpm add formly-reactjs
 ```
 
-## 🎨 Tailwind CSS Setup (Required)
+2. Install the styles package (required):
+
+```bash
+npm install formly-reactjs-styles
+
+# or with yarn
+yarn add formly-reactjs-styles
+
+# or with pnpm
+pnpm add formly-reactjs-styles
+```
+
+3. Import the styles in your app's entry point (e.g., \_app.tsx, App.jsx, or index.js):
+
+```tsx
+import "formly-reactjs-styles/dist/styles.css";
+```
+
+## 🎨 Tailwind CSS Setup (Optional)
+
+If you want to customize the styles, you'll need to set up Tailwind CSS:
 
 ### Alternative: Using Pre-built CSS
 
