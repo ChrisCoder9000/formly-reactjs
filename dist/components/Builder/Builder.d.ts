@@ -11,6 +11,13 @@ type BuilderProps = {
     submitLabel?: string;
     defaultFormData?: Record<string, string>;
     onSubmit?: (data: Record<string, string>) => void;
+    onStepSubmit?: (args: {
+        data: Record<string, string>;
+        stepIndex: number;
+        errors: FieldErrors<{
+            [x: string]: any;
+        }>;
+    }) => void;
     fieldComponentOverwrites?: Partial<FieldComponentOverrides>;
     actionsOverwrites?: (args: {
         onBack: () => void;

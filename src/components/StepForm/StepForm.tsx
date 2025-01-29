@@ -53,13 +53,14 @@ type StepFormProps = {
   formErrorOverwrites?: (props: {
     errors: FieldErrors<{ [x: string]: any }>;
   }) => React.ReactElement;
+  onStepSubmit?: (args: {
+    data: Record<string, string>;
+    stepIndex: number;
+    errors: FieldErrors<{ [x: string]: any }>;
+  }) => void;
 };
 
 const StepForm = (props: StepFormProps) => {
-  const validateStep = (): boolean => {
-    return true;
-  };
-
   const formRef = React.useRef<any>();
   const formSchema = z.object(toZod(props.step.fields));
 
@@ -82,10 +83,7 @@ const StepForm = (props: StepFormProps) => {
   }, [props.formData, form]);
 
   const handleSubmit = () => {
-    const isValid = validateStep();
-    if (isValid) {
-      props.onSubmit(form.getValues());
-    }
+    props.onSubmit(form.getValues());
   };
 
   let firstError = Object.values(form.formState.errors)[0] as FieldError;
@@ -96,10 +94,28 @@ const StepForm = (props: StepFormProps) => {
     )[0] as FieldError;
   }
 
+  const handleStepSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const _validInvalidHandler = () => {
+      console.log("validInvalidHandler");
+      if (props.onStepSubmit) {
+        props.onStepSubmit({
+          data: form.getValues(),
+          stepIndex: props.stepIndex,
+          errors: form.formState.errors,
+        });
+      }
+      handleSubmit();
+    };
+
+    form.handleSubmit(_validInvalidHandler, _validInvalidHandler)(e);
+  };
+
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(handleSubmit)}
+        onSubmit={handleStepSubmit}
         // className={cn(
         //   colorBuilder("bg", props.color?.background ?? "gray", "100/05")
         // )}

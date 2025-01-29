@@ -26,6 +26,13 @@ type StepFormProps = {
             [x: string]: any;
         }>;
     }) => React.ReactElement;
+    onStepSubmit?: (args: {
+        data: Record<string, string>;
+        stepIndex: number;
+        errors: FieldErrors<{
+            [x: string]: any;
+        }>;
+    }) => void;
 };
 declare const StepForm: (props: StepFormProps) => import("react/jsx-runtime").JSX.Element;
 export default StepForm;
