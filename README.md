@@ -304,6 +304,11 @@ interface BuilderProps {
   description?: string; // Form description
   className?: string; // Custom CSS class
   onSubmit: (data: any) => void; // Submit callback
+  defaultFormData?: Record<string, string>; // Initial form data
+  fieldOverwrites?: FieldOverwrites; // Custom field renderers
+  actionsOverwrites?: ActionsOverwrites; // Custom action buttons
+  headerOverwrites?: HeaderOverwrites; // Custom header
+  formErrorOverwrites?: FormErrorOverwrites; // Custom form error messages
 }
 ```
 
@@ -338,6 +343,77 @@ interface Field {
   validators?: Validator[];
   options?: Option[]; // For select, radio, etc.
   defaultValue?: any;
+}
+```
+
+### Default Values
+
+You can set initial values for any field using the `defaultValue` property. The value type should match the field type:
+
+```tsx
+// Text field
+{
+  name: "username",
+  type: "text",
+  defaultValue: "JohnDoe"
+}
+
+// Number field
+{
+  name: "age",
+  type: "number",
+  defaultValue: 25
+}
+
+// Checkbox field
+{
+  name: "subscribe",
+  type: "checkbox",
+  defaultValue: true
+}
+
+// Select field
+{
+  name: "country",
+  type: "select",
+  options: [
+    { label: "USA", value: "us" },
+    { label: "UK", value: "uk" }
+  ],
+  defaultValue: "us"
+}
+
+// Date field
+{
+  name: "birthDate",
+  type: "date",
+  defaultValue: new Date("1990-01-01")
+}
+
+// Block field
+{
+  name: "addresses",
+  type: "blocks",
+  defaultValue: [
+    {
+      street: "123 Main St",
+      city: "New York"
+    },
+    {
+      street: "456 Park Ave",
+      city: "Los Angeles"
+    }
+  ],
+  fields: [
+    {
+      name: "street",
+      type: "text"
+    },
+    {
+      name: "city",
+      type: "text"
+    }
+  ]
 }
 ```
 

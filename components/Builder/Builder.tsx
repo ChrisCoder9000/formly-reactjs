@@ -95,6 +95,7 @@ const reducer = (
  * @param {function} [props.actionsOverwrites] - Optional custom renderer for form action buttons
  * @param {function} [props.headerOverwrites] - Optional custom renderer for form header
  * @param {function} [props.formErrorOverwrites] - Optional custom renderer for form validation errors
+ * @param {Object} [props.defaultFormData] - Optional initial form data to fill in the fields
  *
  * @returns {React.ReactElement} A multi-step form component
  *
