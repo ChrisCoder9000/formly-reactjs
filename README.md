@@ -19,15 +19,29 @@ A modern, type-safe form builder SDK for React applications that makes creating 
 
 ## 📦 Installation
 
-1. Install the core package and its required dependencies:
+1. Install the core package and its peer dependencies:
 
 ```bash
-npm install formly-reactjs tailwindcss postcss autoprefixer
-# or with yarn
-yarn add formly-reactjs tailwindcss postcss autoprefixer
-# or with pnpm
-pnpm add formly-reactjs tailwindcss postcss autoprefixer
+# First, install the correct Tailwind CSS version
+npm install tailwindcss@^3.4.0 postcss autoprefixer
+
+# Then install formly-reactjs
+npm install formly-reactjs
+
+# Or using yarn
+yarn add tailwindcss@^3.4.0 postcss autoprefixer
+yarn add formly-reactjs
+
+# Or using pnpm
+pnpm add tailwindcss@^3.4.0 postcss autoprefixer
+pnpm add formly-reactjs
 ```
+
+> **Note**: If you encounter peer dependency conflicts, you can use one of these approaches:
+>
+> 1. Install the specific Tailwind version required (`^3.4.0`)
+> 2. Use the `--force` flag: `npm install formly-reactjs --force`
+> 3. Use the `--legacy-peer-deps` flag: `npm install formly-reactjs --legacy-peer-deps`
 
 ## 🎨 Tailwind CSS Setup
 
