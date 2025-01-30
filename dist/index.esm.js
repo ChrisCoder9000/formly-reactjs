@@ -16486,17 +16486,14 @@ var SelectField = function SelectField(props) {
     onOpenChange: handleOpenChange,
     onValueChange: handleChange,
     children: [jsx(SelectTrigger, {
-      colors: props.colors,
       className: cn("w-full ".concat(props.errored ? "border-destructive-foreground bg-destructive-foreground/10" : "")),
       children: jsx(SelectValue, {
         placeholder: "Theme"
       })
     }), jsx(SelectContent, {
-      colors: props.colors,
       children: props.options.map(function (option, i) {
         return jsx(SelectItem, {
           value: option.value,
-          colors: props.colors,
           children: option.label
         }, i);
       })
