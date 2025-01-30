@@ -1,13 +1,8 @@
-// File: /tailwind.config.js
-// Created Date: Thursday January 30th 2025
-// Author: Christian Nonis <alch.infoemail@gmail.com>
-// -----
-// Last Modified: Thursday January 30th 2025 2:49:47 pm
-// Modified By: the developer formerly known as Christian Nonis at <alch.infoemail@gmail.com>
-// -----
+import type { Config } from "tailwindcss";
+import forms from "@tailwindcss/forms";
+import typography from "@tailwindcss/typography";
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+const preset: Config = {
   darkMode: ["class"],
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
@@ -133,5 +128,7 @@ module.exports = {
       },
     },
   },
-  plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography")],
-};
+  plugins: [forms, typography],
+} as const;
+
+export default preset;

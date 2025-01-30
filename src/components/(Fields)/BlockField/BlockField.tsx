@@ -6,18 +6,13 @@
 // Modified By: the developer formerly known as Christian Nonis at <alch.infoemail@gmail.com>
 // -----
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FieldError, UseFormReturn } from "react-hook-form";
-import {
-  ColorsOverwrites,
-  Field,
-  FieldFormOverridesBlock,
-} from "../../../constants/types";
-import { FieldRenderer } from "../../../components/FieldRenderer";
-import { PlusIcon, Trash, Trash2 } from "lucide-react";
-import { colorBuilder } from "../../../utils/colors";
+import { ColorsOverwrites, Field } from "../../../constants/types";
+import { PlusIcon, Trash2 } from "lucide-react";
 import { cn } from "../../../lib/utils";
 import { useBlocksField } from "./hooks";
+import BlockFieldRenderer from "./BlockFieldRenderer";
 
 type BlockFieldProps = {
   value: Record<string, any>[];
@@ -79,7 +74,7 @@ const BlocksField = (props: BlockFieldProps) => {
           >
             {openedBlockIndex === j ? (
               block.fields?.map((childField: Field) => (
-                <FieldRenderer
+                <BlockFieldRenderer
                   errored={
                     Array.isArray(props.errored)
                       ? (props.errored as Record<string, FieldError>[])?.find(

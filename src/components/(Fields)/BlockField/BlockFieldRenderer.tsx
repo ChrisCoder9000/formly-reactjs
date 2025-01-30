@@ -1,28 +1,27 @@
-// File: /components/FieldRenderer/FieldRenderer.tsx
-// Created Date: Wednesday January 22nd 2025
+// Created Date: Thursday January 30th 2025
 // Author: Christian Nonis <alch.infoemail@gmail.com>
 // -----
-// Last Modified: Wednesday January 22nd 2025 7:53:55 pm
+// Last Modified: Thursday January 30th 2025 2:49:47 pm
 // Modified By: the developer formerly known as Christian Nonis at <alch.infoemail@gmail.com>
 // -----
 
-import { ColorsOverwrites, Field } from "../../constants/types";
-import { FormDescription, FormField, FormItem, FormLabel } from "../ui/form";
+import React from "react";
 import { FieldError, UseFormReturn } from "react-hook-form";
-import { Textarea } from "../ui/textarea";
-import { cn } from "../../lib/utils";
-import { FieldType } from "../../constants/enums";
-import DateField from "../(Fields)/DateField";
-import SelectField from "../(Fields)/SelectField/SelectField";
-import TextField from "../(Fields)/TextField";
-import ChoiceField from "../(Fields)/ChoiceField/ChoiceField";
-import OptionField from "../(Fields)/OptionField/OptionField";
-import CheckboxField from "../(Fields)/CheckboxField/CheckboxField";
-import { OtpField } from "../(Fields)/OtpField";
-import { areDependenciesSatisfied } from "../../utils/data";
-import BlocksField from "../(Fields)/BlockField";
+import { ColorsOverwrites, Field } from "../../../constants/types";
+import { cn } from "../../../lib/utils";
+import { FormDescription, FormField, FormItem, FormLabel } from "../../ui/form";
+import { FieldType } from "../../../constants/enums";
+import { areDependenciesSatisfied } from "../../../utils/data";
+import { Textarea } from "../../ui/textarea";
+import DateField from "../DateField";
+import SelectField from "../SelectField/SelectField";
+import TextField from "../TextField";
+import ChoiceField from "../ChoiceField/ChoiceField";
+import OptionField from "../OptionField/OptionField";
+import CheckboxField from "../CheckboxField/CheckboxField";
+import { OtpField } from "../OtpField";
 
-export type FieldRendererProps = {
+type BlockFieldRendererProps = {
   field: Field;
   errored?: FieldError;
   onChange: (name: string, value: string) => void;
@@ -31,7 +30,7 @@ export type FieldRendererProps = {
   colors?: ColorsOverwrites;
 };
 
-export const FieldRenderer = (props: FieldRendererProps) => {
+const BlockFieldRenderer = (props: BlockFieldRendererProps) => {
   if (props.field.dependencies?.length) {
     const formValues = props.form.getValues();
     if (!areDependenciesSatisfied(props.field.dependencies, formValues)) {
@@ -66,7 +65,6 @@ export const FieldRenderer = (props: FieldRendererProps) => {
               FieldType.CHOICE,
               FieldType.MULTI_CHOICE,
               FieldType.MULTI_OPTION,
-              FieldType.BLOCKS,
             ].includes(props.field.type) ? (
               <FormDescription
                 className={cn(
@@ -96,7 +94,6 @@ export const FieldRenderer = (props: FieldRendererProps) => {
               FieldType.MULTI_CHOICE,
               FieldType.MULTI_OPTION,
               FieldType.CHECKBOX,
-              FieldType.BLOCKS,
             ].includes(props.field.type) && props.field.description ? (
               <FormDescription
                 className={cn(
@@ -237,19 +234,9 @@ const FieldSwitcher = (
           description={props.description}
         />
       );
-    case "blocks":
-      return (
-        <BlocksField
-          value={props.value ?? []}
-          onChange={props.onChange}
-          name={props.name}
-          errored={props.errored}
-          field={props.field}
-          form={props.form}
-          colors={props.colors}
-        />
-      );
     default:
       return null;
   }
 };
+
+export default BlockFieldRenderer;

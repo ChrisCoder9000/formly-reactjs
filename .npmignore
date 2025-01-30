@@ -4,5 +4,8 @@ webpack.config.js
 node_modules
 examples
 src/output.css
+src/**/*.test.ts
+src/**/*.test.tsx
+src/**/__tests__/*
 .vscode
 .git

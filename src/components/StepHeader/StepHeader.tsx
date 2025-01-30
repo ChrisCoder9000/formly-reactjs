@@ -6,7 +6,6 @@
 // Modified By: the developer formerly known as Christian Nonis at <alch.infoemail@gmail.com>
 // -----
 
-import { colorBuilder } from "../../utils/colors";
 import { ColorsOverwrites } from "../../constants/types";
 import React from "react";
 

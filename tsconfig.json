@@ -13,13 +13,13 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "declaration": true,
-    "declarationDir": "dist",
     "sourceMap": true,
-    "outDir": "dist",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "emitDeclarationOnly": true,
+    "declarationDir": "dist/types"
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]

@@ -70,7 +70,8 @@ module.exports = {
   darkMode: ["class"],
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
-    "./node_modules/formly-reactjs/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/formly-reactjs/dist/esm/**/*.js",
+    "./node_modules/formly-reactjs/dist/cjs/**/*.js",
   ],
   theme: {
     extend: {
@@ -133,6 +134,7 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
         "caret-blink": "caret-blink 1.25s ease-out infinite",
       },
+      ...require("formly-reactjs").tailwindPreset.theme,
     },
   },
   plugins: [],

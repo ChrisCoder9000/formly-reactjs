@@ -27,7 +27,6 @@ import { TriangleAlert } from "lucide-react";
 import { FieldType } from "../../constants/enums";
 import FieldRendererWithOverwriteHandler from "../FieldRendererWithOverwriteHandler";
 import { TW_COLORS } from "../../constants/colors";
-import { colorBuilder } from "../../utils/colors";
 import { cn } from "../../lib/utils";
 
 type StepFormProps = {
@@ -123,12 +122,7 @@ const StepForm = (props: StepFormProps) => {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={handleStepSubmit}
-        // className={cn(
-        //   colorBuilder("bg", props.color?.background ?? "gray", "100/05")
-        // )}
-      >
+      <form onSubmit={handleStepSubmit}>
         {props.headerOverwrites ? (
           props.headerOverwrites({
             title: props.step.title || props.formTitle,

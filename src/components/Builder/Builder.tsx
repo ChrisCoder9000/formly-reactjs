@@ -22,7 +22,6 @@ import { FieldType, FieldTypeFlex } from "../../constants/enums";
 import { cn } from "../../lib/utils";
 import { TW_COLORS } from "../../constants/colors";
 import { FieldError, FieldErrors } from "react-hook-form";
-import { colorBuilder } from "../../utils/colors";
 import { fillInitialFormData } from "../../utils/data";
 
 type BuilderProps = {
@@ -112,7 +111,7 @@ const reducer = (
  *   onSubmit={(data) => console.log(data)}
  * />
  */
-const Builder = (props: BuilderProps) => {
+export const Builder = (props: BuilderProps) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useReducer(
     reducer,

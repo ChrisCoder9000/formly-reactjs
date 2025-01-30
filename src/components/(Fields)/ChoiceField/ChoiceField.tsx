@@ -9,7 +9,6 @@
 import React from "react";
 import { cn } from "../../../lib/utils";
 import { FieldType } from "../../../constants/enums";
-import { colorBuilder } from "../../../utils/colors";
 import { FieldError } from "react-hook-form";
 
 type MultipleChoiceFieldProps = {
@@ -48,15 +47,15 @@ const ChoiceField = <T extends FieldType.CHOICE | FieldType.MULTI_CHOICE>(
         <div
           key={option.value}
           className={cn(
-            `flex items-center gap-2 border py-2 px-4 rounded-md hover:${colorBuilder(
-              "bg",
-              props.errored ? "red" : "gray",
-              "300/30"
-            )} cursor-pointer`,
-            props.errored ? colorBuilder("border", "red", "100") : "",
-            props.errored ? colorBuilder("bg", "red", "50") : "",
+            `flex items-center gap-2 border py-2 px-4 rounded-md hover:${
+              props.errored ? "bg-destructive/5" : "bg-primary/10"
+            } cursor-pointer`,
+            props.errored ? "border-destructive/10" : "",
+            props.errored ? "bg-destructive/5" : "",
             checkValue(option)
-              ? colorBuilder("bg", props.errored ? "red" : "gray", "400/20")
+              ? props.errored
+                ? "bg-destructive/20"
+                : "bg-primary/10"
               : ""
           )}
           onClick={() => {
@@ -90,25 +89,20 @@ const ChoiceField = <T extends FieldType.CHOICE | FieldType.MULTI_CHOICE>(
         >
           <span
             className={cn(
-              `${colorBuilder(
-                "text",
-                props.errored ? "red" : "gray",
-                "500"
-              )} border rounded-md px-2 py-1 text-sm text-center`,
+              `border rounded-md px-2 py-1 text-sm text-center`,
+              props.errored ? "text-destructive" : "",
               checkValue(option)
-                ? colorBuilder("border", props.errored ? "red" : "gray", "300")
-                : colorBuilder("border", props.errored ? "red" : "gray", "200")
+                ? props.errored
+                  ? "border-destructive/20"
+                  : "border-primary/20"
+                : props.errored
+                ? "border-destructive/20"
+                : "border-primary/20"
             )}
           >
             {String.fromCharCode(97 + i).toUpperCase()}
           </span>
-          <p
-            className={`${colorBuilder(
-              "text",
-              props.errored ? "red" : "gray",
-              "500"
-            )} text-sm`}
-          >
+          <p className={`${props.errored ? "text-destructive" : ""} text-sm`}>
             {option.label}
           </p>
         </div>

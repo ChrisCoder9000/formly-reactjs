@@ -2,7 +2,6 @@ import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
 import babel from "@rollup/plugin-babel";
-import postcss from "rollup-plugin-postcss";
 
 const isProduction = !process.env.ROLLUP_WATCH;
 
@@ -10,18 +9,20 @@ export default {
   input: "src/index.ts",
   output: [
     {
-      file: "dist/index.js",
+      file: "dist/cjs/index.js",
       format: "cjs",
       sourcemap: !isProduction,
+      exports: "named",
       globals: {
         react: "React",
         "react-dom": "ReactDOM",
       },
     },
     {
-      file: "dist/index.esm.js",
+      file: "dist/esm/index.js",
       format: "esm",
       sourcemap: !isProduction,
+      exports: "named",
       globals: {
         react: "React",
         "react-dom": "ReactDOM",
@@ -36,13 +37,17 @@ export default {
     /^@hookform\/.*/,
   ],
   plugins: [
-    postcss({
-      inject: false,
-      extract: false,
-      modules: {
-        generateScopedName: "[hash:base64:5]",
+    {
+      name: "remove-use-client",
+      transform(code, id) {
+        if (id.endsWith(".tsx") || id.endsWith(".ts")) {
+          return {
+            code: code.replace(/"use client";?\n?/, ""),
+            map: null,
+          };
+        }
       },
-    }),
+    },
     resolve({
       extensions: [".js", ".jsx", ".ts", ".tsx"],
       preferBuiltins: true,
@@ -51,11 +56,12 @@ export default {
       include: /node_modules/,
     }),
     typescript({
-      tsconfig: "./tsconfig.json",
-      declaration: true,
-      declarationDir: "dist",
-      exclude: ["node_modules/**"],
-      sourceMap: !isProduction,
+      tsconfig: "tsconfig.build.json",
+      noEmitOnError: true,
+      compilerOptions: {
+        sourceMap: !isProduction,
+        inlineSources: !isProduction,
+      },
     }),
     babel({
       exclude: "node_modules/**",

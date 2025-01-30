@@ -16,7 +16,6 @@ import {
 } from "../../../components/ui/select";
 import { FieldError } from "react-hook-form";
 import { ColorsOverwrites } from "../../../constants/types";
-import { colorBuilder } from "../../../utils/colors";
 import { cn } from "../../../lib/utils";
 
 type SelectFieldProps = {

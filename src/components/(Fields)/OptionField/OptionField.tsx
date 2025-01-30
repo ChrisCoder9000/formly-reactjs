@@ -9,7 +9,6 @@
 import React from "react";
 import { cn } from "../../../lib/utils";
 import { FieldType } from "../../../constants/enums";
-import { colorBuilder } from "../../../utils/colors";
 import { FieldError } from "react-hook-form";
 
 type MultipleOptionFieldProps = {
@@ -50,14 +49,14 @@ const OptionField = <T extends FieldType.OPTION | FieldType.MULTI_OPTION>(
         <div
           key={option.value}
           className={cn(
-            `flex items-center gap-2 ${colorBuilder(
-              "bg",
-              props.errored ? "red" : "gray",
-              "100"
-            )} border py-2 px-4 rounded-md w-fit cursor-pointer`,
+            `flex items-center gap-2 border py-2 px-4 rounded-md w-fit cursor-pointer`,
             checkValue(option)
-              ? colorBuilder("bg", props.errored ? "red" : "gray", "300")
-              : colorBuilder("bg", props.errored ? "red" : "gray", "100")
+              ? props.errored
+                ? "bg-destructive/20"
+                : "bg-primary/20"
+              : props.errored
+              ? "bg-destructive/5"
+              : "bg-foreground/5"
           )}
           onClick={() => {
             if (props.type === FieldType.MULTI_OPTION) {
@@ -82,13 +81,7 @@ const OptionField = <T extends FieldType.OPTION | FieldType.MULTI_OPTION>(
             }
           }}
         >
-          <p
-            className={`${colorBuilder(
-              "text",
-              props.errored ? "red" : "gray",
-              "600"
-            )} text-sm`}
-          >
+          <p className={`${props.errored ? "text-destructive" : ""} text-sm`}>
             {option.label}
           </p>
         </div>
