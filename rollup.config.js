@@ -3,6 +3,8 @@ import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
 import babel from "@rollup/plugin-babel";
 import postcss from "rollup-plugin-postcss";
+import autoprefixer from "autoprefixer";
+import tailwindcss from "tailwindcss";
 
 export default {
   input: "src/index.ts",
@@ -35,16 +37,12 @@ export default {
   ],
   plugins: [
     postcss({
-      config: {
-        path: "./postcss.config.js",
-      },
-      extensions: [".css"],
-      inject: {
-        insertAt: "top",
-      },
+      plugins: [tailwindcss(), autoprefixer()],
+      extract: "styles.css",
       modules: false,
       autoModules: false,
       minimize: true,
+      inject: false,
     }),
     resolve({
       extensions: [".js", ".jsx", ".ts", ".tsx"],

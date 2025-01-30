@@ -66,7 +66,6 @@ const SelectField = (props: SelectFieldProps) => {
       onValueChange={handleChange}
     >
       <SelectTrigger
-        colors={props.colors}
         className={cn(
           `w-full ${
             props.errored
@@ -77,9 +76,9 @@ const SelectField = (props: SelectFieldProps) => {
       >
         <SelectValue placeholder="Theme" />
       </SelectTrigger>
-      <SelectContent colors={props.colors}>
+      <SelectContent>
         {props.options.map((option, i) => (
-          <SelectItem key={i} value={option.value} colors={props.colors}>
+          <SelectItem key={i} value={option.value}>
             {option.label}
           </SelectItem>
         ))}

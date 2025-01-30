@@ -12,22 +12,48 @@ A modern, type-safe form builder SDK for React applications that makes creating 
 - 🎯 **Type-Safe**: Built with TypeScript for robust type checking and better IDE support
 - 🚀 **Multi-Step Forms**: Create wizard-like experiences with ease
 - 📝 **Smart Validation**: Built-in validators with custom validation support
-- 🎨 **Customizable UI**: Pre-built components with Tailwind CSS styling
+- 🎨 **Customizable UI**: Pre-built components with optional Tailwind CSS styling
 - 🔄 **State Management**: Efficient form state handling out of the box
 - 📱 **Responsive**: Mobile-first design approach
-- 🎈 **Zero Config**: Start building forms instantly with included styles
+- 🎈 **Flexible Styling**: Use our pre-built styles or bring your own
 
 ## 📦 Installation
 
-1. Install the core package and its required dependencies:
+1. Install the core package:
 
 ```bash
-npm install formly-reactjs tailwindcss postcss autoprefixer
+npm install formly-reactjs
 # or with yarn
-yarn add formly-reactjs tailwindcss postcss autoprefixer
+yarn add formly-reactjs
 # or with pnpm
-pnpm add formly-reactjs tailwindcss postcss autoprefixer
+pnpm add formly-reactjs
 ```
+
+## 🎨 Styling Options
+
+The package supports two styling approaches:
+
+### Option 1: Using Pre-built Styles (Optional)
+
+If you want to use our pre-built styles with Tailwind CSS:
+
+1. Install the required styling dependencies:
+
+```bash
+npm install tailwindcss postcss autoprefixer
+```
+
+2. Import our styles in your application:
+
+```typescript
+import "formly-reactjs/dist/styles"; // Import pre-built styles
+```
+
+3. Follow the Tailwind setup instructions below.
+
+### Option 2: Custom Styling
+
+You can completely skip our styling and use your own CSS by not importing our styles. The components accept standard className props for custom styling.
 
 ## 🎨 Tailwind CSS Setup
 

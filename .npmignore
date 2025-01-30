@@ -3,6 +3,6 @@ index-test.js
 webpack.config.js
 node_modules
 examples
-# src/output.css
+src/output.css
 .vscode
 .git
