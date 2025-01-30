@@ -1,7 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
-  content: ["./src/**/*.{ts,tsx}", "./src/components/**/*.{ts,tsx}"],
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/formly-reactjs/dist/**/*.{js,jsx,ts,tsx}",
+  ],
   safelist: [],
   theme: {
     container: {

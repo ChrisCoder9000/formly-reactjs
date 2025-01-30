@@ -3,8 +3,6 @@ import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
 import babel from "@rollup/plugin-babel";
 import postcss from "rollup-plugin-postcss";
-import autoprefixer from "autoprefixer";
-import tailwindcss from "tailwindcss";
 
 const isProduction = !process.env.ROLLUP_WATCH;
 
@@ -39,10 +37,8 @@ export default {
   ],
   plugins: [
     postcss({
-      plugins: [tailwindcss(), autoprefixer()],
-      extract: "styles.css",
-      modules: false,
-      autoModules: false,
+      modules: true,
+      autoModules: true,
       minimize: isProduction,
       inject: false,
     }),
