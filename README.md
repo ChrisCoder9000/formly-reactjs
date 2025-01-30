@@ -23,17 +23,17 @@ A modern, type-safe form builder SDK for React applications that makes creating 
 
 ```bash
 # First, install the correct Tailwind CSS version
-npm install tailwindcss@^3.4.0 postcss autoprefixer
+npm install tailwindcss@^3.4.0 postcss autoprefixer date-fns input-otp zod, react-day-picker
 
 # Then install formly-reactjs
 npm install formly-reactjs
 
 # Or using yarn
-yarn add tailwindcss@^3.4.0 postcss autoprefixer
+yarn add tailwindcss@^3.4.0 postcss autoprefixer date-fns input-otp zod, react-day-picker
 yarn add formly-reactjs
 
 # Or using pnpm
-pnpm add tailwindcss@^3.4.0 postcss autoprefixer
+pnpm add tailwindcss@^3.4.0 postcss autoprefixer date-fns input-otp zod, react-day-picker
 pnpm add formly-reactjs
 ```
 
@@ -62,82 +62,23 @@ module.exports = {
 
 ### 2. Tailwind Configuration
 
-Create a `tailwind.config.js` file:
+Create a `tailwind.config.js` file, make sure to include the content for telling tailwind where to find the formly-reactjs components and include also the presets:
 
 ```javascript
+import { tailwindPreset } from "formly-reactjs";
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  presets: [tailwindPreset],
   darkMode: ["class"],
+  safelist: [],
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
-    "./node_modules/formly-reactjs/dist/esm/**/*.js",
-    "./node_modules/formly-reactjs/dist/cjs/**/*.js",
+    "./node_modules/formly-reactjs/**/*.js",
   ],
   theme: {
-    extend: {
-      colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-      },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
-      keyframes: {
-        "caret-blink": {
-          "0%,70%,100%": { opacity: "1" },
-          "20%,50%": { opacity: "0" },
-        },
-        "accordion-down": {
-          from: { height: 0 },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: 0 },
-        },
-      },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
-        "caret-blink": "caret-blink 1.25s ease-out infinite",
-      },
-      ...require("formly-reactjs").tailwindPreset.theme,
-    },
+    extend: {},
   },
-  plugins: [],
 };
 ```
 
@@ -158,10 +99,10 @@ Create a CSS file (e.g., `src/styles/globals.css`) and add Tailwind's directives
   --card-foreground: 222.2 84% 4.9%;
   --popover: 0 0% 100%;
   --popover-foreground: 222.2 84% 4.9%;
-  --primary: 222.2 47.4% 11.2%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 210 40% 96.1%;
-  --secondary-foreground: 222.2 47.4% 11.2%;
+  --primary: 0 0% 15%; /* Darker, almost black */
+  --primary-foreground: 0 0% 98%; /* Almost white for contrast */
+  --secondary: 0 0% 93%; /* Light neutral gray */
+  --secondary-foreground: 0 0% 20%; /* Dark gray for contrast */
   --muted: 210 40% 96.1%;
   --muted-foreground: 215.4 16.3% 46.9%;
   --accent: 210 40% 96.1%;
@@ -181,10 +122,10 @@ Create a CSS file (e.g., `src/styles/globals.css`) and add Tailwind's directives
   --card-foreground: 210 40% 98%;
   --popover: 222.2 84% 4.9%;
   --popover-foreground: 210 40% 98%;
-  --primary: 210 40% 98%;
-  --primary-foreground: 222.2 47.4% 11.2%;
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
+  --primary: 0 0% 98%; /* Almost white */
+  --primary-foreground: 0 0% 15%; /* Almost black for contrast */
+  --secondary: 0 0% 20%; /* Dark neutral gray */
+  --secondary-foreground: 0 0% 93%; /* Light gray for contrast */
   --muted: 217.2 32.6% 17.5%;
   --muted-foreground: 215 20.2% 65.1%;
   --accent: 217.2 32.6% 17.5%;
