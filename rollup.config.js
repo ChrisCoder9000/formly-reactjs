@@ -12,7 +12,7 @@ export default {
     {
       file: "dist/index.js",
       format: "cjs",
-      sourcemap: false,
+      sourcemap: true,
       globals: {
         react: "React",
         "react-dom": "ReactDOM",
@@ -21,7 +21,7 @@ export default {
     {
       file: "dist/index.esm.js",
       format: "esm",
-      sourcemap: false,
+      sourcemap: true,
       globals: {
         react: "React",
         "react-dom": "ReactDOM",
