@@ -56,6 +56,7 @@ type StepFormProps = {
     stepIndex: number;
     errors: FieldErrors<{ [x: string]: any }>;
   }) => void;
+  onChange?: (data: Record<string, string>, stepIndex: number) => void;
 };
 
 const StepForm = (props: StepFormProps) => {
@@ -69,7 +70,7 @@ const StepForm = (props: StepFormProps) => {
       );
       return zodResolver(schema)(values, context, options);
     },
-    mode: "onSubmit",
+    mode: "onChange",
   });
 
   formRef.current = form;
@@ -119,6 +120,18 @@ const StepForm = (props: StepFormProps) => {
 
     form.handleSubmit(onValid, onInvalid)(e);
   };
+
+  React.useEffect(() => {
+    const subscription = form.watch((data) => {
+      if (props.onChange) {
+        props.onChange(data?.data || {}, props.stepIndex);
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [form, props.onChange]);
 
   return (
     <Form {...form}>

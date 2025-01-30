@@ -67,11 +67,15 @@ export const toZod = (fields: Field[], formValues: any = {}): ZodRawShape => {
       schema = z.string({ required_error: requiredError }).url();
       schema = isRequired ? schema : schema.optional();
     } else if (field.type === FieldType.MULTI_OPTION) {
-      schema = z.array(z.string(), { required_error: requiredError });
-      schema = isRequired ? schema : schema.optional();
+      let arraySchema = z.array(z.string(), { required_error: requiredError });
+      schema = isRequired
+        ? arraySchema.min(1, { message: requiredError })
+        : arraySchema.optional();
     } else if (field.type === FieldType.MULTI_CHOICE) {
-      schema = z.array(z.string(), { required_error: requiredError });
-      schema = isRequired ? schema : schema.optional();
+      let arraySchema = z.array(z.string(), { required_error: requiredError });
+      schema = isRequired
+        ? arraySchema.min(1, { message: requiredError })
+        : arraySchema.optional();
     } else if (field.type === FieldType.CHECKBOX) {
       schema = z.boolean({ required_error: requiredError });
       if (isRequired) {
@@ -104,9 +108,12 @@ export const toZod = (fields: Field[], formValues: any = {}): ZodRawShape => {
         );
       schema = isRequired ? schema : schema.optional();
     } else {
-      schema = isRequired
-        ? z.string({ required_error: requiredError })
-        : z.string().optional();
+      let stringSchema = z.string({ required_error: requiredError });
+      if (isRequired) {
+        schema = stringSchema.min(1, { message: requiredError });
+      } else {
+        schema = stringSchema.optional();
+      }
     }
 
     if (field.validators) {

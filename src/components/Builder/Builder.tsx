@@ -38,7 +38,7 @@ type BuilderProps = {
     stepIndex: number;
     errors: FieldErrors<{ [x: string]: any }>;
   }) => void;
-  // onStepChange?: (step: FormStepFlex) => void;
+  onChange?: (data: Record<string, string>, stepIndex: number) => void;
 
   // Field Overwrites
   fieldComponentOverwrites?: Partial<FieldComponentOverrides>;
@@ -137,6 +137,16 @@ export const Builder = (props: BuilderProps) => {
     }
     return props.nextLabel || "Next";
   }, [currentStep, props.submitLabel, props.nextLabel]);
+
+  const handleChange = (data: Record<string, string>, stepIndex: number) => {
+    if (props.onChange) {
+      props.onChange(data || {}, stepIndex);
+    }
+    for (const [name, value] of Object.entries(data)) {
+      setFormData({ name, value });
+    }
+  };
+
   // [--primary:84_100%_50%]
   return (
     <div className={`${props.className ?? ""}`}>
@@ -159,6 +169,7 @@ export const Builder = (props: BuilderProps) => {
             props.steps[currentStep].fields.some((f) => f.name === key)
           )
         )}
+        onChange={handleChange}
       />
     </div>
   );
