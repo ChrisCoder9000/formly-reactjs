@@ -6,11 +6,17 @@
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist",
-    "dist/styles.css"
+    "dist/*.js",
+    "dist/*.d.ts",
+    "dist/styles.css",
+    "dist/components",
+    "dist/constants",
+    "dist/lib",
+    "dist/utils"
   ],
   "scripts": {
-    "build": "rollup -c",
+    "clean": "rm -rf dist",
+    "build": "npm run clean && ROLLUP_WATCH=false rollup -c",
     "dev": "rollup -c -w",
     "prepare": "npm run build",
     "typecheck": "tsc --noEmit",

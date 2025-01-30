@@ -6,13 +6,15 @@ import postcss from "rollup-plugin-postcss";
 import autoprefixer from "autoprefixer";
 import tailwindcss from "tailwindcss";
 
+const isProduction = !process.env.ROLLUP_WATCH;
+
 export default {
   input: "src/index.ts",
   output: [
     {
       file: "dist/index.js",
       format: "cjs",
-      sourcemap: true,
+      sourcemap: !isProduction,
       globals: {
         react: "React",
         "react-dom": "ReactDOM",
@@ -21,7 +23,7 @@ export default {
     {
       file: "dist/index.esm.js",
       format: "esm",
-      sourcemap: true,
+      sourcemap: !isProduction,
       globals: {
         react: "React",
         "react-dom": "ReactDOM",
@@ -41,7 +43,7 @@ export default {
       extract: "styles.css",
       modules: false,
       autoModules: false,
-      minimize: true,
+      minimize: isProduction,
       inject: false,
     }),
     resolve({
@@ -56,6 +58,7 @@ export default {
       declaration: true,
       declarationDir: "dist",
       exclude: ["node_modules/**"],
+      sourceMap: !isProduction,
     }),
     babel({
       exclude: "node_modules/**",
