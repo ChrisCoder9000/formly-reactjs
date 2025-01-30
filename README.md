@@ -29,32 +29,6 @@ yarn add formly-reactjs
 pnpm add formly-reactjs
 ```
 
-## 🎨 Styling Options
-
-The package supports two styling approaches:
-
-### Option 1: Using Pre-built Styles (Optional)
-
-If you want to use our pre-built styles with Tailwind CSS:
-
-1. Install the required styling dependencies:
-
-```bash
-npm install tailwindcss postcss autoprefixer
-```
-
-2. Import our styles in your application:
-
-```typescript
-import "formly-reactjs/dist/styles"; // Import pre-built styles
-```
-
-3. Follow the Tailwind setup instructions below.
-
-### Option 2: Custom Styling
-
-You can completely skip our styling and use your own CSS by not importing our styles. The components accept standard className props for custom styling.
-
 ## 🎨 Tailwind CSS Setup
 
 Follow these steps to set up the required styling configuration:
@@ -279,7 +253,6 @@ interface BuilderProps {
   steps: Step[]; // Array of form steps
   title?: string; // Form title
   description?: string; // Form description
-  className?: string; // Custom CSS class
   onSubmit: (data: any) => void; // Submit callback
   defaultFormData?: Record<string, string>; // Initial form data
   fieldOverwrites?: FieldOverwrites; // Custom field renderers
@@ -731,7 +704,7 @@ Each custom component receives the appropriate props type based on the field typ
 
 Formly uses Tailwind CSS for styling. You can customize the appearance through:
 
-- Custom CSS classes via the `className` prop
+- Overriding the default components
 - Tailwind configuration
 - Theme customization (see docs)
 
