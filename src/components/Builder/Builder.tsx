@@ -31,7 +31,6 @@ type BuilderProps = {
   description?: string;
   className?: string;
   nextLabel?: string;
-  color?: ColorsOverwrites;
   submitLabel?: string;
   defaultFormData?: Record<string, string>;
   onSubmit?: (data: Record<string, string>) => void;
@@ -155,7 +154,6 @@ const Builder = (props: BuilderProps) => {
         stepIndex={currentStep}
         stepsLength={props.steps.length}
         onBack={() => setCurrentStep((p) => p - 1)}
-        color={props.color}
         onStepSubmit={props.onStepSubmit}
         formData={Object.fromEntries(
           Object.entries(formData).filter(([key]) =>

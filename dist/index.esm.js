@@ -8,6 +8,39 @@ import * as PopoverPrimitive from '@radix-ui/react-popover';
 import * as SelectPrimitive from '@radix-ui/react-select';
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 
+function styleInject(css, ref) {
+  if ( ref === undefined ) ref = {};
+  var insertAt = ref.insertAt;
+
+  if (!css || typeof document === 'undefined') { return; }
+
+  var head = document.head || document.getElementsByTagName('head')[0];
+  var style = document.createElement('style');
+  style.type = 'text/css';
+
+  if (insertAt === 'top') {
+    if (head.firstChild) {
+      head.insertBefore(style, head.firstChild);
+    } else {
+      head.appendChild(style);
+    }
+  } else {
+    head.appendChild(style);
+  }
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    style.appendChild(document.createTextNode(css));
+  }
+}
+
+var css_248z$1 = "*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com*/*,:after,:before{border:0 solid #e5e7eb;box-sizing:border-box}:after,:before{--tw-content:\"\"}:host,html{-webkit-text-size-adjust:100%;font-feature-settings:normal;-webkit-tap-highlight-color:transparent;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-variation-settings:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4}body{line-height:inherit;margin:0}hr{border-top-width:1px;color:inherit;height:0}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-feature-settings:normal;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-size:1em;font-variation-settings:normal}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{border-collapse:collapse;border-color:inherit;text-indent:0}button,input,optgroup,select,textarea{font-feature-settings:inherit;color:inherit;font-family:inherit;font-size:100%;font-variation-settings:inherit;font-weight:inherit;letter-spacing:inherit;line-height:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{color:#9ca3af;opacity:1}input::placeholder,textarea::placeholder{color:#9ca3af;opacity:1}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{height:auto;max-width:100%}[hidden]:where(:not([hidden=until-found])){display:none}*{border-color:hsl(var(--border))}.sr-only{clip:rect(0,0,0,0);border-width:0;height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;white-space:nowrap;width:1px}.pointer-events-none{pointer-events:none}.invisible{visibility:hidden}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0}.left-1{left:.25rem}.left-3{left:.75rem}.left-\\[50\\%\\]{left:50%}.right-1{right:.25rem}.right-2{right:.5rem}.right-3{right:.75rem}.right-4{right:1rem}.top-1\\/2{top:50%}.top-4{top:1rem}.top-\\[50\\%\\]{top:50%}.z-10{z-index:10}.z-50{z-index:50}.-mx-1{margin-left:-.25rem;margin-right:-.25rem}.my-1{margin-bottom:.25rem;margin-top:.25rem}.\\!mb-4{margin-bottom:1rem!important}.\\!mt-0{margin-top:0!important}.\\!mt-1{margin-top:.25rem!important}.\\!mt-2{margin-top:.5rem!important}.mb-1{margin-bottom:.25rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.ml-1{margin-left:.25rem}.mt-2{margin-top:.5rem}.mt-4{margin-top:1rem}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.table{display:table}.grid{display:grid}.h-10{height:2.5rem}.h-3\\.5{height:.875rem}.h-4{height:1rem}.h-7{height:1.75rem}.h-8{height:2rem}.h-9{height:2.25rem}.h-\\[1px\\]{height:1px}.h-\\[var\\(--radix-select-trigger-height\\)\\]{height:var(--radix-select-trigger-height)}.h-px{height:1px}.max-h-96{max-height:24rem}.min-h-\\[60px\\]{min-height:60px}.w-3\\.5{width:.875rem}.w-4{width:1rem}.w-7{width:1.75rem}.w-72{width:18rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-auto{width:auto}.w-fit{width:-moz-fit-content;width:fit-content}.w-full{width:100%}.w-px{width:1px}.min-w-\\[8rem\\]{min-width:8rem}.min-w-\\[var\\(--radix-select-trigger-width\\)\\]{min-width:var(--radix-select-trigger-width)}.max-w-\\[115px\\]{max-width:115px}.max-w-lg{max-width:32rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.border-collapse{border-collapse:collapse}.-translate-y-1\\/2{--tw-translate-y:-50%}.-translate-y-1\\/2,.translate-x-\\[-50\\%\\]{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.translate-x-\\[-50\\%\\]{--tw-translate-x:-50%}.translate-y-\\[-50\\%\\]{--tw-translate-y:-50%}.transform,.translate-y-\\[-50\\%\\]{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes caret-blink{0%,70%,to{opacity:1}20%,50%{opacity:0}}.animate-caret-blink{animation:caret-blink 1.25s ease-out infinite}.cursor-default{cursor:default}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;-moz-user-select:none;user-select:none}.flex-row{flex-direction:row}.flex-col{flex-direction:column}.flex-col-reverse{flex-direction:column-reverse}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-start{justify-content:flex-start}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:.25rem}.gap-1\\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-4{gap:1rem}.space-x-1>:not([hidden])~:not([hidden]){--tw-space-x-reverse:0;margin-left:calc(.25rem*(1 - var(--tw-space-x-reverse)));margin-right:calc(.25rem*var(--tw-space-x-reverse))}.space-x-2>:not([hidden])~:not([hidden]){--tw-space-x-reverse:0;margin-left:calc(.5rem*(1 - var(--tw-space-x-reverse)));margin-right:calc(.5rem*var(--tw-space-x-reverse))}.space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-bottom:calc(.25rem*var(--tw-space-y-reverse));margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)))}.space-y-1\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-bottom:calc(.375rem*var(--tw-space-y-reverse));margin-top:calc(.375rem*(1 - var(--tw-space-y-reverse)))}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-bottom:calc(.5rem*var(--tw-space-y-reverse));margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)))}.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-bottom:calc(1rem*var(--tw-space-y-reverse));margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)))}.overflow-hidden{overflow:hidden}.whitespace-nowrap{white-space:nowrap}.rounded-lg{border-radius:var(--radius)}.rounded-md{border-radius:calc(var(--radius) - 2px)}.rounded-sm{border-radius:calc(var(--radius) - 4px)}.border{border-width:1px}.border-y{border-bottom-width:1px;border-top-width:1px}.border-r{border-right-width:1px}.border-destructive{border-color:hsl(var(--destructive))}.border-destructive-foreground{border-color:hsl(var(--destructive-foreground))}.border-foreground\\/10{border-color:hsl(var(--foreground)/.1)}.border-input{border-color:hsl(var(--input))}.border-primary{border-color:hsl(var(--primary))}.bg-accent{background-color:hsl(var(--accent))}.bg-background{background-color:hsl(var(--background))}.bg-black\\/80{background-color:rgba(0,0,0,.8)}.bg-destructive{background-color:hsl(var(--destructive))}.bg-destructive-foreground\\/10{background-color:hsl(var(--destructive-foreground)/.1)}.bg-destructive\\/10{background-color:hsl(var(--destructive)/.1)}.bg-foreground{background-color:hsl(var(--foreground))}.bg-muted{background-color:hsl(var(--muted))}.bg-muted-foreground\\/5{background-color:hsl(var(--muted-foreground)/.05)}.bg-popover{background-color:hsl(var(--popover))}.bg-primary{background-color:hsl(var(--primary))}.bg-primary\\/5{background-color:hsl(var(--primary)/.05)}.bg-secondary{background-color:hsl(var(--secondary))}.bg-slate-200{--tw-bg-opacity:1;background-color:rgb(226 232 240/var(--tw-bg-opacity,1))}.bg-transparent{background-color:transparent}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.p-0{padding:0}.p-1{padding:.25rem}.p-3{padding:.75rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-8{padding-left:2rem;padding-right:2rem}.py-1{padding-bottom:.25rem;padding-top:.25rem}.py-1\\.5{padding-bottom:.375rem;padding-top:.375rem}.py-2{padding-bottom:.5rem;padding-top:.5rem}.pl-10{padding-left:2.5rem}.pl-2{padding-left:.5rem}.pl-3{padding-left:.75rem}.pr-8{padding-right:2rem}.pt-1{padding-top:.25rem}.text-left{text-align:left}.text-center{text-align:center}.text-2xl{font-size:1.5rem;line-height:2rem}.text-\\[0\\.8rem\\]{font-size:.8rem}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xs{font-size:.75rem;line-height:1rem}.font-\\[500\\]{font-weight:500}.font-\\[600\\]{font-weight:600}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}.leading-none{line-height:1}.tracking-tight{letter-spacing:-.025em}.text-accent-foreground{color:hsl(var(--accent-foreground))}.text-current{color:currentColor}.text-destructive{color:hsl(var(--destructive))}.text-destructive-foreground{color:hsl(var(--destructive-foreground))}.text-destructive\\/70{color:hsl(var(--destructive)/.7)}.text-muted-foreground{color:hsl(var(--muted-foreground))}.text-popover-foreground{color:hsl(var(--popover-foreground))}.text-primary{color:hsl(var(--primary))}.text-primary-foreground{color:hsl(var(--primary-foreground))}.text-primary\\/30{color:hsl(var(--primary)/.3)}.text-secondary-foreground{color:hsl(var(--secondary-foreground))}.underline-offset-4{text-underline-offset:4px}.opacity-50{opacity:.5}.opacity-70{opacity:.7}.shadow{--tw-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color),0 1px 2px -1px var(--tw-shadow-color)}.shadow,.shadow-lg{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color),0 4px 6px -4px var(--tw-shadow-color)}.shadow-md{--tw-shadow:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color),0 2px 4px -2px var(--tw-shadow-color)}.shadow-md,.shadow-sm{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgba(0,0,0,.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color)}.outline-none{outline:2px solid transparent;outline-offset:2px}.outline{outline-style:solid}.ring{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color)}.ring,.ring-1{box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.ring-1{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color)}.ring-ring{--tw-ring-color:hsl(var(--ring))}.ring-offset-background{--tw-ring-offset-color:hsl(var(--background))}.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.transition-all{transition-duration:.15s;transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1)}.transition-colors{transition-duration:.15s;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1)}.transition-opacity{transition-duration:.15s;transition-property:opacity;transition-timing-function:cubic-bezier(.4,0,.2,1)}.duration-1000{transition-duration:1s}.duration-200{transition-duration:.2s}.\\[--primary\\:84_100\\%_50\\%\\]{--primary:84 100% 50%}:root{--background:0 0% 100%;--foreground:222.2 84% 4.9%;--card:0 0% 100%;--card-foreground:222.2 84% 4.9%;--popover:0 0% 100%;--popover-foreground:222.2 84% 4.9%;--primary:222.2 47.4% 11.2%;--primary-foreground:210 40% 98%;--secondary:210 40% 96.1%;--secondary-foreground:222.2 47.4% 11.2%;--muted:210 40% 96.1%;--muted-foreground:215.4 16.3% 46.9%;--accent:210 40% 96.1%;--accent-foreground:222.2 47.4% 11.2%;--destructive:0 84.2% 60.2%;--destructive-foreground:210 40% 98%;--border:214.3 31.8% 91.4%;--input:214.3 31.8% 91.4%;--ring:222.2 84% 4.9%;--radius:0.5rem}.dark{--background:222.2 84% 4.9%;--foreground:210 40% 98%;--card:222.2 84% 4.9%;--card-foreground:210 40% 98%;--popover:222.2 84% 4.9%;--popover-foreground:210 40% 98%;--primary:210 40% 98%;--primary-foreground:222.2 47.4% 11.2%;--secondary:217.2 32.6% 17.5%;--secondary-foreground:210 40% 98%;--muted:217.2 32.6% 17.5%;--muted-foreground:215 20.2% 65.1%;--accent:217.2 32.6% 17.5%;--accent-foreground:210 40% 98%;--destructive:0 62.8% 30.6%;--destructive-foreground:210 40% 98%;--border:217.2 32.6% 17.5%;--input:217.2 32.6% 17.5%;--ring:212.7 26.8% 83.9%}.file\\:border-0::file-selector-button{border-width:0}.file\\:bg-transparent::file-selector-button{background-color:transparent}.file\\:text-sm::file-selector-button{font-size:.875rem;line-height:1.25rem}.file\\:font-medium::file-selector-button{font-weight:500}.file\\:text-foreground::file-selector-button{color:hsl(var(--foreground))}.placeholder\\:text-muted-foreground::-moz-placeholder{color:hsl(var(--muted-foreground))}.placeholder\\:text-muted-foreground::placeholder{color:hsl(var(--muted-foreground))}.first\\:rounded-l-md:first-child{border-bottom-left-radius:calc(var(--radius) - 2px);border-top-left-radius:calc(var(--radius) - 2px)}.first\\:border-l:first-child{border-left-width:1px}.last\\:rounded-r-md:last-child{border-bottom-right-radius:calc(var(--radius) - 2px);border-top-right-radius:calc(var(--radius) - 2px)}.focus-within\\:relative:focus-within{position:relative}.focus-within\\:z-20:focus-within{z-index:20}.hover\\:bg-accent:hover{background-color:hsl(var(--accent))}.hover\\:bg-destructive\\/10:hover{background-color:hsl(var(--destructive)/.1)}.hover\\:bg-destructive\\/90:hover{background-color:hsl(var(--destructive)/.9)}.hover\\:bg-primary:hover{background-color:hsl(var(--primary))}.hover\\:bg-primary\\/10:hover{background-color:hsl(var(--primary)/.1)}.hover\\:bg-secondary\\/80:hover{background-color:hsl(var(--secondary)/.8)}.hover\\:text-accent-foreground:hover{color:hsl(var(--accent-foreground))}.hover\\:text-primary-foreground:hover{color:hsl(var(--primary-foreground))}.hover\\:underline:hover{text-decoration-line:underline}.hover\\:opacity-100:hover{opacity:1}.focus\\:bg-accent:focus{background-color:hsl(var(--accent))}.focus\\:bg-primary:focus{background-color:hsl(var(--primary))}.focus\\:text-accent-foreground:focus{color:hsl(var(--accent-foreground))}.focus\\:text-primary-foreground:focus{color:hsl(var(--primary-foreground))}.focus\\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\\:ring-1:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color)}.focus\\:ring-1:focus,.focus\\:ring-2:focus{box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.focus\\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color)}.focus\\:ring-ring:focus{--tw-ring-color:hsl(var(--ring))}.focus\\:ring-offset-2:focus{--tw-ring-offset-width:2px}.focus-visible\\:outline-none:focus-visible{outline:2px solid transparent;outline-offset:2px}.focus-visible\\:ring-1:focus-visible{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.focus-visible\\:ring-destructive:focus-visible{--tw-ring-color:hsl(var(--destructive))}.focus-visible\\:ring-ring:focus-visible{--tw-ring-color:hsl(var(--ring))}.disabled\\:pointer-events-none:disabled{pointer-events:none}.disabled\\:cursor-not-allowed:disabled{cursor:not-allowed}.disabled\\:opacity-50:disabled{opacity:.5}.peer:disabled~.peer-disabled\\:cursor-not-allowed{cursor:not-allowed}.peer:disabled~.peer-disabled\\:opacity-70{opacity:.7}.has-\\[\\:disabled\\]\\:opacity-50:has(:disabled){opacity:.5}.aria-selected\\:bg-accent[aria-selected=true]{background-color:hsl(var(--accent))}.aria-selected\\:bg-accent\\/50[aria-selected=true]{background-color:hsl(var(--accent)/.5)}.aria-selected\\:text-accent-foreground[aria-selected=true]{color:hsl(var(--accent-foreground))}.aria-selected\\:text-muted-foreground[aria-selected=true]{color:hsl(var(--muted-foreground))}.aria-selected\\:opacity-100[aria-selected=true]{opacity:1}.data-\\[disabled\\]\\:pointer-events-none[data-disabled]{pointer-events:none}.data-\\[side\\=bottom\\]\\:translate-y-1[data-side=bottom]{--tw-translate-y:0.25rem}.data-\\[side\\=bottom\\]\\:translate-y-1[data-side=bottom],.data-\\[side\\=left\\]\\:-translate-x-1[data-side=left]{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.data-\\[side\\=left\\]\\:-translate-x-1[data-side=left]{--tw-translate-x:-0.25rem}.data-\\[side\\=right\\]\\:translate-x-1[data-side=right]{--tw-translate-x:0.25rem}.data-\\[side\\=right\\]\\:translate-x-1[data-side=right],.data-\\[side\\=top\\]\\:-translate-y-1[data-side=top]{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.data-\\[side\\=top\\]\\:-translate-y-1[data-side=top]{--tw-translate-y:-0.25rem}.data-\\[state\\=checked\\]\\:bg-primary[data-state=checked]{background-color:hsl(var(--primary))}.data-\\[state\\=open\\]\\:bg-accent[data-state=open]{background-color:hsl(var(--accent))}.data-\\[state\\=checked\\]\\:text-primary-foreground[data-state=checked]{color:hsl(var(--primary-foreground))}.data-\\[state\\=open\\]\\:text-muted-foreground[data-state=open]{color:hsl(var(--muted-foreground))}.data-\\[disabled\\]\\:opacity-50[data-disabled]{opacity:.5}@media (min-width:640px){.sm\\:flex-row{flex-direction:row}.sm\\:justify-end{justify-content:flex-end}.sm\\:space-x-2>:not([hidden])~:not([hidden]){--tw-space-x-reverse:0;margin-left:calc(.5rem*(1 - var(--tw-space-x-reverse)));margin-right:calc(.5rem*var(--tw-space-x-reverse))}.sm\\:space-x-4>:not([hidden])~:not([hidden]){--tw-space-x-reverse:0;margin-left:calc(1rem*(1 - var(--tw-space-x-reverse)));margin-right:calc(1rem*var(--tw-space-x-reverse))}.sm\\:space-y-0>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-bottom:calc(0px*var(--tw-space-y-reverse));margin-top:calc(0px*(1 - var(--tw-space-y-reverse)))}.sm\\:rounded-lg{border-radius:var(--radius)}.sm\\:text-left{text-align:left}}@media (min-width:768px){.md\\:text-sm{font-size:.875rem;line-height:1.25rem}}.\\[\\&\\:has\\(\\>\\.day-range-end\\)\\]\\:rounded-r-md:has(>.day-range-end){border-bottom-right-radius:calc(var(--radius) - 2px);border-top-right-radius:calc(var(--radius) - 2px)}.\\[\\&\\:has\\(\\>\\.day-range-start\\)\\]\\:rounded-l-md:has(>.day-range-start){border-bottom-left-radius:calc(var(--radius) - 2px);border-top-left-radius:calc(var(--radius) - 2px)}.\\[\\&\\:has\\(\\[aria-selected\\]\\)\\]\\:rounded-md:has([aria-selected]){border-radius:calc(var(--radius) - 2px)}.\\[\\&\\:has\\(\\[aria-selected\\]\\)\\]\\:bg-accent:has([aria-selected]){background-color:hsl(var(--accent))}.first\\:\\[\\&\\:has\\(\\[aria-selected\\]\\)\\]\\:rounded-l-md:has([aria-selected]):first-child{border-bottom-left-radius:calc(var(--radius) - 2px);border-top-left-radius:calc(var(--radius) - 2px)}.last\\:\\[\\&\\:has\\(\\[aria-selected\\]\\)\\]\\:rounded-r-md:has([aria-selected]):last-child{border-bottom-right-radius:calc(var(--radius) - 2px);border-top-right-radius:calc(var(--radius) - 2px)}.\\[\\&\\:has\\(\\[aria-selected\\]\\.day-outside\\)\\]\\:bg-accent\\/50:has([aria-selected].day-outside){background-color:hsl(var(--accent)/.5)}.\\[\\&\\:has\\(\\[aria-selected\\]\\.day-range-end\\)\\]\\:rounded-r-md:has([aria-selected].day-range-end){border-bottom-right-radius:calc(var(--radius) - 2px);border-top-right-radius:calc(var(--radius) - 2px)}.\\[\\&\\>span\\]\\:line-clamp-1>span{-webkit-box-orient:vertical;-webkit-line-clamp:1;display:-webkit-box;overflow:hidden}.\\[\\&_svg\\]\\:pointer-events-none svg{pointer-events:none}.\\[\\&_svg\\]\\:size-4 svg{height:1rem;width:1rem}.\\[\\&_svg\\]\\:shrink-0 svg{flex-shrink:0}";
+styleInject(css_248z$1,{"insertAt":"top"});
+
+var css_248z = "*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com*/*,:after,:before{border:0 solid #e5e7eb;box-sizing:border-box}:after,:before{--tw-content:\"\"}:host,html{-webkit-text-size-adjust:100%;font-feature-settings:normal;-webkit-tap-highlight-color:transparent;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-variation-settings:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4}body{line-height:inherit;margin:0}hr{border-top-width:1px;color:inherit;height:0}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-feature-settings:normal;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-size:1em;font-variation-settings:normal}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{border-collapse:collapse;border-color:inherit;text-indent:0}button,input,optgroup,select,textarea{font-feature-settings:inherit;color:inherit;font-family:inherit;font-size:100%;font-variation-settings:inherit;font-weight:inherit;letter-spacing:inherit;line-height:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,fieldset,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{color:#9ca3af;opacity:1}input::placeholder,textarea::placeholder{color:#9ca3af;opacity:1}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{height:auto;max-width:100%}[hidden]:where(:not([hidden=until-found])){display:none}*{border-color:hsl(var(--border))}.sr-only{clip:rect(0,0,0,0);border-width:0;height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;white-space:nowrap;width:1px}.pointer-events-none{pointer-events:none}.invisible{visibility:hidden}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0}.left-1{left:.25rem}.left-3{left:.75rem}.left-\\[50\\%\\]{left:50%}.right-1{right:.25rem}.right-2{right:.5rem}.right-3{right:.75rem}.right-4{right:1rem}.top-1\\/2{top:50%}.top-4{top:1rem}.top-\\[50\\%\\]{top:50%}.z-10{z-index:10}.z-50{z-index:50}.-mx-1{margin-left:-.25rem;margin-right:-.25rem}.my-1{margin-bottom:.25rem;margin-top:.25rem}.\\!mb-4{margin-bottom:1rem!important}.\\!mt-0{margin-top:0!important}.\\!mt-1{margin-top:.25rem!important}.\\!mt-2{margin-top:.5rem!important}.mb-1{margin-bottom:.25rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.ml-1{margin-left:.25rem}.mt-2{margin-top:.5rem}.mt-4{margin-top:1rem}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.table{display:table}.grid{display:grid}.h-10{height:2.5rem}.h-3\\.5{height:.875rem}.h-4{height:1rem}.h-7{height:1.75rem}.h-8{height:2rem}.h-9{height:2.25rem}.h-\\[1px\\]{height:1px}.h-\\[var\\(--radix-select-trigger-height\\)\\]{height:var(--radix-select-trigger-height)}.h-px{height:1px}.max-h-96{max-height:24rem}.min-h-\\[60px\\]{min-height:60px}.w-3\\.5{width:.875rem}.w-4{width:1rem}.w-7{width:1.75rem}.w-72{width:18rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-auto{width:auto}.w-fit{width:-moz-fit-content;width:fit-content}.w-full{width:100%}.w-px{width:1px}.min-w-\\[8rem\\]{min-width:8rem}.min-w-\\[var\\(--radix-select-trigger-width\\)\\]{min-width:var(--radix-select-trigger-width)}.max-w-\\[115px\\]{max-width:115px}.max-w-lg{max-width:32rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.border-collapse{border-collapse:collapse}.-translate-y-1\\/2{--tw-translate-y:-50%}.-translate-y-1\\/2,.translate-x-\\[-50\\%\\]{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.translate-x-\\[-50\\%\\]{--tw-translate-x:-50%}.translate-y-\\[-50\\%\\]{--tw-translate-y:-50%}.transform,.translate-y-\\[-50\\%\\]{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes caret-blink{0%,70%,to{opacity:1}20%,50%{opacity:0}}.animate-caret-blink{animation:caret-blink 1.25s ease-out infinite}.cursor-default{cursor:default}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;-moz-user-select:none;user-select:none}.flex-row{flex-direction:row}.flex-col{flex-direction:column}.flex-col-reverse{flex-direction:column-reverse}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-start{justify-content:flex-start}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:.25rem}.gap-1\\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-4{gap:1rem}.space-x-1>:not([hidden])~:not([hidden]){--tw-space-x-reverse:0;margin-left:calc(.25rem*(1 - var(--tw-space-x-reverse)));margin-right:calc(.25rem*var(--tw-space-x-reverse))}.space-x-2>:not([hidden])~:not([hidden]){--tw-space-x-reverse:0;margin-left:calc(.5rem*(1 - var(--tw-space-x-reverse)));margin-right:calc(.5rem*var(--tw-space-x-reverse))}.space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-bottom:calc(.25rem*var(--tw-space-y-reverse));margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)))}.space-y-1\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-bottom:calc(.375rem*var(--tw-space-y-reverse));margin-top:calc(.375rem*(1 - var(--tw-space-y-reverse)))}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-bottom:calc(.5rem*var(--tw-space-y-reverse));margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)))}.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-bottom:calc(1rem*var(--tw-space-y-reverse));margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)))}.overflow-hidden{overflow:hidden}.whitespace-nowrap{white-space:nowrap}.rounded-lg{border-radius:var(--radius)}.rounded-md{border-radius:calc(var(--radius) - 2px)}.rounded-sm{border-radius:calc(var(--radius) - 4px)}.border{border-width:1px}.border-y{border-bottom-width:1px;border-top-width:1px}.border-r{border-right-width:1px}.border-destructive{border-color:hsl(var(--destructive))}.border-destructive-foreground{border-color:hsl(var(--destructive-foreground))}.border-foreground\\/10{border-color:hsl(var(--foreground)/.1)}.border-input{border-color:hsl(var(--input))}.border-primary{border-color:hsl(var(--primary))}.bg-accent{background-color:hsl(var(--accent))}.bg-background{background-color:hsl(var(--background))}.bg-black\\/80{background-color:rgba(0,0,0,.8)}.bg-destructive{background-color:hsl(var(--destructive))}.bg-destructive-foreground\\/10{background-color:hsl(var(--destructive-foreground)/.1)}.bg-destructive\\/10{background-color:hsl(var(--destructive)/.1)}.bg-foreground{background-color:hsl(var(--foreground))}.bg-muted{background-color:hsl(var(--muted))}.bg-muted-foreground\\/5{background-color:hsl(var(--muted-foreground)/.05)}.bg-popover{background-color:hsl(var(--popover))}.bg-primary{background-color:hsl(var(--primary))}.bg-primary\\/5{background-color:hsl(var(--primary)/.05)}.bg-secondary{background-color:hsl(var(--secondary))}.bg-slate-200{--tw-bg-opacity:1;background-color:rgb(226 232 240/var(--tw-bg-opacity,1))}.bg-transparent{background-color:transparent}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.p-0{padding:0}.p-1{padding:.25rem}.p-3{padding:.75rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-8{padding-left:2rem;padding-right:2rem}.py-1{padding-bottom:.25rem;padding-top:.25rem}.py-1\\.5{padding-bottom:.375rem;padding-top:.375rem}.py-2{padding-bottom:.5rem;padding-top:.5rem}.pl-10{padding-left:2.5rem}.pl-2{padding-left:.5rem}.pl-3{padding-left:.75rem}.pr-8{padding-right:2rem}.pt-1{padding-top:.25rem}.text-left{text-align:left}.text-center{text-align:center}.text-2xl{font-size:1.5rem;line-height:2rem}.text-\\[0\\.8rem\\]{font-size:.8rem}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xs{font-size:.75rem;line-height:1rem}.font-\\[500\\]{font-weight:500}.font-\\[600\\]{font-weight:600}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}.leading-none{line-height:1}.tracking-tight{letter-spacing:-.025em}.text-accent-foreground{color:hsl(var(--accent-foreground))}.text-current{color:currentColor}.text-destructive{color:hsl(var(--destructive))}.text-destructive-foreground{color:hsl(var(--destructive-foreground))}.text-destructive\\/70{color:hsl(var(--destructive)/.7)}.text-muted-foreground{color:hsl(var(--muted-foreground))}.text-popover-foreground{color:hsl(var(--popover-foreground))}.text-primary{color:hsl(var(--primary))}.text-primary-foreground{color:hsl(var(--primary-foreground))}.text-primary\\/30{color:hsl(var(--primary)/.3)}.text-secondary-foreground{color:hsl(var(--secondary-foreground))}.underline-offset-4{text-underline-offset:4px}.opacity-50{opacity:.5}.opacity-70{opacity:.7}.shadow{--tw-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color),0 1px 2px -1px var(--tw-shadow-color)}.shadow,.shadow-lg{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color),0 4px 6px -4px var(--tw-shadow-color)}.shadow-md{--tw-shadow:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color),0 2px 4px -2px var(--tw-shadow-color)}.shadow-md,.shadow-sm{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgba(0,0,0,.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color)}.outline-none{outline:2px solid transparent;outline-offset:2px}.outline{outline-style:solid}.ring{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color)}.ring,.ring-1{box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.ring-1{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color)}.ring-ring{--tw-ring-color:hsl(var(--ring))}.ring-offset-background{--tw-ring-offset-color:hsl(var(--background))}.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.transition-all{transition-duration:.15s;transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1)}.transition-colors{transition-duration:.15s;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1)}.transition-opacity{transition-duration:.15s;transition-property:opacity;transition-timing-function:cubic-bezier(.4,0,.2,1)}.duration-1000{transition-duration:1s}.duration-200{transition-duration:.2s}.\\[--primary\\:84_100\\%_50\\%\\]{--primary:84 100% 50%}:root{--background:0 0% 100%;--foreground:222.2 84% 4.9%;--card:0 0% 100%;--card-foreground:222.2 84% 4.9%;--popover:0 0% 100%;--popover-foreground:222.2 84% 4.9%;--primary:222.2 47.4% 11.2%;--primary-foreground:210 40% 98%;--secondary:210 40% 96.1%;--secondary-foreground:222.2 47.4% 11.2%;--muted:210 40% 96.1%;--muted-foreground:215.4 16.3% 46.9%;--accent:210 40% 96.1%;--accent-foreground:222.2 47.4% 11.2%;--destructive:0 84.2% 60.2%;--destructive-foreground:210 40% 98%;--border:214.3 31.8% 91.4%;--input:214.3 31.8% 91.4%;--ring:222.2 84% 4.9%;--radius:0.5rem}.dark{--background:222.2 84% 4.9%;--foreground:210 40% 98%;--card:222.2 84% 4.9%;--card-foreground:210 40% 98%;--popover:222.2 84% 4.9%;--popover-foreground:210 40% 98%;--primary:210 40% 98%;--primary-foreground:222.2 47.4% 11.2%;--secondary:217.2 32.6% 17.5%;--secondary-foreground:210 40% 98%;--muted:217.2 32.6% 17.5%;--muted-foreground:215 20.2% 65.1%;--accent:217.2 32.6% 17.5%;--accent-foreground:210 40% 98%;--destructive:0 62.8% 30.6%;--destructive-foreground:210 40% 98%;--border:217.2 32.6% 17.5%;--input:217.2 32.6% 17.5%;--ring:212.7 26.8% 83.9%}.file\\:border-0::file-selector-button{border-width:0}.file\\:bg-transparent::file-selector-button{background-color:transparent}.file\\:text-sm::file-selector-button{font-size:.875rem;line-height:1.25rem}.file\\:font-medium::file-selector-button{font-weight:500}.file\\:text-foreground::file-selector-button{color:hsl(var(--foreground))}.placeholder\\:text-muted-foreground::-moz-placeholder{color:hsl(var(--muted-foreground))}.placeholder\\:text-muted-foreground::placeholder{color:hsl(var(--muted-foreground))}.first\\:rounded-l-md:first-child{border-bottom-left-radius:calc(var(--radius) - 2px);border-top-left-radius:calc(var(--radius) - 2px)}.first\\:border-l:first-child{border-left-width:1px}.last\\:rounded-r-md:last-child{border-bottom-right-radius:calc(var(--radius) - 2px);border-top-right-radius:calc(var(--radius) - 2px)}.focus-within\\:relative:focus-within{position:relative}.focus-within\\:z-20:focus-within{z-index:20}.hover\\:bg-accent:hover{background-color:hsl(var(--accent))}.hover\\:bg-destructive\\/10:hover{background-color:hsl(var(--destructive)/.1)}.hover\\:bg-destructive\\/90:hover{background-color:hsl(var(--destructive)/.9)}.hover\\:bg-primary:hover{background-color:hsl(var(--primary))}.hover\\:bg-primary\\/10:hover{background-color:hsl(var(--primary)/.1)}.hover\\:bg-secondary\\/80:hover{background-color:hsl(var(--secondary)/.8)}.hover\\:text-accent-foreground:hover{color:hsl(var(--accent-foreground))}.hover\\:text-primary-foreground:hover{color:hsl(var(--primary-foreground))}.hover\\:underline:hover{text-decoration-line:underline}.hover\\:opacity-100:hover{opacity:1}.focus\\:bg-accent:focus{background-color:hsl(var(--accent))}.focus\\:bg-primary:focus{background-color:hsl(var(--primary))}.focus\\:text-accent-foreground:focus{color:hsl(var(--accent-foreground))}.focus\\:text-primary-foreground:focus{color:hsl(var(--primary-foreground))}.focus\\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\\:ring-1:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color)}.focus\\:ring-1:focus,.focus\\:ring-2:focus{box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.focus\\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color)}.focus\\:ring-ring:focus{--tw-ring-color:hsl(var(--ring))}.focus\\:ring-offset-2:focus{--tw-ring-offset-width:2px}.focus-visible\\:outline-none:focus-visible{outline:2px solid transparent;outline-offset:2px}.focus-visible\\:ring-1:focus-visible{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.focus-visible\\:ring-destructive:focus-visible{--tw-ring-color:hsl(var(--destructive))}.focus-visible\\:ring-ring:focus-visible{--tw-ring-color:hsl(var(--ring))}.disabled\\:pointer-events-none:disabled{pointer-events:none}.disabled\\:cursor-not-allowed:disabled{cursor:not-allowed}.disabled\\:opacity-50:disabled{opacity:.5}.peer:disabled~.peer-disabled\\:cursor-not-allowed{cursor:not-allowed}.peer:disabled~.peer-disabled\\:opacity-70{opacity:.7}.has-\\[\\:disabled\\]\\:opacity-50:has(:disabled){opacity:.5}.aria-selected\\:bg-accent[aria-selected=true]{background-color:hsl(var(--accent))}.aria-selected\\:bg-accent\\/50[aria-selected=true]{background-color:hsl(var(--accent)/.5)}.aria-selected\\:text-accent-foreground[aria-selected=true]{color:hsl(var(--accent-foreground))}.aria-selected\\:text-muted-foreground[aria-selected=true]{color:hsl(var(--muted-foreground))}.aria-selected\\:opacity-100[aria-selected=true]{opacity:1}.data-\\[disabled\\]\\:pointer-events-none[data-disabled]{pointer-events:none}.data-\\[side\\=bottom\\]\\:translate-y-1[data-side=bottom]{--tw-translate-y:0.25rem}.data-\\[side\\=bottom\\]\\:translate-y-1[data-side=bottom],.data-\\[side\\=left\\]\\:-translate-x-1[data-side=left]{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.data-\\[side\\=left\\]\\:-translate-x-1[data-side=left]{--tw-translate-x:-0.25rem}.data-\\[side\\=right\\]\\:translate-x-1[data-side=right]{--tw-translate-x:0.25rem}.data-\\[side\\=right\\]\\:translate-x-1[data-side=right],.data-\\[side\\=top\\]\\:-translate-y-1[data-side=top]{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.data-\\[side\\=top\\]\\:-translate-y-1[data-side=top]{--tw-translate-y:-0.25rem}.data-\\[state\\=checked\\]\\:bg-primary[data-state=checked]{background-color:hsl(var(--primary))}.data-\\[state\\=open\\]\\:bg-accent[data-state=open]{background-color:hsl(var(--accent))}.data-\\[state\\=checked\\]\\:text-primary-foreground[data-state=checked]{color:hsl(var(--primary-foreground))}.data-\\[state\\=open\\]\\:text-muted-foreground[data-state=open]{color:hsl(var(--muted-foreground))}.data-\\[disabled\\]\\:opacity-50[data-disabled]{opacity:.5}@media (min-width:640px){.sm\\:flex-row{flex-direction:row}.sm\\:justify-end{justify-content:flex-end}.sm\\:space-x-2>:not([hidden])~:not([hidden]){--tw-space-x-reverse:0;margin-left:calc(.5rem*(1 - var(--tw-space-x-reverse)));margin-right:calc(.5rem*var(--tw-space-x-reverse))}.sm\\:space-x-4>:not([hidden])~:not([hidden]){--tw-space-x-reverse:0;margin-left:calc(1rem*(1 - var(--tw-space-x-reverse)));margin-right:calc(1rem*var(--tw-space-x-reverse))}.sm\\:space-y-0>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-bottom:calc(0px*var(--tw-space-y-reverse));margin-top:calc(0px*(1 - var(--tw-space-y-reverse)))}.sm\\:rounded-lg{border-radius:var(--radius)}.sm\\:text-left{text-align:left}}@media (min-width:768px){.md\\:text-sm{font-size:.875rem;line-height:1.25rem}}.\\[\\&\\:has\\(\\>\\.day-range-end\\)\\]\\:rounded-r-md:has(>.day-range-end){border-bottom-right-radius:calc(var(--radius) - 2px);border-top-right-radius:calc(var(--radius) - 2px)}.\\[\\&\\:has\\(\\>\\.day-range-start\\)\\]\\:rounded-l-md:has(>.day-range-start){border-bottom-left-radius:calc(var(--radius) - 2px);border-top-left-radius:calc(var(--radius) - 2px)}.\\[\\&\\:has\\(\\[aria-selected\\]\\)\\]\\:rounded-md:has([aria-selected]){border-radius:calc(var(--radius) - 2px)}.\\[\\&\\:has\\(\\[aria-selected\\]\\)\\]\\:bg-accent:has([aria-selected]){background-color:hsl(var(--accent))}.first\\:\\[\\&\\:has\\(\\[aria-selected\\]\\)\\]\\:rounded-l-md:has([aria-selected]):first-child{border-bottom-left-radius:calc(var(--radius) - 2px);border-top-left-radius:calc(var(--radius) - 2px)}.last\\:\\[\\&\\:has\\(\\[aria-selected\\]\\)\\]\\:rounded-r-md:has([aria-selected]):last-child{border-bottom-right-radius:calc(var(--radius) - 2px);border-top-right-radius:calc(var(--radius) - 2px)}.\\[\\&\\:has\\(\\[aria-selected\\]\\.day-outside\\)\\]\\:bg-accent\\/50:has([aria-selected].day-outside){background-color:hsl(var(--accent)/.5)}.\\[\\&\\:has\\(\\[aria-selected\\]\\.day-range-end\\)\\]\\:rounded-r-md:has([aria-selected].day-range-end){border-bottom-right-radius:calc(var(--radius) - 2px);border-top-right-radius:calc(var(--radius) - 2px)}.\\[\\&\\>span\\]\\:line-clamp-1>span{-webkit-box-orient:vertical;-webkit-line-clamp:1;display:-webkit-box;overflow:hidden}.\\[\\&_svg\\]\\:pointer-events-none svg{pointer-events:none}.\\[\\&_svg\\]\\:size-4 svg{height:1rem;width:1rem}.\\[\\&_svg\\]\\:shrink-0 svg{flex-shrink:0}";
+styleInject(css_248z,{"insertAt":"top"});
+
 /******************************************************************************
 Copyright (c) Microsoft Corporation.
 
@@ -101,27 +134,15 @@ typeof SuppressedError === "function" ? SuppressedError : function (error, suppr
     return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
 };
 
-// File: /utils/colors.ts
-// Created Date: Thursday January 23rd 2025
-// Author: Christian Nonis <alch.infoemail@gmail.com>
-// -----
-// Last Modified: Thursday January 23rd 2025 5:22:19 pm
-// Modified By: the developer formerly known as Christian Nonis at <alch.infoemail@gmail.com>
-// -----
-var colorBuilder = function colorBuilder(type, color, opacity) {
-  return "".concat(type, "-").concat(color, "-").concat(opacity);
-};
-
 var StepHeader = function StepHeader(props) {
-  var _a, _b, _c, _d;
   return jsxs("div", {
     className: "",
     children: [jsx("h1", {
-      className: "text-2xl font-bold mb-1 ".concat(colorBuilder("text", (_b = (_a = props.colors) === null || _a === undefined ? undefined : _a.text) !== null && _b !== undefined ? _b : "gray", "900")),
+      className: "text-2xl font-bold mb-1 text-primary",
       children: props.title
-    }), jsx("p", {
-      className: "text-sm ".concat(colorBuilder("text", (_d = (_c = props.colors) === null || _c === undefined ? undefined : _c.textSecondary) !== null && _d !== undefined ? _d : "gray", "500"), " mb-6"),
-      children: props.subtitle
+    }), jsxs("p", {
+      className: "text-sm text-muted-foreground mb-6",
+      children: [props.subtitle, props.subtitle]
     })]
   });
 };
@@ -16320,7 +16341,7 @@ var DateField = function DateField(props) {
       asChild: true,
       children: jsxs(Button$1, {
         variant: "outline",
-        className: cn("justify-start text-left font-normal", !props.value && "text-muted-foreground", props.errored && "border-red-500 bg-red-50 text-red-500"),
+        className: cn("justify-start text-left font-normal", !props.value && "text-muted-foreground", props.errored && "border-destructive-foreground bg-destructive-foreground/10 text-destructive-foreground"),
         children: [jsx(Calendar$1, {}), function () {
           var _a, _b;
           if (!props.value) {
@@ -16366,19 +16387,17 @@ var DateField = function DateField(props) {
 var Select = SelectPrimitive.Root;
 var SelectValue = SelectPrimitive.Value;
 var SelectTrigger = /*#__PURE__*/React.forwardRef(function (_a, ref) {
-  var _b;
   var className = _a.className,
     children = _a.children,
-    colors = _a.colors,
-    props = __rest$1(_a, ["className", "children", "colors"]);
+    props = __rest$1(_a, ["className", "children"]);
   return jsxs(SelectPrimitive.Trigger, __assign$1({
     ref: ref,
-    className: cn("flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 bg-white", className)
+    className: cn("flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 bg-white", className)
   }, props, {
     children: [children, jsx(SelectPrimitive.Icon, {
       asChild: true,
       children: jsx(ChevronDown, {
-        className: cn(colorBuilder("text", (_b = colors === null || colors === undefined ? undefined : colors.text) !== null && _b !== undefined ? _b : "gray", "800"), "h-4 w-4 opacity-60")
+        className: "h-4 w-4 opacity-50"
       })
     })]
   }));
@@ -16398,16 +16417,14 @@ var SelectScrollUpButton = /*#__PURE__*/React.forwardRef(function (_a, ref) {
 });
 SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
 var SelectScrollDownButton = /*#__PURE__*/React.forwardRef(function (_a, ref) {
-  var _b;
   var className = _a.className,
-    colors = _a.colors,
-    props = __rest$1(_a, ["className", "colors"]);
+    props = __rest$1(_a, ["className"]);
   return jsx(SelectPrimitive.ScrollDownButton, __assign$1({
     ref: ref,
     className: cn("flex cursor-default items-center justify-center py-1", className)
   }, props, {
     children: jsx(ChevronDown, {
-      className: cn(colorBuilder("text", (_b = colors === null || colors === undefined ? undefined : colors.text) !== null && _b !== undefined ? _b : "gray", "800"), "h-4 w-4")
+      className: "h-4 w-4"
     })
   }));
 });
@@ -16417,8 +16434,7 @@ var SelectContent = /*#__PURE__*/React.forwardRef(function (_a, ref) {
     children = _a.children,
     _b = _a.position,
     position = _b === undefined ? "popper" : _b,
-    colors = _a.colors,
-    props = __rest$1(_a, ["className", "children", "position", "colors"]);
+    props = __rest$1(_a, ["className", "children", "position"]);
   return jsx(SelectPrimitive.Portal, {
     children: jsxs(SelectPrimitive.Content, __assign$1({
       ref: ref,
@@ -16428,9 +16444,7 @@ var SelectContent = /*#__PURE__*/React.forwardRef(function (_a, ref) {
       children: [jsx(SelectScrollUpButton, {}), jsx(SelectPrimitive.Viewport, {
         className: cn("p-1", position === "popper" && "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]"),
         children: children
-      }), jsx(SelectScrollDownButton, {
-        colors: colors
-      })]
+      }), jsx(SelectScrollDownButton, {})]
     }))
   });
 });
@@ -16445,19 +16459,18 @@ var SelectLabel = /*#__PURE__*/React.forwardRef(function (_a, ref) {
 });
 SelectLabel.displayName = SelectPrimitive.Label.displayName;
 var SelectItem = /*#__PURE__*/React.forwardRef(function (_a, ref) {
-  var _b, _c, _d, _e;
   var className = _a.className,
     children = _a.children,
     props = __rest$1(_a, ["className", "children"]);
   return jsxs(SelectPrimitive.Item, __assign$1({
     ref: ref,
-    className: cn("relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 white/80 backdrop-blur-sm w-full", "focus:text-accent-foreground", "focus:bg-".concat((_c = (_b = props.colors) === null || _b === undefined ? undefined : _b.backgroundSecondary) !== null && _c !== undefined ? _c : "gray", "-100"), className)
+    className: cn("relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50", className)
   }, props, {
     children: [jsx("span", {
       className: "absolute right-2 flex h-3.5 w-3.5 items-center justify-center",
       children: jsx(SelectPrimitive.ItemIndicator, {
         children: jsx(Check, {
-          className: cn("h-4 w-4", colorBuilder("text", (_e = (_d = props.colors) === null || _d === undefined ? undefined : _d.text) !== null && _e !== undefined ? _e : "gray", "800"))
+          className: "h-4 w-4"
         })
       })
     }), jsx(SelectPrimitive.ItemText, {
@@ -16477,10 +16490,9 @@ var SelectSeparator = /*#__PURE__*/React.forwardRef(function (_a, ref) {
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 
 var SelectField = function SelectField(props) {
-  var _a, _b;
-  var _c = useState(props.value),
-    internalValue = _c[0],
-    setInternalValue = _c[1];
+  var _a = useState(props.value),
+    internalValue = _a[0],
+    setInternalValue = _a[1];
   var isUserChange = useRef(false);
   useEffect(function () {
     if (!isUserChange.current) {
@@ -16508,7 +16520,7 @@ var SelectField = function SelectField(props) {
     onValueChange: handleChange,
     children: [jsx(SelectTrigger, {
       colors: props.colors,
-      className: cn("w-full ".concat(props.errored ? "border-red-500 bg-red-50" : ""), "focus:ring-".concat((_b = (_a = props.colors) === null || _a === undefined ? undefined : _a.backgroundSecondary) !== null && _b !== undefined ? _b : "gray", "-800")),
+      className: cn("w-full ".concat(props.errored ? "border-destructive-foreground bg-destructive-foreground/10" : "")),
       children: jsx(SelectValue, {
         placeholder: "Theme"
       })
@@ -16531,7 +16543,7 @@ var Input = /*#__PURE__*/React.forwardRef(function (_a, ref) {
     props = __rest$1(_a, ["className", "type"]);
   return jsx("input", __assign$1({
     type: type,
-    className: cn("flex h-9 w-full rounded-md border border-input px-3 py-1 file:border-0 file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-1 file:text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-base shadow-sm transition-colors bg-white", className),
+    className: cn("flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm bg-white", className),
     ref: ref
   }, props));
 });
@@ -16565,7 +16577,7 @@ var TextField = function TextField(props) {
   return jsxs("div", {
     className: "relative !mt-2",
     children: [function () {
-      var _a, _b, _c, _d, _e, _f, _g;
+      var _a, _b, _c;
       if (props.type === FieldType.PHONE) {
         return jsxs("div", {
           className: "flex items-center gap-2",
@@ -16593,7 +16605,7 @@ var TextField = function TextField(props) {
             children: [jsx(Input, {
               type: "tel",
               value: formatPhoneNumber((_b = (_a = props.value) === null || _a === undefined ? undefined : _a.phoneNumber) !== null && _b !== undefined ? _b : ""),
-              className: cn(props.errored ? "border-red-500 bg-red-50" : "", "pl-10", "focus-visible:ring-".concat((_d = (_c = props.colors) === null || _c === undefined ? undefined : _c.ring) !== null && _d !== undefined ? _d : "gray", "-800")),
+              className: cn(props.errored ? "border-destructive bg-destructive/10" : "", "pl-10"),
               placeholder: props.placeholder,
               onChange: function onChange(e) {
                 var _a;
@@ -16614,8 +16626,8 @@ var TextField = function TextField(props) {
       } else {
         return jsx(Input, {
           type: props.type === FieldType.SECRET ? isVisible ? "text" : "password" : props.type,
-          value: (_e = props.value) !== null && _e !== undefined ? _e : "",
-          className: cn(props.errored ? "border-red-500 bg-red-50" : "", [FieldType.TEXT].includes(props.type) ? "pl-3" : "pl-10", "focus-visible:ring-".concat((_g = (_f = props.colors) === null || _f === undefined ? undefined : _f.ring) !== null && _g !== undefined ? _g : "gray", "-800")),
+          value: (_c = props.value) !== null && _c !== undefined ? _c : "",
+          className: cn(props.errored ? "border-destructive bg-destructive/10 focus-visible:ring-destructive" : "", [FieldType.TEXT].includes(props.type) ? "pl-3" : "pl-10"),
           placeholder: props.placeholder,
           onChange: function onChange(e) {
             return props.onChange(props.name, e.target.value);
@@ -16663,6 +16675,17 @@ var TextField = function TextField(props) {
       }
     }()]
   });
+};
+
+// File: /utils/colors.ts
+// Created Date: Thursday January 23rd 2025
+// Author: Christian Nonis <alch.infoemail@gmail.com>
+// -----
+// Last Modified: Thursday January 23rd 2025 5:22:19 pm
+// Modified By: the developer formerly known as Christian Nonis at <alch.infoemail@gmail.com>
+// -----
+var colorBuilder = function colorBuilder(type, color, opacity) {
+  return "".concat(type, "-").concat(color, "-").concat(opacity);
 };
 
 var ChoiceField = function ChoiceField(props) {
@@ -16777,7 +16800,7 @@ var CheckboxField = function CheckboxField(props) {
   return jsxs("div", {
     className: "items-top flex space-x-2",
     children: [jsx(Checkbox, {
-      className: cn("cursor-pointer", props.errored ? "border-red-500 bg-red-50 text-red-500" : ""),
+      className: cn("cursor-pointer", props.errored ? "border-destructive bg-destructive/10 text-destructive" : ""),
       id: props.name,
       checked: props.value,
       onCheckedChange: function onCheckedChange(checked) {
@@ -16787,10 +16810,10 @@ var CheckboxField = function CheckboxField(props) {
       className: "grid gap-1.5 leading-none cursor-pointer",
       children: [jsx("label", {
         htmlFor: props.name,
-        className: cn("text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70", props.errored ? "text-red-500" : ""),
+        className: cn("text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70", props.errored ? "text-destructive" : ""),
         children: props.label
       }), props.description ? jsx("p", {
-        className: cn("text-[0.8rem] text-muted-foreground", props.errored ? "text-red-100" : ""),
+        className: cn("text-[0.8rem] text-muted-foreground", props.errored ? "text-destructive-foreground" : ""),
         children: props.description
       }) : jsx(Fragment, {})]
     })]
@@ -16839,17 +16862,17 @@ var useBlocksField = function useBlocksField(args) {
 };
 
 var BlocksField = function BlocksField(props) {
-  var _a, _b, _c, _d, _e, _f, _g, _h;
+  var _a, _b;
   var field = props.field,
     form = props.form;
-  var _j = useBlocksField({
+  var _c = useBlocksField({
       fields: field.fields || [],
       value: props.value
     }),
-    blocks = _j.blocks,
-    setBlocks = _j.setBlocks,
-    openedBlockIndex = _j.openedBlockIndex,
-    setOpenedBlockIndex = _j.setOpenedBlockIndex;
+    blocks = _c.blocks,
+    setBlocks = _c.setBlocks,
+    openedBlockIndex = _c.openedBlockIndex,
+    setOpenedBlockIndex = _c.setOpenedBlockIndex;
   var handleAdd = function handleAdd(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -16879,10 +16902,10 @@ var BlocksField = function BlocksField(props) {
     children: [jsx("div", {
       className: "space-y-2",
       children: blocks.map(function (block, j) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
+        var _a;
         return jsx("div", {
-          className: cn(openedBlockIndex === j ? cn("space-y-4 p-4 rounded-lg rounded-md", colorBuilder("bg", blockErrored ? "red" : (_b = (_a = props.colors) === null || _a === undefined ? undefined : _a.backgroundSecondary) !== null && _b !== undefined ? _b : "gray", "50")) : ""),
-          children: openedBlockIndex === j ? (_c = block.fields) === null || _c === undefined ? undefined : _c.map(function (childField) {
+          className: cn(openedBlockIndex === j ? cn("space-y-4 p-4 rounded-lg", blockErrored ? "bg-destructive/10" : "bg-primary/5") : ""),
+          children: openedBlockIndex === j ? (_a = block.fields) === null || _a === undefined ? undefined : _a.map(function (childField) {
             var _a, _b, _c;
             return jsx(FieldRenderer, {
               errored: Array.isArray(props.errored) ? (_b = (_a = props.errored) === null || _a === undefined ? undefined : _a.find(function (e) {
@@ -16902,16 +16925,16 @@ var BlocksField = function BlocksField(props) {
               colors: props.colors
             }, childField.name);
           }) : jsxs("div", {
-            className: cn("flex items-center justify-between cursor-pointer py-2 px-4 rounded-md", colorBuilder("bg", blockErrored ? "red" : (_e = (_d = props.colors) === null || _d === undefined ? undefined : _d.backgroundSecondary) !== null && _e !== undefined ? _e : "gray", "50"), colorBuilder("text", blockErrored ? "red" : (_g = (_f = props.colors) === null || _f === undefined ? undefined : _f.textSecondary) !== null && _g !== undefined ? _g : "gray", "500"), "hover:".concat(colorBuilder("bg", blockErrored ? "red" : (_j = (_h = props.colors) === null || _h === undefined ? undefined : _h.backgroundSecondary) !== null && _j !== undefined ? _j : "gray", "50"))),
+            className: cn("flex items-center justify-between cursor-pointer py-2 px-4 rounded-md", blockErrored ? "bg-destructive/10" : "bg-primary/5", blockErrored ? "text-destructive" : "text-primary", blockErrored ? "hover:bg-destructive/10" : "hover:bg-primary/10"),
             onClick: function onClick() {
               return setOpenedBlockIndex(j);
             },
             children: [jsx("p", {
-              className: cn("text-xs font-[600]", colorBuilder("text", (_l = (_k = props.colors) === null || _k === undefined ? undefined : _k.text) !== null && _l !== undefined ? _l : "gray", "800")),
+              className: cn("text-xs font-[600]", "text-primary"),
               children: field.openLabel || "Open"
             }), jsx(Trash2, {
               size: 14,
-              className: cn(colorBuilder("text", (_o = (_m = props.colors) === null || _m === undefined ? undefined : _m.backgroundSecondary) !== null && _o !== undefined ? _o : "gray", "600")),
+              className: cn("text-primary/30"),
               onClick: function onClick(e) {
                 e.stopPropagation();
                 e.preventDefault();
@@ -16926,7 +16949,7 @@ var BlocksField = function BlocksField(props) {
       style: {
         boxShadow: "0 1px 1px rgba(0,0,0,0.1)"
       },
-      className: cn("text-sm font-[500] flex items-center gap-2 rounded-lg border py-1 px-2 mt-2 cursor-pointer", colorBuilder("border", (_d = (_c = props.colors) === null || _c === undefined ? undefined : _c.ring) !== null && _d !== undefined ? _d : "gray", "100"), colorBuilder("text", (_f = (_e = props.colors) === null || _e === undefined ? undefined : _e.text) !== null && _f !== undefined ? _f : "gray", "800"), colorBuilder("bg", (_h = (_g = props.colors) === null || _g === undefined ? undefined : _g.background) !== null && _h !== undefined ? _h : "gray", "50/10")),
+      className: cn("text-sm font-[500] flex items-center gap-2 rounded-lg border py-1 px-2 mt-2 cursor-pointer", "border-foreground/10", "text-primary", "bg-muted-foreground/5"),
       children: [jsx(Plus, {
         className: "w-4 h-4"
       }), props.field.addLabel || "Add"]
@@ -17016,7 +17039,7 @@ var OtpField = function OtpField(props) {
       return props.onChange(props.name, value);
     },
     name: props.name,
-    className: cn(_typeof(props.errored) === "object" && props.errored ? "border-red-500 bg-red-50" : ""),
+    className: cn(_typeof(props.errored) === "object" && props.errored ? "border-destructive-foreground bg-destructive-foreground/10" : ""),
     children: jsxs(InputOTPGroup, {
       children: [jsx(InputOTPSlot, {
         index: 0
@@ -17051,16 +17074,16 @@ var FieldRenderer = function FieldRenderer(props) {
       return jsxs(FormItem, {
         className: "flex flex-col gap-1",
         children: [props.field.label && ![FieldType.CHECKBOX].includes(props.field.type) ? jsxs(FormLabel, {
-          className: cn(props.errored ? "text-red-500" : ""),
+          className: cn(props.errored ? "text-destructive" : ""),
           htmlFor: args.field.name,
           children: [props.field.label, ((_a = props.field.validators) === null || _a === undefined ? undefined : _a.some(function (v) {
             return v.name === "required";
           })) ? jsx("span", {
-            className: "text-red-400 ml-1",
+            className: "text-destructive ml-1",
             children: "*"
           }) : jsx(Fragment, {})]
         }) : jsx(Fragment, {}), [FieldType.OPTION, FieldType.CHOICE, FieldType.MULTI_CHOICE, FieldType.MULTI_OPTION, FieldType.BLOCKS].includes(props.field.type) ? jsx(FormDescription, {
-          className: cn(props.errored ? "text-red-500" : "", "!mt-0"),
+          className: cn(props.errored ? "text-destructive/70" : "", "!mt-0"),
           children: props.field.description
         }) : jsx(Fragment, {}), jsx(FieldSwitcher, __assign$1({}, props.field, {
           value: (_b = args.field.value) !== null && _b !== undefined ? _b : props.value,
@@ -17072,7 +17095,7 @@ var FieldRenderer = function FieldRenderer(props) {
           form: props.form,
           colors: props.colors
         })), ![FieldType.OPTION, FieldType.CHOICE, FieldType.MULTI_CHOICE, FieldType.MULTI_OPTION, FieldType.CHECKBOX, FieldType.BLOCKS].includes(props.field.type) && props.field.description ? jsx(FormDescription, {
-          className: cn(props.errored ? "text-red-500" : "", "!mt-1"),
+          className: cn(props.errored ? "text-destructive/70" : "", "!mt-1"),
           children: props.field.description
         }) : jsx(Fragment, {})]
       });
@@ -17107,7 +17130,7 @@ var FieldSwitcher = function FieldSwitcher(props) {
     case "text_area":
       return jsx(Textarea, {
         value: (_b = props.value) !== null && _b !== undefined ? _b : "",
-        className: _typeof(props.errored) === "object" && props.errored ? "border-red-500 bg-red-50" : "",
+        className: _typeof(props.errored) === "object" && props.errored ? "border-destructive-foreground bg-destructive-foreground/10" : "",
         placeholder: props.placeholder,
         onChange: function onChange(e) {
           return props.onChange(props.name, e.target.value);
@@ -17317,7 +17340,7 @@ var FieldRendererWithOverwriteHandler = function FieldRendererWithOverwriteHandl
 };
 
 var StepForm = function StepForm(props) {
-  var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
+  var _a;
   var formRef = React__default.useRef();
   z.object(_toZod(props.step.fields));
   var form = useForm({
@@ -17349,8 +17372,7 @@ var StepForm = function StepForm(props) {
   var handleStepSubmit = function handleStepSubmit(e) {
     e.preventDefault();
     e.stopPropagation();
-    var _validInvalidHandler = function _validInvalidHandler() {
-      console.log("validInvalidHandler");
+    var onValid = function onValid() {
       if (props.onStepSubmit) {
         props.onStepSubmit({
           data: form.getValues(),
@@ -17360,7 +17382,16 @@ var StepForm = function StepForm(props) {
       }
       handleSubmit();
     };
-    form.handleSubmit(_validInvalidHandler, _validInvalidHandler)(e);
+    var onInvalid = function onInvalid() {
+      if (props.onStepSubmit) {
+        props.onStepSubmit({
+          data: form.getValues(),
+          stepIndex: props.stepIndex,
+          errors: form.formState.errors
+        });
+      }
+    };
+    form.handleSubmit(onValid, onInvalid)(e);
   };
   return jsx(Form, __assign$1({}, form, {
     children: jsxs("form", {
@@ -17370,8 +17401,7 @@ var StepForm = function StepForm(props) {
         subtitle: props.step.subtitle || props.formSubtitle
       }) : jsx(StepHeader, {
         title: props.step.title || props.formTitle,
-        subtitle: props.step.subtitle || props.formSubtitle,
-        colors: props.color
+        subtitle: props.step.subtitle || props.formSubtitle
       }), jsx("div", {
         className: "flex flex-col gap-4",
         children: props.step.fields.map(function (_field, i) {
@@ -17383,33 +17413,32 @@ var StepForm = function StepForm(props) {
             formData: (_a = props.formData) !== null && _a !== undefined ? _a : form.getValues(),
             stepIndex: props.stepIndex,
             form: form,
-            value: (_b = form.getValues()) === null || _b === undefined ? undefined : _b[field.name],
-            colors: props.color
+            value: (_b = form.getValues()) === null || _b === undefined ? undefined : _b[field.name]
           }, i);
         })
       }), props.formErrorOverwrites ? props.formErrorOverwrites({
         errors: form.formState.errors
       }) : Object.keys(form.formState.errors).length ? jsxs("div", {
-        className: "bg-red-200 text-white px-3 py-2 rounded-md mt-4 flex items-center gap-2",
+        className: "bg-destructive text-destructive-foreground px-3 py-2 rounded-md mt-4 flex items-center gap-2",
         children: [jsx(TriangleAlert, {
-          className: "w-4 h-4 text-red-500"
+          className: "w-4 h-4"
         }), jsx("div", {
           className: "flex-1",
           children: jsx("p", {
-            className: "text-red-500 text-sm",
+            className: "text-sm",
             children: (_a = firstError === null || firstError === undefined ? undefined : firstError.message) !== null && _a !== undefined ? _a : "Form is invalid"
           })
         })]
       }) : jsx(Fragment, {}), jsxs("div", {
         className: "flex justify-end mt-4 gap-2",
         children: [props.stepIndex > 0 ? jsx(Button$1, {
-          className: cn(colorBuilder("text", (_d = (_c = (_b = props.color) === null || _b === undefined ? undefined : _b.buttons) === null || _c === undefined ? undefined : _c.secondary) !== null && _d !== undefined ? _d : "gray", "900"), "hover:".concat(colorBuilder("bg", (_g = (_f = (_e = props.color) === null || _e === undefined ? undefined : _e.buttons) === null || _f === undefined ? undefined : _f.secondary) !== null && _g !== undefined ? _g : "gray", "100"))),
+          className: cn("btn-secondary", "hover:btn-secondary/80"),
           variant: "ghost",
           type: "button",
           onClick: props.onBack,
           children: "Back"
         }) : jsx(Fragment, {}), jsx(Button$1, {
-          className: cn(colorBuilder("bg", (_k = (_j = (_h = props.color) === null || _h === undefined ? undefined : _h.buttons) === null || _j === undefined ? undefined : _j.primary) !== null && _k !== undefined ? _k : "gray", "800"), "hover:!".concat(colorBuilder("bg", (_o = (_m = (_l = props.color) === null || _l === undefined ? undefined : _l.buttons) === null || _m === undefined ? undefined : _m.primary) !== null && _o !== undefined ? _o : "zinc", "900/90")), colorBuilder("text", (_r = (_q = (_p = props.color) === null || _p === undefined ? undefined : _p.buttons) === null || _q === undefined ? undefined : _q.primary) !== null && _r !== undefined ? _r : "zinc", "100")),
+          className: cn("bg-primary text-primary-foreground"),
           type: "submit",
           children: props.submitLabel
         })]
@@ -17513,7 +17542,6 @@ var Builder = function Builder(props) {
           return p - 1;
         });
       },
-      color: props.color,
       onStepSubmit: props.onStepSubmit,
       formData: Object.fromEntries(Object.entries(formData).filter(function (_a) {
         var key = _a[0];

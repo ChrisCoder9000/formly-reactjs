@@ -6,7 +6,7 @@
 // Modified By: the developer formerly known as Christian Nonis at <alch.infoemail@gmail.com>
 // -----
 
-import { Input } from "../../../components/ui/input";
+import { Input } from "../../ui/input";
 import {
   FieldType,
   PHONE_MASKS,
@@ -111,12 +111,11 @@ const TextField = (props: TextFieldProps) => {
                     (props.value as unknown as PhoneNumber)?.phoneNumber ?? ""
                   )}
                   className={cn(
-                    props.errored ? "border-red-500 bg-red-50" : "",
-                    "pl-10",
-                    `focus-visible:ring-${props.colors?.ring ?? "gray"}-800`
+                    props.errored ? "border-destructive bg-destructive/10" : "",
+                    "pl-10"
                   )}
                   placeholder={props.placeholder}
-                  onChange={(e) => {
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     const rawValue = e.target.value
                       ? e.target.value?.replace(/\D/g, "")
                       : "";
@@ -147,12 +146,15 @@ const TextField = (props: TextFieldProps) => {
               }
               value={props.value ?? ""}
               className={cn(
-                props.errored ? "border-red-500 bg-red-50" : "",
-                [FieldType.TEXT].includes(props.type) ? "pl-3" : "pl-10",
-                `focus-visible:ring-${props.colors?.ring ?? "gray"}-800`
+                props.errored
+                  ? "border-destructive bg-destructive/10 focus-visible:ring-destructive"
+                  : "",
+                [FieldType.TEXT].includes(props.type) ? "pl-3" : "pl-10"
               )}
               placeholder={props.placeholder}
-              onChange={(e) => props.onChange(props.name, e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                props.onChange(props.name, e.target.value)
+              }
             />
           );
         }

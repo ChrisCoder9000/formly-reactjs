@@ -70,14 +70,8 @@ const BlocksField = (props: BlockFieldProps) => {
             className={cn(
               openedBlockIndex === j
                 ? cn(
-                    "space-y-4 p-4 rounded-lg rounded-md",
-                    colorBuilder(
-                      "bg",
-                      blockErrored
-                        ? "red"
-                        : props.colors?.backgroundSecondary ?? "gray",
-                      "50"
-                    )
+                    "space-y-4 p-4 rounded-lg",
+                    blockErrored ? "bg-destructive/10" : "bg-primary/5"
                   )
                 : ""
             )}
@@ -111,47 +105,20 @@ const BlocksField = (props: BlockFieldProps) => {
               <div
                 className={cn(
                   "flex items-center justify-between cursor-pointer py-2 px-4 rounded-md",
-                  colorBuilder(
-                    "bg",
-                    blockErrored
-                      ? "red"
-                      : props.colors?.backgroundSecondary ?? "gray",
-                    "50"
-                  ),
-                  colorBuilder(
-                    "text",
-                    blockErrored
-                      ? "red"
-                      : props.colors?.textSecondary ?? "gray",
-                    "500"
-                  ),
-                  `hover:${colorBuilder(
-                    "bg",
-                    blockErrored
-                      ? "red"
-                      : props.colors?.backgroundSecondary ?? "gray",
-                    "50"
-                  )}`
+                  blockErrored ? "bg-destructive/10" : "bg-primary/5",
+                  blockErrored ? "text-destructive" : "text-primary",
+                  blockErrored
+                    ? "hover:bg-destructive/10"
+                    : "hover:bg-primary/10"
                 )}
                 onClick={() => setOpenedBlockIndex(j)}
               >
-                <p
-                  className={cn(
-                    "text-xs font-[600]",
-                    colorBuilder("text", props.colors?.text ?? "gray", "800")
-                  )}
-                >
+                <p className={cn("text-xs font-[600]", "text-primary")}>
                   {field.openLabel || "Open"}
                 </p>
                 <Trash2
                   size={14}
-                  className={cn(
-                    colorBuilder(
-                      "text",
-                      props.colors?.backgroundSecondary ?? "gray",
-                      "600"
-                    )
-                  )}
+                  className={cn("text-primary/30")}
                   onClick={(e) => {
                     e.stopPropagation();
                     e.preventDefault();
@@ -170,9 +137,9 @@ const BlocksField = (props: BlockFieldProps) => {
         }}
         className={cn(
           `text-sm font-[500] flex items-center gap-2 rounded-lg border py-1 px-2 mt-2 cursor-pointer`,
-          colorBuilder("border", props.colors?.ring ?? "gray", "100"),
-          colorBuilder("text", props.colors?.text ?? "gray", "800"),
-          colorBuilder("bg", props.colors?.background ?? "gray", "50/10")
+          "border-foreground/10",
+          "text-primary",
+          "bg-muted-foreground/5"
         )}
       >
         <PlusIcon className="w-4 h-4" />

@@ -41,7 +41,6 @@ type StepFormProps = {
   onBack?: () => void;
   formData?: Record<string, string>;
   fieldOverwrites?: Partial<FieldComponentOverrides>;
-  color?: ColorsOverwrites;
   headerOverwrites?: (props: {
     title: string | undefined;
     subtitle: string | undefined;
@@ -97,8 +96,8 @@ const StepForm = (props: StepFormProps) => {
   const handleStepSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    const _validInvalidHandler = () => {
-      console.log("validInvalidHandler");
+
+    const onValid = () => {
       if (props.onStepSubmit) {
         props.onStepSubmit({
           data: form.getValues(),
@@ -109,7 +108,17 @@ const StepForm = (props: StepFormProps) => {
       handleSubmit();
     };
 
-    form.handleSubmit(_validInvalidHandler, _validInvalidHandler)(e);
+    const onInvalid = () => {
+      if (props.onStepSubmit) {
+        props.onStepSubmit({
+          data: form.getValues(),
+          stepIndex: props.stepIndex,
+          errors: form.formState.errors,
+        });
+      }
+    };
+
+    form.handleSubmit(onValid, onInvalid)(e);
   };
 
   return (
@@ -129,7 +138,6 @@ const StepForm = (props: StepFormProps) => {
           <StepHeader
             title={props.step.title || props.formTitle}
             subtitle={props.step.subtitle || props.formSubtitle}
-            colors={props.color}
           />
         )}
         <div className="flex flex-col gap-4">
@@ -144,7 +152,6 @@ const StepForm = (props: StepFormProps) => {
                 stepIndex={props.stepIndex}
                 form={form}
                 value={form.getValues()?.[field.name]}
-                colors={props.color}
               />
             );
           })}
@@ -154,10 +161,10 @@ const StepForm = (props: StepFormProps) => {
             errors: form.formState.errors,
           })
         ) : Object.keys(form.formState.errors).length ? (
-          <div className="bg-red-200 text-white px-3 py-2 rounded-md mt-4 flex items-center gap-2">
-            <TriangleAlert className="w-4 h-4 text-red-500" />
+          <div className="bg-destructive text-destructive-foreground px-3 py-2 rounded-md mt-4 flex items-center gap-2">
+            <TriangleAlert className="w-4 h-4" />
             <div className="flex-1">
-              <p className="text-red-500 text-sm">
+              <p className="text-sm">
                 {firstError?.message ?? "Form is invalid"}
               </p>
             </div>
@@ -168,18 +175,7 @@ const StepForm = (props: StepFormProps) => {
         <div className="flex justify-end mt-4 gap-2">
           {props.stepIndex > 0 ? (
             <Button
-              className={cn(
-                colorBuilder(
-                  "text",
-                  props.color?.buttons?.secondary ?? "gray",
-                  "900"
-                ),
-                `hover:${colorBuilder(
-                  "bg",
-                  props.color?.buttons?.secondary ?? "gray",
-                  "100"
-                )}`
-              )}
+              className={cn("btn-secondary", "hover:btn-secondary/80")}
               variant="ghost"
               type="button"
               onClick={props.onBack}
@@ -190,23 +186,7 @@ const StepForm = (props: StepFormProps) => {
             <></>
           )}
           <Button
-            className={cn(
-              colorBuilder(
-                "bg",
-                props.color?.buttons?.primary ?? "gray",
-                "800"
-              ),
-              `hover:!${colorBuilder(
-                "bg",
-                props.color?.buttons?.primary ?? "zinc",
-                "900/90"
-              )}`,
-              colorBuilder(
-                "text",
-                props.color?.buttons?.primary ?? "zinc",
-                "100"
-              )
-            )}
+            className={cn("bg-primary text-primary-foreground")}
             type="submit"
           >
             {props.submitLabel}

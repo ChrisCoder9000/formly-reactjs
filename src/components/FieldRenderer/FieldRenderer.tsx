@@ -48,12 +48,12 @@ export const FieldRenderer = (props: FieldRendererProps) => {
             {props.field.label &&
             ![FieldType.CHECKBOX].includes(props.field.type) ? (
               <FormLabel
-                className={cn(props.errored ? "text-red-500" : "")}
+                className={cn(props.errored ? "text-destructive" : "")}
                 htmlFor={args.field.name}
               >
                 {props.field.label}
                 {props.field.validators?.some((v) => v.name === "required") ? (
-                  <span className="text-red-400 ml-1">*</span>
+                  <span className="text-destructive ml-1">*</span>
                 ) : (
                   <></>
                 )}
@@ -69,7 +69,10 @@ export const FieldRenderer = (props: FieldRendererProps) => {
               FieldType.BLOCKS,
             ].includes(props.field.type) ? (
               <FormDescription
-                className={cn(props.errored ? "text-red-500" : "", "!mt-0")}
+                className={cn(
+                  props.errored ? "text-destructive/70" : "",
+                  "!mt-0"
+                )}
               >
                 {props.field.description}
               </FormDescription>
@@ -96,7 +99,10 @@ export const FieldRenderer = (props: FieldRendererProps) => {
               FieldType.BLOCKS,
             ].includes(props.field.type) && props.field.description ? (
               <FormDescription
-                className={cn(props.errored ? "text-red-500" : "", "!mt-1")}
+                className={cn(
+                  props.errored ? "text-destructive/70" : "",
+                  "!mt-1"
+                )}
               >
                 {props.field.description}
               </FormDescription>
@@ -157,7 +163,7 @@ const FieldSwitcher = (
           value={props.value ?? ""}
           className={
             typeof props.errored === "object" && props.errored
-              ? "border-red-500 bg-red-50"
+              ? "border-destructive-foreground bg-destructive-foreground/10"
               : ""
           }
           placeholder={props.placeholder}

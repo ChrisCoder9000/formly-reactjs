@@ -1,4 +1,4 @@
-import { FormStep, FormStepFlex, FieldComponentOverrides, ColorsOverwrites } from "../../constants/types";
+import { FormStep, FormStepFlex, FieldComponentOverrides } from "../../constants/types";
 import React from "react";
 import { FieldErrors } from "react-hook-form";
 type BuilderProps = {
@@ -7,7 +7,6 @@ type BuilderProps = {
     description?: string;
     className?: string;
     nextLabel?: string;
-    color?: ColorsOverwrites;
     submitLabel?: string;
     defaultFormData?: Record<string, string>;
     onSubmit?: (data: Record<string, string>) => void;

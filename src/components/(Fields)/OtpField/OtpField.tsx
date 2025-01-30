@@ -32,7 +32,7 @@ const OtpField = (props: OtpFieldProps) => {
       name={props.name}
       className={cn(
         typeof props.errored === "object" && props.errored
-          ? "border-red-500 bg-red-50"
+          ? "border-destructive-foreground bg-destructive-foreground/10"
           : ""
       )}
     >

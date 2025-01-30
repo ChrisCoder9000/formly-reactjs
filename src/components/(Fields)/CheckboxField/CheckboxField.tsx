@@ -29,7 +29,9 @@ const CheckboxField = (props: CheckboxFieldProps) => {
       <Checkbox
         className={cn(
           "cursor-pointer",
-          props.errored ? "border-red-500 bg-red-50 text-red-500" : ""
+          props.errored
+            ? "border-destructive bg-destructive/10 text-destructive"
+            : ""
         )}
         id={props.name}
         checked={props.value}
@@ -42,7 +44,7 @@ const CheckboxField = (props: CheckboxFieldProps) => {
           htmlFor={props.name}
           className={cn(
             "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
-            props.errored ? "text-red-500" : ""
+            props.errored ? "text-destructive" : ""
           )}
         >
           {props.label}
@@ -51,7 +53,7 @@ const CheckboxField = (props: CheckboxFieldProps) => {
           <p
             className={cn(
               "text-[0.8rem] text-muted-foreground",
-              props.errored ? "text-red-100" : ""
+              props.errored ? "text-destructive-foreground" : ""
             )}
           >
             {props.description}

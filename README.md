@@ -104,22 +104,6 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
     "./node_modules/formly-reactjs/**/*.{js,jsx,ts,tsx}",
   ],
-  safelist: [
-    {
-      pattern:
-        /(bg|text|border|ring)-(gray|zinc|red|blue|green|yellow|purple|pink|indigo|orange)-(50|100|200|300|400|500|600|700|800|900)/,
-      variants: ["hover", "focus", "focus-visible"],
-    },
-    {
-      pattern:
-        /(bg|text|border|ring)-(gray|zinc|red|blue|green|yellow|purple|pink|indigo|orange)-(50\/10|100\/10|200\/10|300\/10|400\/10|500\/10|600\/10|700\/10|800\/10|900\/10)/,
-      variants: ["hover", "focus", "focus-visible"],
-    },
-    {
-      pattern: /ring-(0|1|2|4|8)/,
-      variants: ["focus", "focus-visible"],
-    },
-  ],
   theme: {
     extend: {
       colors: {
@@ -776,43 +760,69 @@ Formly uses Tailwind CSS for styling. You can customize the appearance through:
 
 ### Color Customization
 
-You can customize the colors of your form components by passing a `colors` prop to the `Builder` component:
+Formly uses CSS variables for theming. The default theme provides both light and dark mode variables that you can customize. You can override these variables in your CSS or modify them at runtime:
 
-```tsx
-import { Builder } from "formly-reactjs";
-import { TW_COLORS } from "formly-reactjs/constants/colors";
+```css
+:root {
+  /* Base colors */
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
 
-function App() {
-  return (
-    <Builder
-      steps={steps}
-      colors={{
-        background: "blue", // Primary background color
-        backgroundSecondary: "indigo", // Secondary background color
-        text: "gray", // Primary text color
-        textSecondary: "slate", // Secondary text color
-        error: "red", // Error state color
-        buttons: {
-          primary: "blue", // Primary button color
-          secondary: "gray", // Secondary button color
-        },
-        ring: "blue", // Focus ring color
-      }}
-      onSubmit={handleSubmit}
-    />
-  );
+  /* Component colors */
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
+
+  /* UI element colors */
+  --primary: 222.2 47.4% 11.2%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96.1%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+
+  /* State colors */
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --accent: 210 40% 96.1%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+
+  /* Border and input colors */
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 222.2 84% 4.9%;
+
+  /* Border radius */
+  --radius: 0.5rem;
+}
+
+/* Dark mode overrides */
+.dark {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  /* ... other dark mode variables ... */
 }
 ```
 
-Available color options (TW_COLORS):
+To customize the theme, you can either:
 
-- Basic: `gray`, `zinc`, `neutral`, `stone`
-- Warm: `red`, `orange`, `amber`, `yellow`
-- Nature: `lime`, `green`, `emerald`, `teal`
-- Cool: `cyan`, `sky`, `blue`, `indigo`
-- Vibrant: `violet`, `purple`, `fuchsia`, `pink`, `rose`
+1. Override the CSS variables in your stylesheet:
 
-Each color follows Tailwind CSS's color palette system and will automatically handle different shades for various states (hover, focus, etc.).
+```css
+:root {
+  --primary: 240 100% 50%; /* Custom blue */
+  --primary-foreground: 0 0% 100%;
+}
+```
+
+2. Modify them at runtime using JavaScript:
+
+```javascript
+document.documentElement.style.setProperty("--primary", "240 100% 50%");
+```
+
+The variables use HSL color format (Hue Saturation Lightness) which makes it easy to create cohesive color schemes. Each color variable has a corresponding foreground variable that ensures proper contrast for text and icons.
 
 ## 🤝 Contributing
 

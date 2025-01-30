@@ -1,4 +1,4 @@
-import { FormStep, FieldComponentOverrides, ColorsOverwrites } from "../../constants/types";
+import { FormStep, FieldComponentOverrides } from "../../constants/types";
 import React from "react";
 import { FieldErrors } from "react-hook-form";
 type StepFormProps = {
@@ -12,7 +12,6 @@ type StepFormProps = {
     onBack?: () => void;
     formData?: Record<string, string>;
     fieldOverwrites?: Partial<FieldComponentOverrides>;
-    color?: ColorsOverwrites;
     headerOverwrites?: (props: {
         title: string | undefined;
         subtitle: string | undefined;

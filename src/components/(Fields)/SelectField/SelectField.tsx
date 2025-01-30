@@ -68,8 +68,11 @@ const SelectField = (props: SelectFieldProps) => {
       <SelectTrigger
         colors={props.colors}
         className={cn(
-          `w-full ${props.errored ? "border-red-500 bg-red-50" : ""}`,
-          `focus:ring-${props.colors?.backgroundSecondary ?? "gray"}-800`
+          `w-full ${
+            props.errored
+              ? "border-destructive-foreground bg-destructive-foreground/10"
+              : ""
+          }`
         )}
       >
         <SelectValue placeholder="Theme" />

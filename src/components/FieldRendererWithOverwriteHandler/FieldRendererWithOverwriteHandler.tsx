@@ -26,7 +26,6 @@ type FieldRendererWithOverwriteHandlerProps = Omit<
   fieldOverwrites?: Partial<FieldComponentOverrides>;
   formData: Record<string, any>;
   stepIndex: number;
-  colors?: ColorsOverwrites;
 };
 
 const FieldRendererWithOverwriteHandler = (

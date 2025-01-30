@@ -37,7 +37,8 @@ const DateField = (props: DateFieldProps) => {
           className={cn(
             "justify-start text-left font-normal",
             !props.value && "text-muted-foreground",
-            props.errored && "border-red-500 bg-red-50 text-red-500"
+            props.errored &&
+              "border-destructive-foreground bg-destructive-foreground/10 text-destructive-foreground"
           )}
         >
           <CalendarIcon />

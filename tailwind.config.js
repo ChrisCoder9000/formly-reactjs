@@ -2,22 +2,7 @@
 module.exports = {
   darkMode: ["class"],
   content: ["./src/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
-  safelist: [
-    {
-      pattern:
-        /(bg|text|border|ring)-(gray|zinc|red|blue|green|yellow|purple|pink|indigo|orange)-(50|100|200|300|400|500|600|700|800|900)/,
-      variants: ["hover", "focus", "focus-visible"],
-    },
-    {
-      pattern:
-        /(bg|text|border|ring)-(gray|zinc|red|blue|green|yellow|purple|pink|indigo|orange)-(50\/10|100\/10|200\/10|300\/10|400\/10|500\/10|600\/10|700\/10|800\/10|900\/10)/,
-      variants: ["hover", "focus", "focus-visible"],
-    },
-    {
-      pattern: /ring-(0|1|2|4|8)/,
-      variants: ["focus", "focus-visible"],
-    },
-  ],
+  safelist: [],
   theme: {
     extend: {
       colors: {
