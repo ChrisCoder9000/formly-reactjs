@@ -19,14 +19,14 @@ A modern, type-safe form builder SDK for React applications that makes creating 
 
 ## 📦 Installation
 
-1. Install the core package:
+1. Install the core package and its required dependencies:
 
 ```bash
-npm install formly-reactjs
+npm install formly-reactjs tailwindcss postcss autoprefixer
 # or with yarn
-yarn add formly-reactjs
+yarn add formly-reactjs tailwindcss postcss autoprefixer
 # or with pnpm
-pnpm add formly-reactjs
+pnpm add formly-reactjs tailwindcss postcss autoprefixer
 ```
 
 ## 🎨 Tailwind CSS Setup
