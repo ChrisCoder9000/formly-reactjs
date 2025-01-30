@@ -146,6 +146,21 @@ import "./styles/globals.css";
 
 ## 🚀 Quick Start
 
+> **Note**: If you are using Next.js
+> in order to use the tailwind dark theme with class method you must install next-themes and wrap your app in the ThemeProvider component.
+>
+> ```tsx
+> import { ThemeProvider } from "next-themes";
+>
+> export default function App({ Component, pageProps }: AppProps) {
+>   return (
+>     <ThemeProvider attribute="class">
+>       <Component {...pageProps} />
+>     </ThemeProvider>
+>   );
+> }
+> ```
+
 ```tsx
 import { Builder } from "formly-reactjs";
 
