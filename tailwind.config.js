@@ -1,3 +1,11 @@
+// File: /tailwind.config.js
+// Created Date: Thursday January 30th 2025
+// Author: Christian Nonis <alch.infoemail@gmail.com>
+// -----
+// Last Modified: Thursday January 30th 2025 2:49:47 pm
+// Modified By: the developer formerly known as Christian Nonis at <alch.infoemail@gmail.com>
+// -----
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
@@ -5,7 +13,56 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
     "./node_modules/formly-reactjs/dist/**/*.{js,jsx,ts,tsx}",
   ],
-  safelist: [],
+  safelist: [
+    // Dynamic color patterns using regex
+    {
+      pattern:
+        /^bg-(primary|secondary|background|destructive|muted|accent|popover|card)$/,
+    },
+    {
+      pattern: /^bg-(primary|secondary|destructive|muted|accent)\/90$/,
+    },
+    {
+      pattern:
+        /^text-(primary|secondary|background|foreground|destructive|muted|accent|popover|card)$/,
+    },
+    {
+      pattern:
+        /^text-(primary|secondary|destructive|muted|accent|popover|card)-foreground$/,
+    },
+    {
+      pattern:
+        /^border-(border|input|primary|secondary|destructive|muted|accent)$/,
+    },
+    {
+      pattern: /^ring-(ring|primary|secondary|destructive)$/,
+    },
+    {
+      pattern: /^ring-offset-(background|2)$/,
+    },
+    // Interactive state patterns
+    {
+      pattern:
+        /^(focus|focus-visible):(ring-2|ring-ring|ring-offset-2|outline-none)$/,
+    },
+    {
+      pattern: /^hover:bg-(primary|secondary|destructive|muted|accent)\/90$/,
+    },
+    {
+      pattern: /^disabled:(cursor-not-allowed|opacity-50|pointer-events-none)$/,
+    },
+    {
+      pattern: /^peer-disabled:(cursor-not-allowed|opacity-70)$/,
+    },
+    // File input patterns
+    {
+      pattern: /^file:(border-0|bg-transparent|text-sm|font-medium)$/,
+    },
+    // Placeholder pattern
+    {
+      pattern: /^placeholder:text-muted-foreground$/,
+    },
+  ],
   theme: {
     container: {
       center: true,
@@ -76,9 +133,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require("@tailwindcss/forms"),
-    require("@tailwindcss/typography"),
-    require("@tailwindcss/jit-plugins/dynamic-classes"),
-  ],
+  plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography")],
 };

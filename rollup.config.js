@@ -37,10 +37,11 @@ export default {
   ],
   plugins: [
     postcss({
-      modules: true,
-      autoModules: true,
-      minimize: isProduction,
       inject: false,
+      extract: false,
+      modules: {
+        generateScopedName: "[hash:base64:5]",
+      },
     }),
     resolve({
       extensions: [".js", ".jsx", ".ts", ".tsx"],
