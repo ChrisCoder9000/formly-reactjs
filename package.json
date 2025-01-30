@@ -11,7 +11,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "prepare": "npm run build && npm run build-css",
+    "prepare": "npm run build",
     "typecheck": "tsc --noEmit",
     "publish": "npm publish --access=public",
     "build-css": "npx tailwindcss -i ./src/index.css -o ./src/output.css --minify",

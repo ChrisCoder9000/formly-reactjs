@@ -19,64 +19,21 @@ A modern, type-safe form builder SDK for React applications that makes creating 
 
 ## 📦 Installation
 
-1. Install the core package:
+1. Install the core package and its required dependencies:
 
 ```bash
-npm install formly-reactjs
-
+npm install formly-reactjs tailwindcss postcss autoprefixer
 # or with yarn
-yarn add formly-reactjs
-
+yarn add formly-reactjs tailwindcss postcss autoprefixer
 # or with pnpm
-pnpm add formly-reactjs
+pnpm add formly-reactjs tailwindcss postcss autoprefixer
 ```
 
-2. Install the styles package (required):
+## 🎨 Tailwind CSS Setup
 
-```bash
-npm install formly-reactjs-styles
+Follow these steps to set up the required styling configuration:
 
-# or with yarn
-yarn add formly-reactjs-styles
-
-# or with pnpm
-pnpm add formly-reactjs-styles
-```
-
-## 🎨 Tailwind CSS Setup (Optional)
-
-If you want to customize the styles, you'll need to set up Tailwind CSS:
-
-### Alternative: Using Pre-built CSS
-
-If you prefer not to install Tailwind CSS, you can manually add our pre-built CSS file from:
-https://github.com/ChrisCoder9000/formly-reactjs-styles
-
-Download the `output.css` file and include it in your project.
-
-Alternatively you can install styles with npm `npm install formly-reactjs-styles` and import them in the root of your project:
-
-```tsx
-import "formly-reactjs-styles";
-```
-
-<details>
-<summary><strong>📦 1. Install Dependencies</strong></summary>
-
-Install Tailwind CSS and its peer dependencies:
-
-```bash
-npm install -D tailwindcss postcss autoprefixer
-# or
-yarn add -D tailwindcss postcss autoprefixer
-# or
-pnpm add -D tailwindcss postcss autoprefixer
-```
-
-</details>
-
-<details>
-<summary><strong>⚙️ 2. PostCSS Configuration</strong></summary>
+### 1. PostCSS Configuration
 
 Create a `postcss.config.js` file:
 
@@ -89,10 +46,7 @@ module.exports = {
 };
 ```
 
-</details>
-
-<details>
-<summary><strong>🔧 3. Tailwind Configuration</strong></summary>
+### 2. Tailwind Configuration
 
 Create a `tailwind.config.js` file:
 
@@ -171,14 +125,9 @@ module.exports = {
 };
 ```
 
-> **Important**: This configuration is required for proper styling of form components. Make sure to include all the theme extensions and safelist patterns as they are used for dynamic color applications and animations.
+### 3. CSS Setup
 
-</details>
-
-<details>
-<summary><strong>🎨 4. CSS Setup</strong></summary>
-
-Add Tailwind's directives to your CSS:
+Create a CSS file (e.g., `src/styles/globals.css`) and add Tailwind's directives along with the required CSS variables:
 
 ```css
 @tailwind base;
@@ -232,9 +181,11 @@ Add Tailwind's directives to your CSS:
 }
 ```
 
-> **Important**: These CSS variables are required for proper styling of form components. They provide the base colors and theme values used throughout the library. You can customize these values to match your application's theme.
+Import this CSS file in your application's entry point (e.g., `src/index.tsx` or `src/App.tsx`):
 
-</details>
+```tsx
+import "./styles/globals.css";
+```
 
 ## 🚀 Quick Start
 
