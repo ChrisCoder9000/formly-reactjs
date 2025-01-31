@@ -6,6 +6,6 @@
 // Modified By: the developer formerly known as Christian Nonis at <alch.infoemail@gmail.com>
 // -----
 
-import { Builder } from "./Builder";
-export { Builder };
-export default Builder;
+import FormBuilder from "./Builder";
+export { FormBuilder };
+export default FormBuilder;

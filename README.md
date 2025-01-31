@@ -74,7 +74,7 @@ module.exports = {
   safelist: [],
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
-    "./node_modules/formly-reactjs/**/*.js",
+    "./node_modules/formly-reactjs/dist/**/*.js",
   ],
   theme: {
     extend: {},

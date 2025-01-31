@@ -15,7 +15,7 @@ import {
   FieldComponentOverrides,
   ColorsOverwrites,
 } from "../../constants/types";
-import React from "react";
+import React, { useMemo, useEffect, useCallback } from "react";
 import StepHeader from "../StepHeader/StepHeader";
 import { Form } from "../ui/form";
 import { FieldError, FieldErrors, useForm } from "react-hook-form";
@@ -59,10 +59,16 @@ type StepFormProps = {
   onChange?: (data: Record<string, string>, stepIndex: number) => void;
 };
 
-const StepForm = (props: StepFormProps) => {
+const StepForm = React.memo((props: StepFormProps) => {
   const formRef = React.useRef<any>();
-  const formSchema = z.object(toZod(props.step.fields));
 
+  // Memoize the form schema
+  const formSchema = useMemo(
+    () => z.object(toZod(props.step.fields)),
+    [props.step.fields]
+  );
+
+  // Memoize the form instance
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: async (values, context, options) => {
       const schema = z.object(
@@ -71,67 +77,101 @@ const StepForm = (props: StepFormProps) => {
       return zodResolver(schema)(values, context, options);
     },
     mode: "onChange",
+    defaultValues: props.formData, // Set default values here
   });
 
   formRef.current = form;
 
-  React.useEffect(() => {
+  // Update form values when formData changes
+  useEffect(() => {
     if (props.formData) {
-      form.reset(props.formData);
+      // Use setValue instead of reset to preserve form state
+      Object.entries(props.formData).forEach(([key, value]) => {
+        form.setValue(key, value, {
+          shouldValidate: false,
+          shouldDirty: false,
+          shouldTouch: false,
+        });
+      });
     }
   }, [props.formData, form]);
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     props.onSubmit(form.getValues());
-  };
+  }, [form, props.onSubmit]);
 
-  let firstError = Object.values(form.formState.errors)[0] as FieldError;
+  const handleStepSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
 
-  if (Array.isArray(firstError)) {
-    firstError = Object.values(
-      Object.entries(firstError)[0][1]
-    )[0] as FieldError;
-  }
-
-  const handleStepSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const onValid = () => {
-      if (props.onStepSubmit) {
-        props.onStepSubmit({
+      const onValid = () => {
+        props.onStepSubmit?.({
           data: form.getValues(),
           stepIndex: props.stepIndex,
           errors: form.formState.errors,
         });
-      }
-      handleSubmit();
-    };
+        handleSubmit();
+      };
 
-    const onInvalid = () => {
-      if (props.onStepSubmit) {
-        props.onStepSubmit({
+      const onInvalid = () => {
+        props.onStepSubmit?.({
           data: form.getValues(),
           stepIndex: props.stepIndex,
           errors: form.formState.errors,
         });
-      }
-    };
+      };
 
-    form.handleSubmit(onValid, onInvalid)(e);
-  };
+      form.handleSubmit(onValid, onInvalid)(e);
+    },
+    [form, props.onStepSubmit, props.stepIndex, handleSubmit]
+  );
 
-  React.useEffect(() => {
+  // Memoize form watch subscription
+  useEffect(() => {
+    if (!props.onChange) return;
+
     const subscription = form.watch((data) => {
-      if (props.onChange) {
-        props.onChange(data?.data || {}, props.stepIndex);
-      }
+      props.onChange?.(data || {}, props.stepIndex);
     });
 
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [form, props.onChange]);
+    return () => subscription.unsubscribe();
+  }, [form, props.onChange, props.stepIndex]);
+
+  // Memoize the first error computation
+  const firstError = useMemo(() => {
+    let error = Object.values(form.formState.errors)[0] as FieldError;
+    if (Array.isArray(error)) {
+      error = Object.values(Object.entries(error)[0][1])[0] as FieldError;
+    }
+    return error;
+  }, [form.formState.errors]);
+
+  // Memoize fields rendering
+  const renderFields = useMemo(
+    () =>
+      props.step.fields.map((_field: any, i) => {
+        const field = _field as Omit<Field, "type"> & { type: FieldType };
+        return (
+          <FieldRendererWithOverwriteHandler
+            key={i}
+            field={field}
+            fieldOverwrites={props.fieldOverwrites}
+            formData={props.formData ?? form.getValues()}
+            stepIndex={props.stepIndex}
+            form={form}
+            value={form.getValues()?.[field.name]}
+          />
+        );
+      }),
+    [
+      props.step.fields,
+      props.fieldOverwrites,
+      props.formData,
+      props.stepIndex,
+      form,
+    ]
+  );
 
   return (
     <Form {...form}>
@@ -147,22 +187,7 @@ const StepForm = (props: StepFormProps) => {
             subtitle={props.step.subtitle || props.formSubtitle}
           />
         )}
-        <div className="flex flex-col gap-4">
-          {props.step.fields.map((_field: any, i) => {
-            const field = _field as Omit<Field, "type"> & { type: FieldType };
-            return (
-              <FieldRendererWithOverwriteHandler
-                key={i}
-                field={field}
-                fieldOverwrites={props.fieldOverwrites}
-                formData={props.formData ?? form.getValues()}
-                stepIndex={props.stepIndex}
-                form={form}
-                value={form.getValues()?.[field.name]}
-              />
-            );
-          })}
-        </div>
+        <div className="flex flex-col gap-4">{renderFields}</div>
         {props.formErrorOverwrites ? (
           props.formErrorOverwrites({
             errors: form.formState.errors,
@@ -176,11 +201,9 @@ const StepForm = (props: StepFormProps) => {
               </p>
             </div>
           </div>
-        ) : (
-          <></>
-        )}
+        ) : null}
         <div className="flex justify-end mt-4 gap-2">
-          {props.stepIndex > 0 ? (
+          {props.stepIndex > 0 && (
             <Button
               className={cn("btn-secondary", "hover:btn-secondary/80")}
               variant="ghost"
@@ -189,8 +212,6 @@ const StepForm = (props: StepFormProps) => {
             >
               Back
             </Button>
-          ) : (
-            <></>
           )}
           <Button
             className={cn("bg-primary text-primary-foreground")}
@@ -202,6 +223,8 @@ const StepForm = (props: StepFormProps) => {
       </form>
     </Form>
   );
-};
+});
+
+StepForm.displayName = "StepForm";
 
 export default StepForm;
