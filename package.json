@@ -1,6 +1,6 @@
 {
   "name": "formly-reactjs",
-  "version": "1.8.7",
+  "version": "1.9.0",
   "type": "module",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
