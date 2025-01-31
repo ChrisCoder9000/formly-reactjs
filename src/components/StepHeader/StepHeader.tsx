@@ -18,10 +18,7 @@ const StepHeader = (props: StepHeaderProps) => {
   return (
     <div className="">
       <h1 className={`text-2xl font-bold mb-1 text-primary`}>{props.title}</h1>
-      <p className={`text-sm text-muted-foreground mb-6`}>
-        {props.subtitle}
-        {props.subtitle}
-      </p>
+      <p className={`text-sm text-muted-foreground mb-6`}>{props.subtitle}</p>
     </div>
   );
 };
