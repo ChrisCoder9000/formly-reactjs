@@ -37,8 +37,9 @@ type BuilderProps = {
     data: Record<string, string>;
     stepIndex: number;
     errors: FieldErrors<{ [x: string]: any }>;
-  }) => void;
+  }) => Promise<void>;
   onChange?: (data: Record<string, string>, stepIndex: number) => void;
+  isButtonLoading?: boolean;
 
   // Field Overwrites
   fieldComponentOverwrites?: Partial<FieldComponentOverrides>;
@@ -47,6 +48,7 @@ type BuilderProps = {
   actionsOverwrites?: (args: {
     onBack: () => void;
     onSubmit: (data: Record<string, string>) => void;
+    isButtonLoading?: boolean;
   }) => React.ReactElement<any>;
 
   // Header Overwrites
@@ -162,6 +164,7 @@ export const Builder = (props: BuilderProps) => {
         submitLabel={submitLabel}
         stepIndex={currentStep}
         stepsLength={props.steps.length}
+        isButtonLoading={props.isButtonLoading}
         onBack={() => setCurrentStep((p) => p - 1)}
         onStepSubmit={props.onStepSubmit}
         formData={Object.fromEntries(

@@ -231,6 +231,12 @@ interface BuilderProps {
   actionsOverwrites?: ActionsOverwrites; // Custom action buttons
   headerOverwrites?: HeaderOverwrites; // Custom header
   formErrorOverwrites?: FormErrorOverwrites; // Custom form error messages
+  isButtonLoading?: boolean; // Whether the button is loading
+  onStepSubmit?: (args: {
+    data: Record<string, string>;
+    stepIndex: number;
+    errors: FieldErrors;
+  }) => Promise<void>; // Custom step submit callback, is pending, the button will be disabled and the loader will be shown
 }
 ```
 

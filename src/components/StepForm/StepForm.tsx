@@ -23,7 +23,7 @@ import { Button } from "../ui/button";
 import { z } from "zod";
 import { fillNestedField, getNestedValue, toZod } from "../../utils/data";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TriangleAlert } from "lucide-react";
+import { Loader, TriangleAlert } from "lucide-react";
 import { FieldType } from "../../constants/enums";
 import FieldRendererWithOverwriteHandler from "../FieldRendererWithOverwriteHandler";
 import { TW_COLORS } from "../../constants/colors";
@@ -47,6 +47,7 @@ type StepFormProps = {
   actionsOverwrites?: (props: {
     onBack: () => void;
     onSubmit: () => void;
+    isButtonLoading?: boolean;
   }) => React.ReactElement;
   formErrorOverwrites?: (props: {
     errors: FieldErrors<{ [x: string]: any }>;
@@ -55,12 +56,14 @@ type StepFormProps = {
     data: Record<string, string>;
     stepIndex: number;
     errors: FieldErrors<{ [x: string]: any }>;
-  }) => void;
+  }) => Promise<void>;
   onChange?: (data: Record<string, string>, stepIndex: number) => void;
+  isButtonLoading?: boolean;
 };
 
 const StepForm = React.memo((props: StepFormProps) => {
   const formRef = React.useRef<any>();
+  const [isStepSubmitting, setIsStepSubmitting] = React.useState(false);
 
   // Memoize the form schema
   const formSchema = useMemo(
@@ -101,17 +104,22 @@ const StepForm = React.memo((props: StepFormProps) => {
   }, [form, props.onSubmit]);
 
   const handleStepSubmit = useCallback(
-    (e: React.FormEvent<HTMLFormElement>) => {
+    async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       e.stopPropagation();
 
-      const onValid = () => {
-        props.onStepSubmit?.({
-          data: form.getValues(),
-          stepIndex: props.stepIndex,
-          errors: form.formState.errors,
-        });
-        handleSubmit();
+      const onValid = async () => {
+        setIsStepSubmitting(true);
+        try {
+          await props.onStepSubmit?.({
+            data: form.getValues(),
+            stepIndex: props.stepIndex,
+            errors: form.formState.errors,
+          });
+          handleSubmit();
+        } finally {
+          setIsStepSubmitting(false);
+        }
       };
 
       const onInvalid = () => {
@@ -173,6 +181,9 @@ const StepForm = React.memo((props: StepFormProps) => {
     ]
   );
 
+  // Update the button loading condition
+  const isLoading = props.isButtonLoading || isStepSubmitting;
+
   return (
     <Form {...form}>
       <form onSubmit={handleStepSubmit}>
@@ -202,24 +213,42 @@ const StepForm = React.memo((props: StepFormProps) => {
             </div>
           </div>
         ) : null}
-        <div className="flex justify-end mt-4 gap-2">
-          {props.stepIndex > 0 && (
+        {props.actionsOverwrites ? (
+          props.actionsOverwrites({
+            onBack: props.onBack ?? (() => {}),
+            onSubmit: handleSubmit,
+            isButtonLoading: props.isButtonLoading,
+          })
+        ) : (
+          <div className="flex justify-end mt-4 gap-2">
+            {props.stepIndex > 0 && (
+              <Button
+                className={cn("btn-secondary", "hover:btn-secondary/80")}
+                variant="ghost"
+                type="button"
+                onClick={props.onBack ?? (() => {})}
+                disabled={props.isButtonLoading}
+              >
+                Back
+              </Button>
+            )}
             <Button
-              className={cn("btn-secondary", "hover:btn-secondary/80")}
-              variant="ghost"
-              type="button"
-              onClick={props.onBack}
+              className={cn(
+                "bg-primary text-primary-foreground",
+                "flex items-center gap-2"
+              )}
+              type="submit"
+              disabled={isLoading}
             >
-              Back
+              {isLoading ? (
+                <Loader className={cn("text-secondary", "animate-spin-slow")} />
+              ) : (
+                <></>
+              )}
+              {props.submitLabel}
             </Button>
-          )}
-          <Button
-            className={cn("bg-primary text-primary-foreground")}
-            type="submit"
-          >
-            {props.submitLabel}
-          </Button>
-        </div>
+          </div>
+        )}
       </form>
     </Form>
   );
