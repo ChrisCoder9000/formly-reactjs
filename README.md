@@ -23,17 +23,17 @@ A modern, type-safe form builder SDK for React applications that makes creating 
 
 ```bash
 # First, install the correct Tailwind CSS version
-npm install tailwindcss@^3.4.0 postcss autoprefixer date-fns input-otp zod, react-day-picker
+npm install tailwindcss@^3.4.0 postcss autoprefixer date-fns input-otp zod react-day-picker
 
 # Then install formly-reactjs
 npm install formly-reactjs
 
 # Or using yarn
-yarn add tailwindcss@^3.4.0 postcss autoprefixer date-fns input-otp zod, react-day-picker
+yarn add tailwindcss@^3.4.0 postcss autoprefixer date-fns input-otp zod react-day-picker
 yarn add formly-reactjs
 
 # Or using pnpm
-pnpm add tailwindcss@^3.4.0 postcss autoprefixer date-fns input-otp zod, react-day-picker
+pnpm add tailwindcss@^3.4.0 postcss autoprefixer date-fns input-otp zod react-day-picker
 pnpm add formly-reactjs
 ```
 
