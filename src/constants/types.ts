@@ -24,7 +24,7 @@ export type FieldOption = {
 
 export type FieldDependency = {
   name: string;
-  value: any;
+  value?: any;
 };
 
 export type Field = {

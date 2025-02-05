@@ -232,15 +232,30 @@ export const areDependenciesSatisfied = (
   return dependencies.every((dependency) => {
     const dependencyValue = findDependencyValue(formValues, dependency.name);
 
-    if (dependencyValue === undefined || dependencyValue === null) {
-      return false;
+    if (dependency.value) {
+      if (Array.isArray(dependencyValue)) {
+        return dependencyValue.includes(dependency.value);
+      }
+
+      // Convert both values to strings for comparison to handle different types
+      return String(dependencyValue) === String(dependency.value);
     }
 
+    // Handle different types of non-empty checks
     if (Array.isArray(dependencyValue)) {
-      return dependencyValue.includes(dependency.value);
+      return dependencyValue.length > 0;
+    }
+    if (typeof dependencyValue === "string") {
+      return dependencyValue.length > 0;
+    }
+    if (typeof dependencyValue === "number") {
+      return true; // Any number is considered valid
+    }
+    if (typeof dependencyValue === "boolean") {
+      return dependencyValue; // Only true is considered valid
     }
 
-    return dependencyValue === dependency.value;
+    return !!dependencyValue; // Handle other cases
   });
 };
 
