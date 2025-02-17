@@ -7,38 +7,39 @@
 // -----
 
 "use client";
-
 import {
-  Field,
-  FormFieldOverrides,
   FormStep,
   FormStepFlex,
   FieldComponentOverrides,
-  ColorsOverwrites,
 } from "../../constants/types";
-import React, { useMemo, useReducer, useState } from "react";
+import React, { useEffect, useMemo, useReducer, useState } from "react";
 import StepForm from "../StepForm";
-import { FieldType, FieldTypeFlex } from "../../constants/enums";
-import { cn } from "../../lib/utils";
-import { TW_COLORS } from "../../constants/colors";
-import { FieldError, FieldErrors } from "react-hook-form";
+import { FieldErrors } from "react-hook-form";
 import { fillInitialFormData } from "../../utils/data";
+import {
+  registerStepSubmission,
+  registerFormSubmission,
+  retrieveForm,
+  getSubmission,
+} from "formly-reactjs-core";
+import { lessHlsVivid } from "@/src/utils/colors";
+import { lessHlsVivid2 } from "@/src/utils/colors";
 
 type BuilderProps = {
-  steps: FormStepFlex[];
+  steps?: FormStepFlex[];
   title?: string;
   description?: string;
   className?: string;
   nextLabel?: string;
   submitLabel?: string;
-  defaultFormData?: Record<string, string>;
-  onSubmit?: (data: Record<string, string>) => void;
+  defaultFormData?: Record<string, any>;
+  onSubmit?: (data: Record<string, any>) => Promise<void>;
   onStepSubmit?: (args: {
-    data: Record<string, string>;
+    data: Record<string, any>;
     stepIndex: number;
     errors: FieldErrors<{ [x: string]: any }>;
   }) => Promise<void>;
-  onChange?: (data: Record<string, string>, stepIndex: number) => void;
+  onChange?: (data: Record<string, any>, stepIndex: number) => void;
   isButtonLoading?: boolean;
 
   // Field Overwrites
@@ -47,7 +48,7 @@ type BuilderProps = {
   // Actions Overwrites
   actionsOverwrites?: (args: {
     onBack: () => void;
-    onSubmit: (data: Record<string, string>) => void;
+    onSubmit: (data: Record<string, any>) => void;
     isButtonLoading?: boolean;
   }) => React.ReactElement<any>;
 
@@ -73,12 +74,21 @@ type BuilderProps = {
     onSubmit: (data: Record<string, string>) => void;
     formData: Record<string, string>;
   }) => React.ComponentType<any>;
+
+  // Formly Dashboard
+  options?: {
+    publishableKey: string;
+    formId: string;
+  };
 };
 
 const reducer = (
   state: Record<string, string>,
-  action: { name: string; value: string }
+  action: { name: string; value: any }
 ) => {
+  if (action.name === "formly-fill-entire-form") {
+    return { ...state, ...(action.value as any) };
+  }
   return { ...state, [action.name]: action.value };
 };
 
@@ -100,6 +110,9 @@ const reducer = (
  * @param {function} [props.headerOverwrites] - Optional custom renderer for form header
  * @param {function} [props.formErrorOverwrites] - Optional custom renderer for form validation errors
  * @param {Object} [props.defaultFormData] - Optional initial form data to fill in the fields
+ * @param {Object} [props.options] - Optional options for the form
+ * @param {string} [props.options.publishableKey] - The publishable key for the form
+ * @param {string} [props.options.formId] - The form ID for the form
  *
  * @returns {React.ReactElement} A multi-step form component
  *
@@ -115,26 +128,77 @@ const reducer = (
  */
 export const Builder = (props: BuilderProps) => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [title, setTitle] = useState<string | undefined>(props.title);
+  const [description, setDescription] = useState<string | undefined>(
+    props.description
+  );
+  const [themeColor, setThemeColor] = useState<string | undefined>(undefined);
+  const [steps, setSteps] = useState<FormStepFlex[]>(props.steps ?? []);
   const [formData, setFormData] = useReducer(
     reducer,
-    fillInitialFormData(props.defaultFormData, props.steps)
+    fillInitialFormData(props.defaultFormData, steps)
   );
 
-  const handleSubmit = (data: Record<string, string>) => {
+  useEffect(() => {
+    setSteps(props.steps ?? []);
+    setTitle(props.title);
+    setDescription(props.description);
+  }, [props.steps, props.title, props.description]);
+
+  useEffect(() => {
+    if (props.options?.formId && props.options?.publishableKey) {
+      retrieveForm({
+        publicKey: props.options.publishableKey,
+        formId: props.options.formId,
+      })
+        .then(
+          (form: {
+            steps: FormStepFlex[];
+            title?: string;
+            description?: string;
+            themeColor?: string;
+          }) => {
+            setSteps(form.steps);
+            setTitle(form.title);
+            setDescription(form.description);
+            setThemeColor(form.themeColor);
+            getSubmission({
+              publicKey: props.options!.publishableKey,
+              formId: props.options!.formId,
+            }).then((submission) => {
+              setFormData({
+                name: "formly-fill-entire-form",
+                value: submission,
+              });
+            });
+          }
+        )
+        .finally(() => {});
+    }
+  }, []);
+
+  const handleSubmit = async (data: Record<string, string>) => {
     let _data: Record<string, string> = {};
     Object.entries(data).forEach(([name, value]) => {
       setFormData({ name, value });
       _data[name] = value;
     });
-    if (currentStep === props.steps.length - 1) {
-      props.onSubmit && props.onSubmit({ ...formData, ..._data });
+    if (props.options?.formId && props.options?.publishableKey) {
+      await registerFormSubmission({
+        publicKey: props.options?.publishableKey,
+        formId: props.options?.formId,
+        data,
+      });
+    }
+    if (currentStep === steps.length - 1) {
+      props.onSubmit && (await props.onSubmit({ ...formData, ..._data }));
     } else {
       setCurrentStep((p) => p + 1);
     }
   };
 
   const submitLabel = useMemo(() => {
-    if (currentStep === props.steps.length - 1) {
+    if (currentStep === steps.length - 1) {
       return props.submitLabel || "Submit";
     }
     return props.nextLabel || "Next";
@@ -149,27 +213,59 @@ export const Builder = (props: BuilderProps) => {
     }
   };
 
+  const handleStepSubmit = async (args: {
+    data: Record<string, string>;
+    stepIndex: number;
+    errors: FieldErrors<{ [x: string]: any }>;
+  }): Promise<void> => {
+    if (props.options?.formId && props.options?.publishableKey) {
+      await registerStepSubmission({
+        publicKey: props.options.publishableKey,
+        formId: props.options.formId,
+        data: args.data,
+      });
+    }
+    if (props.onStepSubmit) {
+      await props.onStepSubmit(args);
+    }
+  };
+
+  const styleOverwrites = useMemo(() => {
+    if (!themeColor) {
+      return {};
+    }
+    return {
+      ["--primary" as string]: lessHlsVivid(themeColor),
+      ["--muted-foreground" as string]: lessHlsVivid2(themeColor),
+    };
+  }, [themeColor]);
+
+  if (!steps.length) {
+    return <></>;
+  }
+
   // [--primary:84_100%_50%]
   return (
-    <div className={`${props.className ?? ""}`}>
+    <div className={`${props.className ?? ""}`} style={styleOverwrites}>
       <StepForm
         headerOverwrites={props.headerOverwrites}
         fieldOverwrites={props.fieldComponentOverwrites}
         actionsOverwrites={props.actionsOverwrites}
         formErrorOverwrites={props.formErrorOverwrites}
-        formTitle={props.title}
-        formSubtitle={props.description}
-        step={props.steps[currentStep] as FormStep}
+        formTitle={title}
+        formSubtitle={description}
+        step={steps[currentStep] as FormStep}
         onSubmit={handleSubmit}
         submitLabel={submitLabel}
         stepIndex={currentStep}
-        stepsLength={props.steps.length}
+        stepsLength={steps.length}
         isButtonLoading={props.isButtonLoading}
         onBack={() => setCurrentStep((p) => p - 1)}
-        onStepSubmit={props.onStepSubmit}
-        formData={Object.fromEntries(
+        onStepSubmit={handleStepSubmit}
+        formData={formData}
+        stepFormData={Object.fromEntries(
           Object.entries(formData).filter(([key]) =>
-            props.steps[currentStep].fields.some((f) => f.name === key)
+            steps[currentStep].fields.some((f) => f.name === key)
           )
         )}
         onChange={handleChange}

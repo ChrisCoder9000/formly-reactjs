@@ -22,18 +22,14 @@ export const useBlocksField = (args: UseBlocksFieldProps) => {
   const [openedBlockIndex, setOpenedBlockIndex] = useState<number>(0);
 
   useEffect(() => {
-    if (!blocks.length) {
-      setBlocks(
-        args.isBlock
-          ? Array.from({ length: args.value.length || 1 }, (_, i) => ({
-              fields: args.fields.map((field) => ({
-                ...field,
-                value: getNestedValue(field.name, args.value, field.type),
-              })),
-            }))
-          : []
-      );
-    }
+    setBlocks(
+      Array.from({ length: args.value?.length || 1 }, (_, i) => ({
+        fields: args.fields.map((field) => ({
+          ...field,
+          value: getNestedValue(field.name, args.value, field.type),
+        })),
+      }))
+    );
   }, [args.value]);
 
   return {

@@ -22,6 +22,7 @@ type BlockFieldProps = {
   field: Field;
   form: UseFormReturn;
   colors?: ColorsOverwrites;
+  formData?: Record<string, any>;
 };
 
 const BlocksField = (props: BlockFieldProps) => {
@@ -73,7 +74,7 @@ const BlocksField = (props: BlockFieldProps) => {
             key={j}
           >
             {openedBlockIndex === j ? (
-              block.fields?.map((childField: Field) => (
+              block.fields?.map((childField: Field, k: number) => (
                 <BlockFieldRenderer
                   errored={
                     Array.isArray(props.errored)
@@ -83,7 +84,7 @@ const BlocksField = (props: BlockFieldProps) => {
                         )?.[childField.name]
                       : undefined
                   }
-                  key={childField.name}
+                  key={k}
                   field={childField}
                   onChange={(name, value) => {
                     const prev = props.value[j] ?? {};
@@ -94,6 +95,7 @@ const BlocksField = (props: BlockFieldProps) => {
                   value={props.value[j]?.[childField.name]}
                   form={form}
                   colors={props.colors}
+                  formData={props.formData}
                 />
               ))
             ) : (

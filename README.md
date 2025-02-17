@@ -214,7 +214,47 @@ function App() {
 }
 ```
 
-## 📖 API Reference
+## 🌐 Formly Dashboard Integration
+
+You can optionally connect your forms to the [Formly online dashboard](https://formly.biz/) to manage your forms and submissions in a centralized way. This gives you access to:
+
+- Visual form builder interface
+- Form analytics and submission tracking
+- Team collaboration features
+- Form versioning
+- Submission management
+
+### Setting up Dashboard Integration
+
+1. Create an account at [formly.biz](https://formly.biz/)
+2. Create a new form in the dashboard
+3. Get your publishable key and form ID
+4. Add them to your Builder component:
+
+```tsx
+function App() {
+  return (
+    <Builder
+      options={{
+        publishableKey: "your_publishable_key", // From formly.biz dashboard
+        formId: "your_form_id", // From formly.biz dashboard
+      }}
+      // If using dashboard, steps are optional as they'll be loaded from there
+      steps={steps}
+      onSubmit={handleSubmit}
+    />
+  );
+}
+```
+
+When using the dashboard integration:
+
+- Form submissions are automatically sent to your dashboard
+- Form configuration can be managed through the dashboard interface
+- You can still provide local steps as a fallback
+- All features (validation, styling, etc.) work the same way
+
+## 📚 API Reference
 
 ### Builder Component
 

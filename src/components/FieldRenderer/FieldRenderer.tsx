@@ -29,15 +29,16 @@ export type FieldRendererProps = {
   value?: any;
   form: UseFormReturn;
   colors?: ColorsOverwrites;
+  formData?: Record<string, any>;
 };
 
 export const FieldRenderer = (props: FieldRendererProps) => {
   if (props.field.dependencies?.length) {
-    const formValues = props.form.getValues();
-    if (!areDependenciesSatisfied(props.field.dependencies, formValues)) {
+    if (!areDependenciesSatisfied(props.field.dependencies, props.formData)) {
       return null;
     }
   }
+
   return (
     <FormField
       name={props.field.name}
@@ -124,6 +125,7 @@ const FieldSwitcher = (
     field: Field;
     form: UseFormReturn;
     colors?: ColorsOverwrites;
+    formData?: Record<string, any>;
   }
 ) => {
   switch (props.type) {
@@ -149,7 +151,7 @@ const FieldSwitcher = (
     case "otp":
       return (
         <OtpField
-          value={props.value}
+          value={props.value ?? ""}
           onChange={props.onChange}
           name={props.name}
           errored={
@@ -247,6 +249,7 @@ const FieldSwitcher = (
           field={props.field}
           form={props.form}
           colors={props.colors}
+          formData={props.formData}
         />
       );
     default:

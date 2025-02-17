@@ -2,6 +2,7 @@ import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
 import babel from "@rollup/plugin-babel";
+import json from "@rollup/plugin-json";
 
 const isProduction = !process.env.ROLLUP_WATCH;
 
@@ -35,8 +36,14 @@ export default {
     "react/jsx-runtime",
     /^@radix-ui\/.*/,
     /^@hookform\/.*/,
+    /^@babel\/runtime.*/,
+    /^@babel\/runtime-corejs3.*/,
+    "fs",
+    "path",
+    "crypto",
   ],
   plugins: [
+    json(),
     {
       name: "remove-use-client",
       transform(code, id) {
@@ -51,9 +58,11 @@ export default {
     resolve({
       extensions: [".js", ".jsx", ".ts", ".tsx"],
       preferBuiltins: true,
+      browser: true,
     }),
     commonjs({
       include: /node_modules/,
+      ignore: ["fs", "path", "crypto"],
     }),
     typescript({
       tsconfig: "tsconfig.build.json",

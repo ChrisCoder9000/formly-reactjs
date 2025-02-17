@@ -33,12 +33,12 @@ type StepFormProps = {
   step: FormStep;
   formTitle?: string;
   formSubtitle?: string;
-  onSubmit: (data: Record<string, string>) => void;
+  onSubmit: (data: Record<string, string>) => Promise<void>;
   submitLabel?: string;
   stepIndex: number;
   stepsLength: number;
   onBack?: () => void;
-  formData?: Record<string, string>;
+  formData?: Record<string, any>;
   fieldOverwrites?: Partial<FieldComponentOverrides>;
   headerOverwrites?: (props: {
     title: string | undefined;
@@ -46,7 +46,7 @@ type StepFormProps = {
   }) => React.ReactElement;
   actionsOverwrites?: (props: {
     onBack: () => void;
-    onSubmit: () => void;
+    onSubmit: () => Promise<void>;
     isButtonLoading?: boolean;
   }) => React.ReactElement;
   formErrorOverwrites?: (props: {
@@ -58,6 +58,7 @@ type StepFormProps = {
     errors: FieldErrors<{ [x: string]: any }>;
   }) => Promise<void>;
   onChange?: (data: Record<string, string>, stepIndex: number) => void;
+  stepFormData?: Record<string, any>;
   isButtonLoading?: boolean;
 };
 
@@ -80,16 +81,16 @@ const StepForm = React.memo((props: StepFormProps) => {
       return zodResolver(schema)(values, context, options);
     },
     mode: "onChange",
-    defaultValues: props.formData, // Set default values here
+    // defaultValues: props.formData, // Set default values here
   });
 
   formRef.current = form;
 
   // Update form values when formData changes
   useEffect(() => {
-    if (props.formData) {
+    if (props.stepFormData) {
       // Use setValue instead of reset to preserve form state
-      Object.entries(props.formData).forEach(([key, value]) => {
+      Object.entries(props.stepFormData).forEach(([key, value]) => {
         form.setValue(key, value, {
           shouldValidate: false,
           shouldDirty: false,
@@ -97,10 +98,10 @@ const StepForm = React.memo((props: StepFormProps) => {
         });
       });
     }
-  }, [props.formData, form]);
+  }, [props.stepFormData, form]);
 
-  const handleSubmit = useCallback(() => {
-    props.onSubmit(form.getValues());
+  const handleSubmit = useCallback(async () => {
+    await props.onSubmit(form.getValues());
   }, [form, props.onSubmit]);
 
   const handleStepSubmit = useCallback(
@@ -116,29 +117,39 @@ const StepForm = React.memo((props: StepFormProps) => {
             stepIndex: props.stepIndex,
             errors: form.formState.errors,
           });
-          handleSubmit();
-        } finally {
-          setIsStepSubmitting(false);
+          await handleSubmit();
+          form.reset();
+        } catch (error) {
+          console.error(error);
         }
       };
 
-      const onInvalid = () => {
-        props.onStepSubmit?.({
-          data: form.getValues(),
-          stepIndex: props.stepIndex,
-          errors: form.formState.errors,
-        });
+      const onInvalid = async () => {
+        try {
+          await props.onStepSubmit?.({
+            data: form.getValues(),
+            stepIndex: props.stepIndex,
+            errors: form.formState.errors,
+          });
+        } catch (error) {
+          console.error(error);
+        }
       };
 
-      form.handleSubmit(onValid, onInvalid)(e);
+      await form.handleSubmit(onValid, onInvalid)(e);
+      setIsStepSubmitting(false);
     },
     [form, props.onStepSubmit, props.stepIndex, handleSubmit]
   );
 
+  const handleBack = useCallback(() => {
+    form.reset();
+    props.onBack?.();
+  }, [form, props.onBack]);
+
   // Memoize form watch subscription
   useEffect(() => {
     if (!props.onChange) return;
-
     const subscription = form.watch((data) => {
       props.onChange?.(data || {}, props.stepIndex);
     });
@@ -160,25 +171,22 @@ const StepForm = React.memo((props: StepFormProps) => {
     () =>
       props.step.fields.map((_field: any, i) => {
         const field = _field as Omit<Field, "type"> & { type: FieldType };
+
         return (
           <FieldRendererWithOverwriteHandler
             key={i}
             field={field}
             fieldOverwrites={props.fieldOverwrites}
-            formData={props.formData ?? form.getValues()}
+            formValues={form.getValues()}
+            formData={props.formData ?? {}}
+            // formData={props.formData ?? form.getValues()}
             stepIndex={props.stepIndex}
             form={form}
             value={form.getValues()?.[field.name]}
           />
         );
       }),
-    [
-      props.step.fields,
-      props.fieldOverwrites,
-      props.formData,
-      props.stepIndex,
-      form,
-    ]
+    [props.step.fields, props.fieldOverwrites, props.stepIndex, form]
   );
 
   // Update the button loading condition
@@ -226,7 +234,7 @@ const StepForm = React.memo((props: StepFormProps) => {
                 className={cn("btn-secondary", "hover:btn-secondary/80")}
                 variant="ghost"
                 type="button"
-                onClick={props.onBack ?? (() => {})}
+                onClick={handleBack}
                 disabled={props.isButtonLoading}
               >
                 Back

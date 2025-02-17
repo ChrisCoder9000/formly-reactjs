@@ -28,12 +28,12 @@ type BlockFieldRendererProps = {
   value?: any;
   form: UseFormReturn;
   colors?: ColorsOverwrites;
+  formData?: Record<string, any>;
 };
 
 const BlockFieldRenderer = (props: BlockFieldRendererProps) => {
   if (props.field.dependencies?.length) {
-    const formValues = props.form.getValues();
-    if (!areDependenciesSatisfied(props.field.dependencies, formValues)) {
+    if (!areDependenciesSatisfied(props.field.dependencies, props.formData)) {
       return null;
     }
   }

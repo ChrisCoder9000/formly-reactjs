@@ -152,7 +152,7 @@ export const toZod = (fields: Field[], formValues: any = {}): ZodRawShape => {
 };
 
 export const getNestedValue = (path: string, value: any, type?: FieldType) => {
-  if (!Object.entries(value).length) {
+  if (!Object.entries(value ?? {}).length) {
     return undefined;
   }
   if (!path.includes(".") && type && [FieldType.CHECKBOX].includes(type)) {

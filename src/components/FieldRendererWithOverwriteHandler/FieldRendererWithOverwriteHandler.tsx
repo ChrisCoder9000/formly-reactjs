@@ -24,8 +24,9 @@ type FieldRendererWithOverwriteHandlerProps = Omit<
   "onChange"
 > & {
   fieldOverwrites?: Partial<FieldComponentOverrides>;
-  formData: Record<string, any>;
   stepIndex: number;
+  formValues: Record<string, any>;
+  formData: Record<string, any>;
 };
 
 const FieldRendererWithOverwriteHandler = (
@@ -39,6 +40,7 @@ const FieldRendererWithOverwriteHandler = (
 
   let CurrentComponent = (
     <FieldRenderer
+      formData={props.formData}
       form={props.form}
       errored={props.form.formState.errors[props.field.name] as any}
       field={props.field}
@@ -47,7 +49,7 @@ const FieldRendererWithOverwriteHandler = (
         const _formData = fillNestedField(
           props.field.name,
           value,
-          props.formData
+          props.formValues
         );
         props.form.setValue(props.field.name, _formData[props.field.name]);
       }}
@@ -68,7 +70,7 @@ const FieldRendererWithOverwriteHandler = (
         const _formData = fillNestedField(
           props.field.name,
           value,
-          props.formData
+          props.formValues
         );
         props.form.setValue(props.field.name, _formData[props.field.name], {
           shouldDirty: true,
@@ -179,6 +181,7 @@ const FieldRendererWithOverwriteHandler = (
                 value={props.value?.[j]?.[f.name]}
                 key={i}
                 colors={props.colors}
+                formData={props.formData}
               />
             ),
           };
