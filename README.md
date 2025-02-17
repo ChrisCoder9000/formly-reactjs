@@ -241,6 +241,7 @@ function App() {
       }}
       // If using dashboard, steps are optional as they'll be loaded from there
       steps={steps}
+      // If using dashboard, onSubmit is optional as the submission will be sent to the dashboard
       onSubmit={handleSubmit}
     />
   );
